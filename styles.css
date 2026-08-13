@@ -1459,3 +1459,33 @@ body.demo-notice-open{overflow:hidden}
 @media (prefers-reduced-motion:reduce){
   .demo-notice,.demo-notice-enter{transition:none!important}
 }
+
+
+/* ==========================================================================
+   V34 — private access gate
+   ========================================================================== */
+.access-gate{position:fixed;z-index:4000;inset:0;display:grid;place-items:center;padding:28px;opacity:0;visibility:hidden;transition:opacity .42s ease,visibility .42s ease}
+.access-gate.is-open{opacity:1;visibility:visible}
+.access-gate.is-unlocked{opacity:0;visibility:hidden}
+.access-gate-backdrop{position:absolute;inset:0;background:rgba(5,8,7,.88);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.access-gate-panel{position:relative;z-index:1;width:min(720px,calc(100vw - 40px));background:#f5f0e6;color:#171715;padding:32px 42px 36px;box-shadow:0 34px 110px rgba(0,0,0,.42);border:1px solid rgba(38,34,28,.10)}
+.access-gate-topline{display:flex;justify-content:space-between;gap:20px;font-family:var(--sans);font-size:7px;letter-spacing:.18em;color:#8b7756}
+.access-gate-kicker{margin:52px 0 13px;font-family:var(--sans);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:#8b7756}
+.access-gate h2{margin:0;font-family:var(--archive-display,var(--serif));font-size:clamp(54px,7vw,84px);font-weight:400;line-height:.82;letter-spacing:-.06em}
+.access-gate h2 em{font-weight:400}
+.access-gate-rule{height:1px;background:rgba(25,24,21,.18);margin:32px 0 26px}
+.access-gate-copy{max-width:580px;margin:0;font-family:var(--serif);font-size:17px;line-height:1.62;color:#4c4841}
+.access-gate-form{margin-top:30px;padding-top:24px;border-top:1px solid rgba(25,24,21,.13)}
+.access-gate-form label{display:block;margin-bottom:9px;font-family:var(--sans);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#756e64}
+.access-gate-field{display:grid;grid-template-columns:minmax(0,1fr) auto;border:1px solid rgba(23,61,53,.28);background:rgba(255,255,255,.48)}
+.access-gate-field input{min-width:0;border:0;outline:0;background:transparent;padding:17px 18px;font-family:var(--sans);font-size:14px;color:#171715}
+.access-gate-field input::placeholder{color:#9a9389}
+.access-gate-field button{border:0;background:#173d35;color:#fff;padding:0 20px;display:flex;align-items:center;gap:20px;font-family:var(--sans);font-size:8px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .25s ease}
+.access-gate-field button:hover{background:#0f2c27}
+.access-gate-field button:disabled{opacity:.62;cursor:wait}
+.access-gate-field button b{font-family:var(--serif);font-size:16px;font-weight:400}
+.access-gate-error{min-height:19px;margin:9px 0 0;font-family:var(--sans);font-size:8px;letter-spacing:.05em;color:#8d3f37}
+.access-gate-foot{margin:20px 0 0;font-family:var(--sans);font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:#9a9184}
+body.access-gate-open{overflow:hidden}
+@media (max-width:700px){.access-gate{padding:12px}.access-gate-panel{width:100%;padding:22px 22px 26px}.access-gate-topline span:last-child{display:none}.access-gate-kicker{margin-top:36px}.access-gate h2{font-size:clamp(48px,16vw,68px)}.access-gate-field{grid-template-columns:1fr}.access-gate-field button{min-height:52px;justify-content:space-between}.access-gate-copy{font-size:16px}}
+@media (prefers-reduced-motion:reduce){.access-gate{transition:none!important}}

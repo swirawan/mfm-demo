@@ -490,6 +490,30 @@
   </footer>
 
 
+
+  <div class="access-gate" data-access-gate aria-hidden="false" role="dialog" aria-modal="true" aria-labelledby="access-gate-title" aria-describedby="access-gate-copy">
+    <div class="access-gate-backdrop" aria-hidden="true"></div>
+    <section class="access-gate-panel" role="document">
+      <div class="access-gate-topline">
+        <span>PRIVATE / INVITATION ONLY</span>
+        <span>MFM · DESIGN DEMO</span>
+      </div>
+      <p class="access-gate-kicker">Restricted portfolio preview</p>
+      <h2 id="access-gate-title">Private<br><em>Design Demo</em></h2>
+      <div class="access-gate-rule" aria-hidden="true"></div>
+      <p class="access-gate-copy" id="access-gate-copy">This private portfolio demonstration is intended only for invited viewers. Enter the access key provided to you to continue.</p>
+      <form class="access-gate-form" data-access-gate-form novalidate>
+        <label for="access-key">Access key</label>
+        <div class="access-gate-field">
+          <input id="access-key" type="password" autocomplete="current-password" spellcheck="false" data-access-key-input placeholder="Enter access key" aria-describedby="access-gate-error">
+          <button type="submit">Enter private demo <b>→</b></button>
+        </div>
+        <p class="access-gate-error" id="access-gate-error" data-access-gate-error aria-live="polite"></p>
+      </form>
+      <p class="access-gate-foot">Independent portfolio concept · Access limited to invited viewers</p>
+    </section>
+  </div>
+
   <div class="demo-notice" data-demo-notice aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="demo-notice-title" aria-describedby="demo-notice-copy">
     <div class="demo-notice-backdrop" aria-hidden="true"></div>
     <section class="demo-notice-panel" role="document">

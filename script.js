@@ -2,6 +2,72 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 
+
+  /* Private access gate for the static portfolio demo.
+     The key itself is not stored in plaintext; only its SHA-256 digest is compared.
+     This is a client-side gate suitable for discouraging casual access on static hosting. */
+  const accessGate = document.querySelector('[data-access-gate]');
+  const accessForm = document.querySelector('[data-access-gate-form]');
+  const accessInput = document.querySelector('[data-access-key-input]');
+  const accessError = document.querySelector('[data-access-gate-error]');
+  const ACCESS_GRANTED_KEY = 'mfm-private-demo-access-v1';
+  const ACCESS_KEY_SHA256 = 'e6303531f6b77fa270b6bfacf0c8730ec8fcf18b5fdcb577d07841b67350e2b5';
+
+  const hasPrivateAccess = () => {
+    try { return window.localStorage.getItem(ACCESS_GRANTED_KEY) === 'true'; }
+    catch (_) { return false; }
+  };
+
+  const sha256Hex = async (value) => {
+    const bytes = new TextEncoder().encode(value);
+    const digest = await crypto.subtle.digest('SHA-256', bytes);
+    return [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2, '0')).join('');
+  };
+
+  const unlockPrivateDemo = () => {
+    try { window.localStorage.setItem(ACCESS_GRANTED_KEY, 'true'); } catch (_) {}
+    accessGate?.classList.add('is-unlocked');
+    accessGate?.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('access-gate-open');
+    window.setTimeout(() => accessGate?.remove(), reduceMotion ? 0 : 420);
+    window.setTimeout(() => openDemoNotice(), reduceMotion ? 0 : 180);
+  };
+
+  const showPrivateGate = () => {
+    if (!accessGate) return;
+    accessGate.classList.add('is-open');
+    accessGate.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('access-gate-open');
+    window.setTimeout(() => accessInput?.focus(), reduceMotion ? 0 : 160);
+  };
+
+  accessForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const value = accessInput?.value || '';
+    if (!value) {
+      if (accessError) accessError.textContent = 'Please enter the access key.';
+      accessInput?.focus();
+      return;
+    }
+    const button = accessForm.querySelector('button[type="submit"]');
+    button?.setAttribute('disabled', '');
+    if (accessError) accessError.textContent = 'Checking access…';
+    try {
+      const digest = await sha256Hex(value);
+      if (digest === ACCESS_KEY_SHA256) {
+        if (accessError) accessError.textContent = '';
+        unlockPrivateDemo();
+      } else {
+        if (accessError) accessError.textContent = 'That access key is not correct.';
+        if (accessInput) { accessInput.value = ''; accessInput.focus(); }
+      }
+    } catch (_) {
+      if (accessError) accessError.textContent = 'Unable to verify the key in this browser.';
+    } finally {
+      button?.removeAttribute('disabled');
+    }
+  });
+
   /* Portfolio demonstration notice. Shows on first visit unless the visitor
      explicitly chooses not to see it again. The footer can always reopen it. */
   const demoNotice = document.querySelector('[data-demo-notice]');
@@ -41,7 +107,12 @@
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && demoNotice?.classList.contains('is-open')) closeDemoNotice();
   });
-  window.setTimeout(() => openDemoNotice(), 120);
+  if (hasPrivateAccess()) {
+    accessGate?.remove();
+    window.setTimeout(() => openDemoNotice(), 120);
+  } else {
+    showPrivateGate();
+  }
 
   /* Header + mobile menu */
   const header = document.querySelector('[data-header]');
