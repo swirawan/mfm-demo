@@ -241,29 +241,22 @@
     }, 1000);
   }
 
-  /* Lookbook content */
-  const spreads = [
-    {
-      left: `<p class="page-kicker">MFM Luxury Travel · Issue 01</p><h3 class="page-title">The<br><em>Private Edit</em></h3><div class="page-rule"></div><p class="page-copy">A small collection of places, rhythms and details worth building a journey around.</p><span class="page-index">01</span><span class="page-number">MFM / 01</span>`,
-      right: `<img class="page-image" src="assets/images/lake-terrace.webp" alt="Lake Como terrace framed by arches"><div class="page-image-overlay"><p class="page-kicker">Italy · The lakes</p><h3>Arrive. Unpack.<br>Stay awhile.</h3></div><span class="page-number">02</span>`
-    },
-    {
-      left: `<img class="page-image" src="assets/images/kyoto-evening.webp" alt="Kyoto city and pagoda at sunset"><div class="page-image-overlay"><p class="page-kicker">Japan · Kyoto</p><h3>A city best<br>read slowly.</h3></div><span class="page-number">03</span>`,
-      right: `<p class="page-kicker">A note on pace</p><p class="page-quote">“The luxury is not squeezing in one more temple. It is having enough time to remember the one you saw.”</p><div class="page-rule"></div><p class="page-copy">Build the day around a few anchors. Leave the rest open for weather, appetite and whatever catches your eye.</p><span class="page-index">02</span><span class="page-number">04</span>`
-    },
-    {
-      left: `<img class="page-image" src="assets/images/safari-sunset.webp" alt="Acacia tree at sunset on safari"><div class="page-image-overlay"><p class="page-kicker">Africa · Safari</p><h3>Wild at<br>golden hour.</h3></div><span class="page-number">05</span>`,
-      right: `<img class="page-image" src="assets/images/bora-bora.webp" alt="Overwater bungalows in Bora Bora"><div class="page-image-overlay"><p class="page-kicker">French Polynesia</p><h3>Then, nowhere<br>to be.</h3></div><span class="page-number">06</span>`
-    },
-    {
-      left: `<p class="page-kicker">The Mediterranean</p><h3 class="page-title">White walls.<br>Blue water.<br><em>One long table.</em></h3><p class="page-copy">The best island days need very little choreography: a boat, a late lunch, a swim, and a room worth returning to.</p><span class="page-index">03</span><span class="page-number">07</span>`,
-      right: `<img class="page-image" src="assets/images/santorini.webp" alt="Santorini overlooking the Aegean Sea"><div class="page-image-overlay"><p class="page-kicker">Greece · Islands</p><h3>Sunset is<br>the appointment.</h3></div><span class="page-number">08</span>`
-    },
-    {
-      left: `<img class="page-image" src="assets/images/whistler.webp" alt="Gondola above snowy Whistler mountains"><div class="page-image-overlay"><p class="page-kicker">Canada · Whistler</p><h3>Cold air.<br>Warm table.</h3></div><span class="page-number">09</span>`,
-      right: `<p class="page-kicker">Your issue starts here</p><h3 class="page-title">Where do you<br>want to <em>feel</em><br>next?</h3><div class="page-rule"></div><p class="page-copy">Bring us the half-formed idea. A season, a hotel, a celebration, a place you keep saving. We will edit from there.</p><a class="text-link" href="#inquire">Begin a journey <span>→</span></a><span class="page-number">10</span>`
-    }
-  ];
+  /* Maddy Lens V30 - exact uploaded 20-page magazine rendered at 200 DPI.
+     Desktop pairs the cover by itself, then 02/03, 04/05 ... 18/19, with page 20 closing the issue.
+     Mobile presents every page individually. */
+  const lookbookPages = Array.from({ length: 20 }, (_, idx) => {
+    const pageNo = String(idx + 1).padStart(2, '0');
+    return `<div class="pdf-page"><img src="assets/lookbook/pages/page-${pageNo}.png" alt="Maddy Lens Issue 01 page ${idx + 1}" draggable="false" decoding="async"></div>`;
+  });
+
+  const blankLookbookPage = `<div class="pdf-page pdf-page--blank" aria-hidden="true"></div>`;
+  const spreads = [{ left: blankLookbookPage, right: lookbookPages[0] }];
+  for (let i = 1; i < lookbookPages.length; i += 2) {
+    spreads.push({
+      left: lookbookPages[i],
+      right: lookbookPages[i + 1] || blankLookbookPage
+    });
+  }
 
   const clamp01 = (value) => Math.max(0, Math.min(1, value));
   const sineEase = (value) => .5 - .5 * Math.cos(Math.PI * clamp01(value));
@@ -367,26 +360,40 @@
     const left = root.querySelector('[data-book-left]');
     const right = root.querySelector('[data-book-right]');
     const sheet = root.querySelector('[data-turning-sheet]');
+    left.classList.add('book-page--pdf');
+    right.classList.add('book-page--pdf');
     let index = 0;
     let turning = false;
     let autoTimer = null;
     let autoPaused = false;
 
+    const singlePageMode = () => window.matchMedia('(max-width: 600px)').matches;
+    const totalItems = () => singlePageMode() ? lookbookPages.length : spreads.length;
+
     const updateMeta = () => {
-      if (countEl) countEl.textContent = `${String(index + 1).padStart(2, '0')} / ${String(spreads.length).padStart(2, '0')}`;
-      if (progressEl) progressEl.style.width = `${((index + 1) / spreads.length) * 100}%`;
+      const total = totalItems();
+      if (countEl) countEl.textContent = `${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+      if (progressEl) progressEl.style.width = `${((index + 1) / total) * 100}%`;
     };
+
     const paint = (at = index) => {
-      index = at;
-      left.innerHTML = spreads[index].left;
-      right.innerHTML = spreads[index].right;
+      const total = totalItems();
+      index = Math.max(0, Math.min(total - 1, at));
+      if (singlePageMode()) {
+        left.innerHTML = '';
+        right.innerHTML = lookbookPages[index];
+      } else {
+        left.innerHTML = spreads[index].left;
+        right.innerHTML = spreads[index].right;
+      }
       updateMeta();
     };
 
     const getTarget = (direction) => {
+      const total = totalItems();
       let target = index + (direction === 'next' ? 1 : -1);
-      if (loop) target = (target + spreads.length) % spreads.length;
-      if (target < 0 || target >= spreads.length) return null;
+      if (loop) target = (target + total) % total;
+      if (target < 0 || target >= total) return null;
       return target;
     };
 
@@ -405,20 +412,19 @@
       if (target === null) return false;
       turning = true;
 
-      const singlePage = window.matchMedia('(max-width: 600px)').matches;
+      const singlePage = singlePageMode();
       const pageWidth = Math.max(1, right.getBoundingClientRect().width);
       let frontMarkup;
       let backMarkup;
 
       if (singlePage) {
         if (direction === 'next') {
-          frontMarkup = spreads[index].right;
-          backMarkup = spreads[target].right;
-          right.innerHTML = spreads[target].right;
+          frontMarkup = lookbookPages[index];
+          backMarkup = lookbookPages[target];
+          right.innerHTML = lookbookPages[target];
         } else {
-          frontMarkup = spreads[target].right;
-          backMarkup = spreads[index].right;
-          // Current page remains beneath until the previous page unfolds over it.
+          frontMarkup = lookbookPages[target];
+          backMarkup = lookbookPages[index];
         }
       } else if (direction === 'next') {
         frontMarkup = spreads[index].right;
@@ -453,15 +459,29 @@
       autoTimer = null;
     };
     const pauseAuto = (value) => { autoPaused = value; };
-    const setIndex = (nextIndex) => paint(Math.max(0, Math.min(spreads.length - 1, nextIndex)));
+    const setIndex = (nextIndex) => paint(nextIndex);
     const getIndex = () => index;
 
     paint(0);
     startAuto();
-    return { turn, paint, setIndex, getIndex, pauseAuto, startAuto, stopAuto, root };
+
+    let touchX = null;
+    root.addEventListener('touchstart', (event) => {
+      touchX = event.changedTouches[0]?.clientX ?? null;
+    }, { passive: true });
+    root.addEventListener('touchend', (event) => {
+      if (touchX === null) return;
+      const endX = event.changedTouches[0]?.clientX ?? touchX;
+      const delta = endX - touchX;
+      touchX = null;
+      if (Math.abs(delta) > 44) turn(delta < 0 ? 'next' : 'prev');
+    }, { passive: true });
+
+    return { turn, setIndex, getIndex, pauseAuto, stopAuto, startAuto, paint };
   };
 
   const previewBookRoot = document.querySelector('[data-book-preview]');
+
   const previewBook = createBook({
     root: previewBookRoot,
     countEl: document.querySelector('[data-book-count]'),
@@ -517,15 +537,16 @@
     if (e.key === 'ArrowLeft') modalBook?.turn('prev');
   });
 
-  let touchX = null;
-  modalBook?.root.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
-  modalBook?.root.addEventListener('touchend', e => {
-    if (touchX === null) return;
-    const dx = e.changedTouches[0].clientX - touchX;
-    if (Math.abs(dx) > 50) modalBook.turn(dx < 0 ? 'next' : 'prev');
-    touchX = null;
-  }, { passive: true });
 
+  let lookbookWasSingle = window.matchMedia('(max-width: 600px)').matches;
+  window.addEventListener('resize', () => {
+    const nowSingle = window.matchMedia('(max-width: 600px)').matches;
+    if (nowSingle !== lookbookWasSingle) {
+      lookbookWasSingle = nowSingle;
+      previewBook?.setIndex(0);
+      modalBook?.setIndex(0);
+    }
+  });
 
   /* MFM team archive: one active profile at a time on touch/keyboard. */
   const teamRoster = document.querySelector('[data-team-roster]');

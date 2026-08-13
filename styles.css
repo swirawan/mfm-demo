@@ -1163,3 +1163,106 @@ body{font-size:15px}
 @media (prefers-reduced-motion:reduce){
   .team-card,.team-card-detail,.team-watermark,.team-arrow{transition:none!important}
 }
+
+
+/*
+   V26 — Maddy Lens lookbook redesign
+   More editorial, more personal, less brochure-like.
+*/
+.lookbook .text-button{padding-bottom:4px}
+.preview-open{backdrop-filter:blur(8px)}
+.page-title--small{font-size:clamp(26px,3.2vw,44px);line-height:1.02}
+.page-title--medium{font-size:clamp(28px,3.45vw,50px);line-height:.98}
+.page-mini-copy{font-size:13px;line-height:1.55;color:rgba(255,255,255,.88);margin:0}
+.page-cover,.page-essay,.page-signoff,.page-collage,.page-duo{position:relative;height:100%;display:flex;flex-direction:column}
+.page-cover{justify-content:flex-start;background:linear-gradient(180deg,#f8f3ea 0%,#f2ece0 100%)}
+.page-note{margin-top:auto;padding:18px 20px;border:1px solid rgba(31,31,31,.08);background:rgba(255,255,255,.65)}
+.page-note-label{display:block;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#8b7756;margin-bottom:8px}
+.page-note p{margin:0;font-size:13px;line-height:1.6;color:#5d5a54}
+.page-note-signoff{display:inline-block;margin-top:16px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#8b7756}
+.page-essay{justify-content:flex-start;background:linear-gradient(180deg,#faf6ee 0%,#f3eee4 100%)}
+.page-essay--cream{background:#f5f0e5}
+.page-quote-block{margin:26px 0 8px;padding:20px 0;border-top:1px solid rgba(31,31,31,.08);border-bottom:1px solid rgba(31,31,31,.08)}
+.page-list{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:10px}
+.page-list li{position:relative;padding-left:16px;font-size:13px;line-height:1.55;color:#57534c}
+.page-list li::before{content:'•';position:absolute;left:0;color:#8b7756}
+.page-mood-grid{display:grid;gap:16px;margin-top:22px}
+.page-mood-grid div{padding-top:14px;border-top:1px solid rgba(31,31,31,.09)}
+.page-mood-grid span{display:block;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#8b7756;margin-bottom:6px}
+.page-mood-grid b{display:block;font-family:var(--serif);font-weight:400;font-size:24px;line-height:1;margin-bottom:8px}
+.page-mood-grid p{margin:0;font-size:13px;line-height:1.5;color:#59554d}
+.page-collage{padding:0;background:#f7f2e9}
+.page-collage-head{padding:26px 28px 12px}
+.page-collage-foot{margin-top:auto;padding:14px 28px 22px}
+.page-grid{display:grid;gap:16px;flex:1;padding:18px 24px 24px}
+.page-grid--two{grid-template-columns:1fr 1fr}
+.page-grid--stack{grid-template-rows:1fr 1fr}
+.page-grid--stack .page-card{min-height:0}
+.page-grid--compact{padding-top:6px}
+.page-card{position:relative;overflow:hidden;background:#e9e1d4;min-height:0;border-radius:2px}
+.page-card img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.page-card figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 14px 12px;background:linear-gradient(transparent,rgba(0,0,0,.75));color:#fff;font-size:10px;letter-spacing:.12em;text-transform:uppercase}
+.page-card figcaption b{display:block;font-family:var(--serif);font-size:22px;font-weight:400;letter-spacing:-.03em;line-height:1.02;text-transform:none;margin-bottom:4px}
+.page-card figcaption span{display:block;font-size:10px;letter-spacing:.11em;text-transform:none;color:rgba(255,255,255,.84)}
+.page-card:hover img{transform:scale(1.02)}
+.page-bleed{position:absolute;inset:0;overflow:hidden;background:#ddd}
+.page-bleed::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.04),rgba(0,0,0,.36))}
+.page-bleed .page-image{z-index:0}
+.page-overlay-card,.page-overlay-strip,.page-badge{position:absolute;z-index:2}
+.page-overlay-card{left:28px;right:28px;bottom:28px;padding:20px 22px;background:rgba(17,16,15,.56);backdrop-filter:blur(10px);color:#fff}
+.page-overlay-card h3,.page-overlay-strip h3{font-family:var(--serif);font-size:clamp(26px,3.2vw,44px);font-weight:400;line-height:.98;margin:0 0 10px}
+.page-overlay-card--large{max-width:84%}
+.page-overlay-card--small{max-width:78%}
+.page-overlay-strip{left:0;right:0;bottom:0;padding:22px 26px;background:linear-gradient(transparent,rgba(0,0,0,.72))}
+.page-badge{left:24px;top:22px;padding:8px 12px;border:1px solid rgba(255,255,255,.38);color:#fff;font-size:9px;letter-spacing:.19em;text-transform:uppercase;background:rgba(0,0,0,.18);backdrop-filter:blur(6px)}
+.page-duo{background:#f6f1e7;padding:24px 24px 18px}
+.page-duo-copy{padding:0 4px 6px}
+.page-signoff{justify-content:flex-start;background:linear-gradient(180deg,#f7f1e6 0%,#efe8db 100%)}
+.page-signoff .text-link{margin-top:14px}
+@media (max-width: 820px){
+  .page-grid{padding:16px 16px 18px;gap:12px}
+  .page-collage-head,.page-collage-foot,.page-duo{padding-left:18px;padding-right:18px}
+  .page-overlay-card{left:18px;right:18px;bottom:18px;padding:16px 18px}
+  .page-overlay-strip{padding:18px}
+  .page-badge{left:18px;top:16px}
+}
+@media (max-width: 600px){
+  .page-grid--two{grid-template-columns:1fr}
+  .page-card figcaption b{font-size:20px}
+  .page-overlay-card--large,.page-overlay-card--small{max-width:none}
+  .page-note{margin-top:24px}
+  .page-mood-grid b{font-size:20px}
+}
+
+/* V27 - embedded 25-page Maddy Lens issue */
+.lookbook-actions{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:22px}
+.lookbook-actions .text-button{margin-top:0}
+.lookbook-pdf-link{text-decoration:none;color:inherit}
+.modal-topbar-actions{display:flex!important;align-items:center;gap:22px!important}
+.modal-topbar-actions>a{color:#fff;text-decoration:none;text-transform:uppercase;letter-spacing:.16em;font-size:7px;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:4px}
+.book{aspect-ratio:17/11;background:#eee8de}
+.book-page--pdf{padding:0!important;background:#f7f2e8}
+.pdf-page{position:absolute;inset:0;background:#f7f2e8;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.pdf-page img{width:100%;height:100%;display:block;object-fit:contain;background:#f7f2e8;user-select:none;-webkit-user-drag:none}
+.pdf-page--blank{background:linear-gradient(90deg,#eae2d6,#f4ede3)}
+.curl-page-content .pdf-page{position:absolute;inset:0}
+.curl-page-content .pdf-page img{width:100%;height:100%;object-fit:contain}
+.book-gutter{width:34px;background:linear-gradient(90deg,transparent,rgba(24,24,22,.13),rgba(255,255,255,.28),rgba(24,24,22,.09),transparent)}
+.book--modal{aspect-ratio:17/11}
+@media (max-width:600px){
+  .book,.book--modal{aspect-ratio:8.5/11}
+  .pdf-page img{object-fit:contain}
+  .lookbook-actions{gap:14px}
+  .modal-topbar-actions{gap:12px!important}
+  .modal-topbar-actions>a{display:none}
+}
+
+
+/* V28 - HD magazine lookbook, based on the supplied editorial mock. */
+.book{background:#d8d5cf;box-shadow:0 30px 90px rgba(20,24,20,.20);}
+.pdf-page{background:#f8f7f3;}
+.pdf-page img{image-rendering:auto;filter:none;transform:translateZ(0);}
+.book-page--pdf{background:#f8f7f3;}
+.book-gutter{width:28px;background:linear-gradient(90deg,transparent,rgba(0,0,0,.10),rgba(255,255,255,.30),rgba(0,0,0,.07),transparent);}
+.lookbook-modal-panel{max-width:1500px;}
+@media (min-width:901px){.book--modal{max-height:82vh;}}
