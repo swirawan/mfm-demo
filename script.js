@@ -1,6 +1,48 @@
 (() => {
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+
+  /* Portfolio demonstration notice. Shows on first visit unless the visitor
+     explicitly chooses not to see it again. The footer can always reopen it. */
+  const demoNotice = document.querySelector('[data-demo-notice]');
+  const demoNoticeClose = document.querySelector('[data-close-demo-notice]');
+  const demoNoticeRemember = document.querySelector('[data-demo-notice-remember]');
+  const demoNoticeOpenButtons = document.querySelectorAll('[data-open-demo-notice]');
+  const DEMO_NOTICE_KEY = 'mfm-portfolio-demo-notice-dismissed-v1';
+  let demoNoticePreviousFocus = null;
+
+  const demoNoticeDismissed = () => {
+    try { return window.localStorage.getItem(DEMO_NOTICE_KEY) === 'true'; }
+    catch (_) { return false; }
+  };
+
+  const openDemoNotice = ({ force = false } = {}) => {
+    if (!demoNotice || (!force && demoNoticeDismissed())) return;
+    demoNoticePreviousFocus = document.activeElement;
+    demoNotice.classList.add('is-open');
+    demoNotice.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('demo-notice-open');
+    window.setTimeout(() => demoNoticeClose?.focus(), reduceMotion ? 0 : 180);
+  };
+
+  const closeDemoNotice = () => {
+    if (!demoNotice) return;
+    if (demoNoticeRemember?.checked) {
+      try { window.localStorage.setItem(DEMO_NOTICE_KEY, 'true'); } catch (_) {}
+    }
+    demoNotice.classList.remove('is-open');
+    demoNotice.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('demo-notice-open');
+    demoNoticePreviousFocus?.focus?.();
+  };
+
+  demoNoticeClose?.addEventListener('click', closeDemoNotice);
+  demoNoticeOpenButtons.forEach((button) => button.addEventListener('click', () => openDemoNotice({ force: true })));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && demoNotice?.classList.contains('is-open')) closeDemoNotice();
+  });
+  window.setTimeout(() => openDemoNotice(), 120);
+
   /* Header + mobile menu */
   const header = document.querySelector('[data-header]');
   const onScroll = () => header?.classList.toggle('is-scrolled', window.scrollY > 24);
