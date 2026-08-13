@@ -803,11 +803,11 @@
       window.setTimeout(() => teamStoryModal.querySelector('[data-team-story-close]')?.focus(), 80);
     };
 
-    const closeTeamStory = () => {
+    const closeTeamStory = (restoreFocus = true) => {
       teamStoryModal.classList.remove('is-open');
       teamStoryModal.setAttribute('aria-hidden', 'true');
       document.body.classList.remove('modal-open');
-      lastStoryTrigger?.focus?.();
+      if (restoreFocus) lastStoryTrigger?.focus?.();
     };
 
     document.querySelectorAll('[data-team-story-open]').forEach((button) => {
@@ -824,10 +824,19 @@
         if (window.innerWidth > 900) openTeamStory(storyButton.dataset.teamStoryOpen, toggle);
       });
     });
-    storyCloseButtons.forEach((button) => button.addEventListener('click', closeTeamStory));
+    storyCloseButtons.forEach((button) => button.addEventListener('click', () => closeTeamStory(true)));
     storyPrev?.addEventListener('click', () => renderTeamStory(storyCursor - 1));
     storyNext?.addEventListener('click', () => renderTeamStory(storyCursor + 1));
-    storyInquiry?.addEventListener('click', closeTeamStory);
+    storyInquiry?.addEventListener('click', (event) => {
+      event.preventDefault();
+      const selectedStory = teamStories[storyCursor];
+      closeTeamStory(false);
+      if (selectedStory?.key) chooseAdvisor(selectedStory.key, false);
+      const inquirySection = document.querySelector('#inquire');
+      window.requestAnimationFrame(() => {
+        inquirySection?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      });
+    });
 
     document.addEventListener('keydown', (event) => {
       if (!teamStoryModal.classList.contains('is-open')) return;
@@ -1303,8 +1312,10 @@
         }
       };
       heroTypeLoop();
-      document.addEventListener('visibilitychange', () => {
-        if (document.hidden && heroTypeTimer) window.clearTimeout(heroTypeTimer);
+      /* Do not cancel the pending typewriter timeout when mobile browsers briefly
+         hide/freeze the page; cancelling it strands the async loop forever. */
+      window.addEventListener('pageshow', () => {
+        heroTypeTitle.classList.remove('is-paused');
       });
     }
   }

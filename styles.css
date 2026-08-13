@@ -1027,7 +1027,7 @@ body{font-size:15px}
   height:min(90vh,820px);
   display:grid;
   grid-template-columns:minmax(360px,.88fr) minmax(480px,1.12fr);
-  background:#f3eee5;
+  background:var(--paper);
   color:#171613;
   box-shadow:0 36px 110px rgba(0,0,0,.46);
   overflow:hidden;
@@ -1038,7 +1038,7 @@ body{font-size:15px}
   top:22px;
   right:26px;
   border:0;
-  background:rgba(243,238,229,.82);
+  background:rgba(245,241,232,.90);
   color:#171613;
   padding:8px 10px;
   font-family:var(--sans);
@@ -2693,4 +2693,160 @@ body.access-gate-open{overflow:hidden}
   .demo-notice-identity{display:grid;gap:8px;margin-top:18px}
   .demo-notice-identity b{padding-left:0;line-height:1.5}
   .demo-notice-identity b:before{display:none}
+}
+
+/* ==========================================================================\n   V53 — focused mobile refinement\n   1) resilient hero typewriter layout\n   2) top-aligned, less cramped demo notice\n   3) compact phone + preferred-call controls\n   4) true edge-to-edge black footer\n   ========================================================================== */
+@media (max-width:600px){
+  /* Hero: preserve enough line height/width for the JS typewriter on mobile. */
+  .hero-type-title{
+    min-height:2.42em!important;
+    overflow:visible!important;
+  }
+  .hero-type-line{
+    min-height:.88em!important;
+    white-space:nowrap;
+  }
+  .hero-type-line--second{
+    display:block!important;
+    min-height:.88em!important;
+  }
+  .hero-type-beautiful,
+  [data-hero-type-arranged]{
+    display:inline!important;
+  }
+  .hero-type-caret{
+    display:inline-block!important;
+    opacity:1;
+  }
+
+  /* Disclaimer / introduction: start at the top of the viewport and tighten the
+     vertical rhythm without shrinking the important introduction. */
+  .demo-notice{
+    place-items:start center!important;
+    padding:8px!important;
+    overflow:hidden!important;
+  }
+  .demo-notice-panel{
+    width:100%!important;
+    max-height:calc(100dvh - 16px)!important;
+    margin:0!important;
+    padding:18px 18px 22px!important;
+    scroll-padding-top:0!important;
+    overscroll-behavior:contain;
+  }
+  .demo-notice-topline{font-size:6.5px!important}
+  .demo-notice-kicker{margin:20px 0 9px!important;font-size:7px!important}
+  .demo-notice h2{
+    font-size:clamp(43px,13vw,58px)!important;
+    line-height:.86!important;
+    letter-spacing:-.055em!important;
+  }
+  .demo-notice-identity{margin-top:14px!important;gap:5px!important}
+  .demo-notice-identity span{font-size:8px!important}
+  .demo-notice-identity b{font-size:7px!important;line-height:1.45!important}
+  .demo-notice-rule{margin:20px 0 18px!important}
+  .demo-notice-copy{gap:14px!important}
+  .demo-notice-copy p{font-size:14px!important;line-height:1.5!important}
+  .demo-notice-copy p:first-child{font-size:15px!important}
+  .demo-notice-copy .demo-notice-private,
+  .demo-notice-copy .demo-notice-takedown{padding:13px 14px!important}
+  .demo-notice-actions{margin-top:20px!important;padding-top:18px!important;gap:16px!important}
+  .demo-notice-enter{min-height:54px!important;padding:15px 16px!important}
+  .demo-notice-foot{margin-top:16px!important}
+
+  /* Form: the contact controls should read as compact utility rows, not two
+     oversized feature blocks. */
+  .inquiry-form--advisor{gap:21px!important}
+  .inquiry-contact-row{gap:15px!important}
+  .luxury-label,.call-schedule legend{margin-bottom:6px!important}
+  .phone-composer{min-height:46px!important}
+  .inquiry-form .country-trigger{
+    min-width:88px!important;
+    max-width:94px!important;
+    height:46px!important;
+    padding-inline:10px!important;
+    gap:6px!important;
+  }
+  .country-flag{font-size:16px!important}
+  .country-dial{font-size:13px!important}
+  .inquiry-form .phone-composer input[type="tel"]{
+    height:46px!important;
+    padding:0 13px!important;
+    font-size:14px!important;
+  }
+  .inquiry-form .phone-composer input[type="tel"]::placeholder{font-size:15px!important}
+  .call-control{padding:7px 10px 6px!important}
+  .call-control>span{margin-bottom:3px!important;font-size:5.5px!important}
+  .inquiry-form .call-control-button{height:27px!important;padding-right:20px!important}
+  .call-control-button b{font-size:14px!important}
+  .call-control-button.has-value b{font-size:12.5px!important}
+  .calendar-glyph,.clock-glyph{transform:scale(.86);transform-origin:right center}
+
+  /* Footer: black must extend to both viewport edges. Inner padding remains. */
+  .site-footer{
+    width:100%!important;
+    max-width:none!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    padding-left:28px!important;
+    padding-right:28px!important;
+    box-sizing:border-box!important;
+    background:#0b0b0a!important;
+  }
+}
+
+@media (max-width:380px){
+  .site-footer{padding-left:22px!important;padding-right:22px!important}
+  .demo-notice-panel{padding-left:15px!important;padding-right:15px!important}
+  .demo-notice h2{font-size:clamp(40px,12.5vw,52px)!important}
+  .inquiry-form .country-trigger{min-width:84px!important;max-width:88px!important}
+  .call-control{padding-inline:8px!important}
+}
+
+
+/* V54 — team story panel uses the same warm paper as the main editorial site. */
+.team-story-panel{
+  background:var(--paper);
+}
+.team-story-copy{
+  background:var(--paper);
+}
+
+/* V55 — calendar month navigation alignment */
+.calendar-head{
+  align-items:center!important;
+}
+.calendar-head strong{
+  min-height:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  line-height:1!important;
+}
+.inquiry-form .calendar-head button{
+  position:relative;
+  align-self:center!important;
+  justify-self:center!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  line-height:1!important;
+  font-size:0!important;
+  overflow:hidden;
+}
+.inquiry-form .calendar-head button::before{
+  content:"";
+  width:7px;
+  height:7px;
+  border-top:1px solid currentColor;
+  border-right:1px solid currentColor;
+  position:absolute;
+  left:50%;
+  top:50%;
+}
+.inquiry-form .calendar-head [data-cal-prev]::before{
+  transform:translate(-42%,-50%) rotate(-135deg);
+}
+.inquiry-form .calendar-head [data-cal-next]::before{
+  transform:translate(-58%,-50%) rotate(45deg);
 }
