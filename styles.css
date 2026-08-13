@@ -1489,3 +1489,1087 @@ body.demo-notice-open{overflow:hidden}
 body.access-gate-open{overflow:hidden}
 @media (max-width:700px){.access-gate{padding:12px}.access-gate-panel{width:100%;padding:22px 22px 26px}.access-gate-topline span:last-child{display:none}.access-gate-kicker{margin-top:36px}.access-gate h2{font-size:clamp(48px,16vw,68px)}.access-gate-field{grid-template-columns:1fr}.access-gate-field button{min-height:52px;justify-content:space-between}.access-gate-copy{font-size:16px}}
 @media (prefers-reduced-motion:reduce){.access-gate{transition:none!important}}
+
+/* V35 — advisor-aware inquiry experience */
+.inquire-inner{grid-template-columns:minmax(300px,.66fr) minmax(0,1.34fr)}
+.inquiry-form--advisor{
+  display:grid;
+  grid-template-columns:minmax(0,1.08fr) minmax(260px,.72fr);
+  grid-auto-rows:max-content;
+  column-gap:38px;
+  row-gap:25px;
+  align-content:center;
+  padding:48px 46px;
+}
+.inquiry-form--advisor .inquiry-form-main{grid-column:1}
+.inquiry-form--advisor .form-row{width:100%}
+.inquiry-form select{
+  width:100%;
+  appearance:none;
+  -webkit-appearance:none;
+  border:0;
+  outline:0;
+  color:var(--ink);
+  background:transparent;
+  padding:0 34px 0 0;
+  font-family:var(--serif);
+  font-size:18px;
+  line-height:1.35;
+  cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,#6f786f 50%),linear-gradient(135deg,#6f786f 50%,transparent 50%);
+  background-position:calc(100% - 11px) 54%,calc(100% - 6px) 54%;
+  background-size:5px 5px,5px 5px;
+  background-repeat:no-repeat;
+}
+.advisor-select-label small{
+  display:block;
+  margin-top:8px;
+  color:#8f958f;
+  font:500 8px/1.5 var(--sans);
+  letter-spacing:.02em;
+}
+.advisor-selection-card{
+  grid-column:2;
+  grid-row:1 / span 6;
+  align-self:stretch;
+  min-width:0;
+  background:#11110f;
+  color:#f7f2e8;
+  overflow:hidden;
+  display:grid;
+  grid-template-rows:minmax(260px,1.12fr) auto;
+  box-shadow:0 22px 55px rgba(24,22,19,.14);
+}
+.advisor-selection-media{position:relative;margin:0;min-height:260px;overflow:hidden;background:#d7d0c5}
+.advisor-selection-photo,.advisor-selection-collage{position:absolute;inset:0;width:100%;height:100%}
+.advisor-selection-photo{object-fit:cover;object-position:center 30%;transition:opacity .32s ease,transform .55s cubic-bezier(.2,.75,.2,1);transform:scale(1.015)}
+.advisor-selection-card.is-changing .advisor-selection-photo{opacity:.18;transform:scale(1.04)}
+.advisor-selection-collage{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr}
+.advisor-selection-collage img{width:100%;height:100%;object-fit:cover;filter:saturate(.72) contrast(.96);opacity:.9}
+.advisor-selection-collage img:nth-child(1){object-position:center 27%}
+.advisor-selection-collage img:nth-child(2){object-position:43% 47%}
+.advisor-selection-collage img:nth-child(3){object-position:center 33%}
+.advisor-selection-collage img:nth-child(4){object-position:52% 46%}
+.advisor-selection-media:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 54%,rgba(8,8,8,.52));pointer-events:none}
+.advisor-selection-index{position:absolute;z-index:2;left:17px;bottom:15px;font:600 8px/1 var(--sans);letter-spacing:.16em;color:#fff}
+.advisor-selection-copy{padding:24px 23px 25px}
+.advisor-selection-eyebrow{margin:0 0 12px;color:#c5a36c;font:600 8px/1.3 var(--sans);letter-spacing:.17em;text-transform:uppercase}
+.advisor-selection-copy h3{margin:0;font-family:var(--archive-display,var(--serif));font-weight:400;font-size:clamp(30px,2.5vw,43px);line-height:.94;letter-spacing:-.045em}
+.advisor-selection-role{margin:11px 0 0;color:#cfc8bc;font:600 8px/1.45 var(--sans);letter-spacing:.12em;text-transform:uppercase}
+.advisor-selection-bio{margin:18px 0 0;color:#d8d2c8;font-family:var(--serif);font-size:14px;line-height:1.55}
+.advisor-selection-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+.advisor-selection-tags span{border:1px solid rgba(216,189,139,.3);padding:6px 7px 5px;color:#d9bd8b;font:600 7px/1 var(--sans);letter-spacing:.13em}
+
+@media (max-width:1100px){
+  .inquiry-form--advisor{grid-template-columns:minmax(0,1fr) minmax(235px,.68fr);column-gap:28px;padding:42px 34px}
+  .advisor-selection-card{grid-template-rows:minmax(230px,.95fr) auto}
+  .advisor-selection-media{min-height:230px}
+  .advisor-selection-copy{padding:20px}
+}
+@media (max-width:900px){
+  .inquiry-form--advisor{grid-template-columns:minmax(0,1fr) minmax(250px,.75fr);padding:45px 38px}
+}
+@media (max-width:720px){
+  .inquiry-form--advisor{display:flex;flex-direction:column;gap:25px;padding:42px 24px}
+  .inquiry-form--advisor .advisor-select-label{order:3}
+  .inquiry-form--advisor .advisor-selection-card{order:4;width:100%;grid-template-rows:auto auto}
+  .inquiry-form--advisor > label.inquiry-form-main:last-of-type{order:5}
+  .inquiry-form--advisor > button{order:6}
+  .inquiry-form--advisor > .form-note{order:7}
+  .inquiry-form--advisor > .form-row{order:1}
+  .inquiry-form--advisor > label.inquiry-form-main:not(.advisor-select-label):not(:last-of-type){order:2}
+  .advisor-selection-media{aspect-ratio:4/5;min-height:0;max-height:460px}
+  .advisor-selection-copy{padding:25px 22px 27px}
+  .advisor-selection-copy h3{font-size:40px}
+  .advisor-selection-bio{font-size:16px;line-height:1.55}
+  .inquiry-form select{font-size:18px}
+}
+@media (max-width:420px){
+  .advisor-selection-media{max-height:390px}
+  .advisor-selection-copy h3{font-size:35px}
+  .advisor-selection-tags{gap:5px}
+}
+
+/* ========================================================================== 
+   V36 — bespoke editorial advisor picker
+   Replaces the browser-native select UI while preserving the hidden select
+   for form submission. Designed to feel like a luxury roster / appointment book.
+   ========================================================================== */
+.advisor-select-label{
+  position:relative;
+  min-width:0;
+  padding:0;
+  border:0;
+}
+.advisor-field-label{
+  display:block;
+  margin:0 0 9px;
+  font:500 7px/1.35 var(--sans);
+  letter-spacing:.17em;
+  text-transform:uppercase;
+  color:#7b887f;
+}
+.advisor-native-select{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+.advisor-picker{position:relative;z-index:18}
+.advisor-picker-trigger{
+  width:100%;
+  min-height:61px;
+  border:0;
+  border-top:1px solid rgba(22,22,19,.10);
+  border-bottom:1px solid rgba(22,22,19,.34);
+  background:transparent;
+  color:var(--ink);
+  padding:10px 2px 11px 0;
+  text-align:left;
+  cursor:pointer;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  transition:border-color .35s ease,background-color .35s ease,padding .35s ease;
+}
+.advisor-picker-trigger:hover,.advisor-picker-trigger:focus-visible,.advisor-picker.is-open .advisor-picker-trigger{
+  border-bottom-color:#aa8753;
+  outline:none;
+}
+.advisor-picker.is-open .advisor-picker-trigger{background:rgba(202,170,112,.045);padding-left:10px;padding-right:10px}
+.advisor-trigger-meta{
+  display:block;
+  margin-bottom:6px;
+  color:#a38350;
+  font:600 6.5px/1.2 var(--sans);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  transition:opacity .25s ease,transform .25s ease;
+}
+.advisor-trigger-row{display:grid;grid-template-columns:minmax(0,1fr) 18px;gap:15px;align-items:center;width:100%}
+.advisor-trigger-row strong{
+  min-width:0;
+  font-family:var(--archive-display,var(--serif));
+  font-size:18px;
+  line-height:1.12;
+  font-weight:400;
+  letter-spacing:-.025em;
+}
+.advisor-picker-chevron{
+  position:relative;
+  width:15px;height:15px;
+  justify-self:end;
+  transition:transform .5s cubic-bezier(.2,.75,.2,1);
+}
+.advisor-picker-chevron:before,.advisor-picker-chevron:after{
+  content:"";position:absolute;top:7px;width:8px;height:1px;background:#76766d;
+  transition:background .25s ease;
+}
+.advisor-picker-chevron:before{left:0;transform:rotate(38deg);transform-origin:right center}
+.advisor-picker-chevron:after{right:0;transform:rotate(-38deg);transform-origin:left center}
+.advisor-picker.is-open .advisor-picker-chevron{transform:rotate(180deg)}
+.advisor-picker.is-open .advisor-picker-chevron:before,.advisor-picker.is-open .advisor-picker-chevron:after{background:#aa8753}
+.advisor-picker-menu{
+  position:absolute;
+  z-index:60;
+  top:calc(100% + 8px);
+  left:-10px;
+  right:-10px;
+  max-height:min(450px,55vh);
+  overflow:auto;
+  overscroll-behavior:contain;
+  padding:8px;
+  background:#f6f1e8;
+  border:1px solid rgba(23,21,17,.13);
+  box-shadow:0 24px 60px rgba(26,23,18,.18),0 2px 10px rgba(26,23,18,.06);
+  opacity:0;
+  visibility:hidden;
+  transform:translateY(-8px) scale(.985);
+  transform-origin:top center;
+  pointer-events:none;
+  transition:opacity .26s ease,transform .34s cubic-bezier(.2,.75,.2,1),visibility .26s;
+  scrollbar-width:thin;
+  scrollbar-color:#b5a891 transparent;
+}
+.advisor-picker.is-open .advisor-picker-menu{
+  opacity:1;
+  visibility:visible;
+  transform:translateY(0) scale(1);
+  pointer-events:auto;
+}
+.advisor-picker-option{
+  position:relative;
+  width:100%;
+  min-height:58px;
+  border:0;
+  border-bottom:1px solid rgba(24,22,18,.09);
+  background:transparent;
+  color:#27251f;
+  padding:11px 12px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 30px;
+  gap:15px;
+  align-items:center;
+  text-align:left;
+  cursor:pointer;
+  overflow:hidden;
+  transition:background-color .28s ease,color .28s ease,padding .34s cubic-bezier(.2,.75,.2,1);
+}
+.advisor-picker-option:last-child{border-bottom:0}
+.advisor-picker-option:before{
+  content:"";
+  position:absolute;
+  left:0;top:11px;bottom:11px;
+  width:2px;
+  background:#b28d53;
+  transform:scaleY(0);
+  transform-origin:center;
+  transition:transform .3s ease;
+}
+.advisor-picker-option span{min-width:0}
+.advisor-picker-option b{
+  display:block;
+  font-family:var(--archive-display,var(--serif));
+  font-size:17px;
+  line-height:1.05;
+  font-weight:400;
+  letter-spacing:-.025em;
+  transition:transform .32s cubic-bezier(.2,.75,.2,1);
+}
+.advisor-picker-option small{
+  display:block;
+  margin-top:5px;
+  color:#817b71;
+  font:500 6.5px/1.3 var(--sans);
+  letter-spacing:.13em;
+  text-transform:uppercase;
+  transition:color .28s ease;
+}
+.advisor-picker-option>i{
+  font:500 7px/1 var(--sans);
+  letter-spacing:.12em;
+  color:#aaa08f;
+  font-style:normal;
+  text-align:right;
+  transition:color .28s ease,transform .32s ease;
+}
+.advisor-picker-option:hover,.advisor-picker-option:focus-visible,.advisor-picker-option.is-keyboard-focus{
+  outline:none;
+  background:#181816;
+  color:#f7f1e7;
+  padding-left:18px;
+}
+.advisor-picker-option:hover:before,.advisor-picker-option:focus-visible:before,.advisor-picker-option.is-keyboard-focus:before,.advisor-picker-option.is-selected:before{transform:scaleY(1)}
+.advisor-picker-option:hover b,.advisor-picker-option:focus-visible b,.advisor-picker-option.is-keyboard-focus b{transform:translateX(2px)}
+.advisor-picker-option:hover small,.advisor-picker-option:focus-visible small,.advisor-picker-option.is-keyboard-focus small{color:#c9c0b2}
+.advisor-picker-option:hover>i,.advisor-picker-option:focus-visible>i,.advisor-picker-option.is-keyboard-focus>i{color:#c5a36c;transform:translateX(-2px)}
+.advisor-picker-option.is-selected:not(:hover):not(:focus-visible):not(.is-keyboard-focus){background:rgba(178,141,83,.08)}
+.advisor-picker-option.is-selected:not(:hover):not(:focus-visible):not(.is-keyboard-focus)>i{color:#a47e43}
+.advisor-select-label>small{
+  display:block;
+  margin-top:9px;
+  color:#93978f;
+  font:500 7px/1.5 var(--sans);
+  letter-spacing:.025em;
+}
+/* make the already-good advisor card transition feel equally deliberate */
+.advisor-selection-copy{
+  transition:opacity .28s ease,transform .42s cubic-bezier(.2,.75,.2,1);
+}
+.advisor-selection-card.is-changing .advisor-selection-copy{opacity:.18;transform:translateY(7px)}
+.advisor-selection-card:not(.is-changing) .advisor-selection-copy{opacity:1;transform:translateY(0)}
+.advisor-selection-card.is-changing .advisor-selection-media:after{opacity:.86}
+.advisor-selection-media:after{transition:opacity .35s ease}
+
+@media (max-width:720px){
+  .advisor-picker{z-index:30}
+  .advisor-picker-trigger{min-height:68px;padding-block:11px}
+  .advisor-trigger-row strong{font-size:20px}
+  .advisor-picker-menu{
+    position:relative;
+    top:auto;left:auto;right:auto;
+    max-height:0;
+    margin-top:0;
+    padding:0 7px;
+    overflow:hidden;
+    border-left:0;border-right:0;
+    box-shadow:none;
+    opacity:0;
+    visibility:hidden;
+    transform:translateY(-6px);
+    transition:max-height .5s cubic-bezier(.2,.75,.2,1),opacity .28s ease,transform .38s ease,margin-top .38s ease,padding .38s ease,visibility .28s;
+  }
+  .advisor-picker.is-open .advisor-picker-menu{
+    max-height:520px;
+    margin-top:8px;
+    padding:7px;
+    opacity:1;
+    visibility:visible;
+    transform:translateY(0);
+  }
+  .advisor-picker-option{min-height:62px;padding:12px 11px}
+  .advisor-picker-option b{font-size:19px}
+  .advisor-picker-option small{font-size:7px}
+}
+@media (prefers-reduced-motion:reduce){
+  .advisor-picker-menu,.advisor-picker-trigger,.advisor-picker-chevron,.advisor-picker-option,.advisor-picker-option *,.advisor-selection-copy,.advisor-selection-photo{transition:none!important}
+}
+
+/* ========================================================================== 
+   V37 — refined advisor typography + selection moment
+   ========================================================================== */
+.advisor-picker-trigger{
+  text-transform:none!important;
+  letter-spacing:normal!important;
+  font-size:inherit!important;
+}
+.advisor-trigger-row strong{
+  font-family:"Libre Caslon Display","Bodoni Moda",Georgia,serif;
+  font-size:clamp(20px,1.6vw,25px);
+  line-height:1.06;
+  font-weight:400;
+  letter-spacing:-.025em;
+  text-transform:none!important;
+  color:#201f1b;
+}
+.advisor-picker-option{
+  text-transform:none!important;
+  letter-spacing:normal!important;
+  font-size:inherit!important;
+}
+.advisor-picker-option b{
+  font-family:"Libre Caslon Display","Bodoni Moda",Georgia,serif;
+  font-size:20px;
+  line-height:1.05;
+  letter-spacing:-.015em;
+  text-transform:none!important;
+}
+.advisor-picker-option small{
+  font-family:var(--sans);
+  font-size:6.8px;
+  letter-spacing:.145em;
+  line-height:1.35;
+}
+.advisor-picker-menu{
+  background:rgba(248,244,236,.985);
+  backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);
+  border-color:rgba(141,108,60,.18);
+  box-shadow:0 30px 75px rgba(20,18,14,.17),0 3px 14px rgba(20,18,14,.06);
+}
+.advisor-picker-option:hover,
+.advisor-picker-option:focus-visible,
+.advisor-picker-option.is-keyboard-focus{
+  background:#151512;
+}
+.advisor-picker.has-selection-pulse .advisor-picker-trigger{
+  animation:advisorTriggerConfirm .86s cubic-bezier(.2,.75,.2,1);
+}
+@keyframes advisorTriggerConfirm{
+  0%{box-shadow:inset 0 -1px 0 rgba(170,135,83,.55)}
+  38%{box-shadow:inset 0 -2px 0 #c5a36c,0 7px 22px rgba(170,135,83,.08)}
+  100%{box-shadow:inset 0 -1px 0 rgba(22,22,19,.34)}
+}
+
+/* A restrained 'celebration': one warm glint, a gold edge pulse, and tiny sparks. */
+.advisor-selection-card{overflow:hidden}
+.advisor-selection-card:before{
+  content:"";
+  position:absolute;
+  z-index:8;
+  inset:0;
+  pointer-events:none;
+  border:1px solid transparent;
+}
+.advisor-selection-card.is-selected-moment:before{
+  animation:advisorFrameGlow 1.15s ease both;
+}
+.advisor-selection-card.is-selected-moment .advisor-selection-media:before{
+  content:"";
+  position:absolute;
+  z-index:4;
+  top:-20%;bottom:-20%;
+  width:22%;
+  left:-30%;
+  transform:skewX(-14deg);
+  background:linear-gradient(90deg,transparent,rgba(255,239,202,.34),rgba(255,255,255,.22),transparent);
+  filter:blur(1px);
+  animation:advisorGlint 1.05s cubic-bezier(.2,.75,.2,1) both;
+  pointer-events:none;
+}
+.advisor-selection-card.is-selected-moment .advisor-selection-copy h3{
+  animation:advisorNameSettle .72s cubic-bezier(.2,.75,.2,1) both;
+}
+.advisor-selection-card.is-selected-moment .advisor-selection-tags span{
+  animation:advisorTagRise .55s cubic-bezier(.2,.75,.2,1) both;
+}
+.advisor-selection-card.is-selected-moment .advisor-selection-tags span:nth-child(2){animation-delay:.07s}
+.advisor-selection-card.is-selected-moment .advisor-selection-tags span:nth-child(3){animation-delay:.14s}
+.advisor-selection-card.is-selected-moment:after{
+  content:"✦";
+  position:absolute;
+  z-index:9;
+  top:16px;
+  right:18px;
+  color:#e4c98f;
+  font-size:14px;
+  line-height:1;
+  text-shadow:-17px 13px 0 rgba(228,201,143,.55),-7px 27px 0 rgba(228,201,143,.28);
+  pointer-events:none;
+  animation:advisorSpark 1.15s ease both;
+}
+@keyframes advisorFrameGlow{
+  0%{border-color:rgba(228,201,143,0);box-shadow:inset 0 0 0 rgba(228,201,143,0)}
+  35%{border-color:rgba(228,201,143,.72);box-shadow:inset 0 0 28px rgba(228,201,143,.08)}
+  100%{border-color:rgba(228,201,143,0);box-shadow:inset 0 0 0 rgba(228,201,143,0)}
+}
+@keyframes advisorGlint{0%{left:-32%;opacity:0}20%{opacity:1}100%{left:118%;opacity:0}}
+@keyframes advisorNameSettle{0%{opacity:.25;transform:translateY(8px)}100%{opacity:1;transform:none}}
+@keyframes advisorTagRise{0%{opacity:0;transform:translateY(6px)}100%{opacity:1;transform:none}}
+@keyframes advisorSpark{0%,100%{opacity:0;transform:scale(.45) rotate(-18deg)}35%{opacity:1;transform:scale(1.05) rotate(0)}70%{opacity:.65;transform:scale(.9) rotate(8deg)}}
+.advisor-selection-card.is-previewing .advisor-selection-eyebrow{color:#d8bd86}
+
+@media (max-width:720px){
+  .advisor-trigger-row strong{font-size:22px}
+  .advisor-picker-option b{font-size:21px}
+  .advisor-selection-card.is-selected-moment:after{top:13px;right:14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .advisor-picker.has-selection-pulse .advisor-picker-trigger,
+  .advisor-selection-card.is-selected-moment:before,
+  .advisor-selection-card.is-selected-moment:after,
+  .advisor-selection-card.is-selected-moment .advisor-selection-media:before,
+  .advisor-selection-card.is-selected-moment .advisor-selection-copy h3,
+  .advisor-selection-card.is-selected-moment .advisor-selection-tags span{animation:none!important}
+}
+
+/* ========================================================================== 
+   V38 — legible advisor selector + editorial contact / discovery-call fields
+   ========================================================================== */
+/* The global .inquiry-form button rule styles CTAs; this component is a button
+   too, so explicitly restore its intended quiet editorial treatment. */
+.inquiry-form .advisor-picker-trigger{
+  background:#f3ede2!important;
+  color:#171714!important;
+  min-height:72px;
+  padding:12px 14px!important;
+  border:1px solid rgba(35,31,25,.12)!important;
+  border-bottom-color:rgba(35,31,25,.34)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.62);
+  text-transform:none!important;
+  letter-spacing:normal!important;
+  transform:none!important;
+}
+.inquiry-form .advisor-picker-trigger:hover,
+.inquiry-form .advisor-picker-trigger:focus-visible,
+.advisor-picker.is-open .advisor-picker-trigger{
+  background:#f8f3e9!important;
+  border-color:rgba(165,128,70,.52)!important;
+  box-shadow:0 10px 28px rgba(58,45,28,.055),inset 0 1px 0 rgba(255,255,255,.8);
+}
+.advisor-trigger-row strong{
+  color:#171714!important;
+  font-family:"Libre Caslon Display","Bodoni Moda",Georgia,serif!important;
+  font-size:clamp(21px,1.65vw,26px)!important;
+  line-height:1.03!important;
+  text-shadow:none!important;
+}
+.advisor-trigger-meta{color:#9b7438!important}
+.advisor-picker-chevron:before,.advisor-picker-chevron:after{background:#706657}
+.advisor-picker.has-selection-pulse .advisor-picker-trigger{animation:advisorTriggerConfirmV38 .9s cubic-bezier(.2,.75,.2,1)}
+@keyframes advisorTriggerConfirmV38{
+  0%{box-shadow:inset 0 0 0 rgba(197,163,108,0)}
+  38%{box-shadow:inset 0 0 0 1px rgba(197,163,108,.82),0 12px 34px rgba(197,163,108,.12)}
+  100%{box-shadow:inset 0 1px 0 rgba(255,255,255,.72)}
+}
+
+/* Contact row: intentionally not ordinary boxed inputs. */
+.inquiry-contact-row{align-items:end;gap:24px}
+.luxury-field{position:relative;overflow:visible}
+.inquiry-form .luxury-field input{font-size:17px}
+.luxury-field:after,
+.call-schedule:after{
+  content:"";position:absolute;left:0;right:100%;bottom:-1px;height:1px;background:#b58d52;
+  transition:right .48s cubic-bezier(.2,.75,.2,1)
+}
+.luxury-field:focus-within:after,.call-schedule:focus-within:after{right:0}
+.luxury-field:focus-within>span{color:#9b7438}
+
+.call-schedule{
+  position:relative;min-width:0;margin:0;padding:0 0 10px;border:0;border-bottom:1px solid var(--line);
+}
+.call-schedule legend{
+  width:100%;padding:0;margin:0 0 10px;color:#7b887f;font:500 7px/1.35 var(--sans);letter-spacing:.17em;text-transform:uppercase
+}
+.call-schedule legend small{font:500 6px/1 var(--sans);letter-spacing:.13em;color:#a49d90;margin-left:6px}
+.call-schedule-fields{display:grid;grid-template-columns:1fr .76fr;gap:15px;align-items:end}
+.call-schedule-fields label{border:0!important;padding:0!important;position:relative}
+.call-schedule-fields label+label:before{content:"";position:absolute;left:-8px;top:4px;bottom:4px;width:1px;background:rgba(40,37,31,.12)}
+.call-schedule-fields label span{font-size:6px!important;letter-spacing:.14em!important;margin:0 0 4px!important;color:#a0927d!important}
+.inquiry-form .call-schedule input{
+  min-width:0;width:100%;font-family:"Libre Caslon Display","Bodoni Moda",Georgia,serif;font-size:16px;color:#24211c;
+  padding:0;background:transparent;border:0;outline:0;color-scheme:light
+}
+.inquiry-form .call-schedule input::-webkit-calendar-picker-indicator{opacity:.46;cursor:pointer;filter:sepia(.2)}
+.call-schedule-glow{position:absolute;pointer-events:none;left:50%;bottom:-1px;width:0;height:1px;background:#d2ad72;transition:left .48s cubic-bezier(.2,.75,.2,1),width .48s cubic-bezier(.2,.75,.2,1)}
+.call-schedule:focus-within .call-schedule-glow{left:0;width:100%}
+.call-schedule:focus-within legend{color:#9b7438}
+
+/* A quiet completion cue once both preferred call fields have values. */
+.call-schedule.is-complete:before{
+  content:"✦";position:absolute;right:0;top:0;color:#b9955e;font-size:9px;animation:callScheduleSpark .8s ease both
+}
+@keyframes callScheduleSpark{0%{opacity:0;transform:scale(.4) rotate(-18deg)}45%{opacity:1;transform:scale(1.12)}100%{opacity:.72;transform:scale(.92)}}
+
+@media (max-width:720px){
+  .inquiry-contact-row{grid-template-columns:1fr;gap:24px}
+  .call-schedule-fields{grid-template-columns:1.15fr .85fr}
+  .inquiry-form .advisor-picker-trigger{min-height:76px;padding:13px 14px!important}
+  .advisor-trigger-row strong{font-size:23px!important}
+}
+@media (prefers-reduced-motion:reduce){
+  .luxury-field:after,.call-schedule:after,.call-schedule-glow{transition:none!important}
+  .call-schedule.is-complete:before,.advisor-picker.has-selection-pulse .advisor-picker-trigger{animation:none!important}
+}
+
+/* ========================================================================== 
+   V39 — premium international phone + bespoke calendar/time controls
+   ========================================================================== */
+/* Advisor: selected state must always remain readable when the menu is reopened. */
+.advisor-picker-option.is-selected:not(:hover):not(:focus-visible):not(.is-keyboard-focus){
+  background:#eee4d5!important;color:#1b1a17!important;
+}
+.advisor-picker-option.is-selected:not(:hover):not(:focus-visible):not(.is-keyboard-focus) b{color:#1b1a17!important}
+.advisor-picker-option.is-selected:not(:hover):not(:focus-visible):not(.is-keyboard-focus) small{color:#766d60!important}
+.advisor-picker-option.is-selected:not(:hover):not(:focus-visible):not(.is-keyboard-focus)>i{color:#9b7438!important}
+.advisor-picker-option:hover b,.advisor-picker-option:focus-visible b,.advisor-picker-option.is-keyboard-focus b{color:#fff!important}
+
+.inquiry-contact-row{align-items:start;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px}
+.luxury-label{display:flex!important;align-items:center;gap:7px}
+.luxury-label small{font:500 6px/1 var(--sans);letter-spacing:.13em;color:#aaa08f}
+
+/* Shared validation */
+.validated-field,.phone-field{position:relative}
+.field-error{display:block;min-height:12px;margin-top:6px;color:#a25445;font:500 7px/1.4 var(--sans);letter-spacing:.045em;opacity:0;transform:translateY(-2px);transition:opacity .24s ease,transform .24s ease}
+.field-error:not(:empty){opacity:1;transform:none}
+.validated-field.is-invalid,.phone-field.is-invalid{border-bottom-color:#a25445!important}
+.validated-field.is-valid:after,.phone-field.is-valid:after{content:"✓";position:absolute;right:0;bottom:14px;color:#8d734d;font:600 9px/1 var(--sans);animation:fieldTick .45s ease both}
+@keyframes fieldTick{0%{opacity:0;transform:translateY(3px) scale(.7)}100%{opacity:1;transform:none}}
+
+/* International phone field */
+.phone-field{border-bottom:1px solid var(--line);padding-bottom:4px;z-index:24}
+.phone-composer{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:13px;min-height:34px}
+.inquiry-form .country-trigger{
+  width:auto!important;min-width:76px;height:32px;margin:0!important;padding:0 10px 0 0!important;
+  border:0!important;border-right:1px solid rgba(37,33,27,.14)!important;background:transparent!important;color:#24211c!important;
+  display:flex!important;justify-content:flex-start!important;align-items:center;gap:7px;text-transform:none!important;letter-spacing:normal!important;
+  transform:none!important;box-shadow:none!important
+}
+.inquiry-form .country-trigger:hover,.inquiry-form .country-trigger:focus-visible{background:transparent!important;color:#24211c!important;transform:none!important;outline:none}
+.country-flag{font-size:16px;line-height:1}.country-dial{font:500 11px/1 var(--sans);letter-spacing:.04em;color:#5e574d}
+.country-trigger i{position:relative;width:8px;height:5px;margin-left:auto}.country-trigger i:before,.country-trigger i:after{content:"";position:absolute;top:2px;width:5px;height:1px;background:#8b7556;transition:transform .28s ease}.country-trigger i:before{left:0;transform:rotate(38deg)}.country-trigger i:after{right:0;transform:rotate(-38deg)}
+.phone-field.is-country-open .country-trigger i:before{transform:rotate(-38deg)}.phone-field.is-country-open .country-trigger i:after{transform:rotate(38deg)}
+.inquiry-form .phone-composer input[type="tel"]{font-size:17px;padding:0 20px 0 0;min-width:0}
+.country-menu{position:absolute;z-index:70;top:calc(100% + 9px);left:0;width:min(335px,92vw);max-height:0;overflow:auto;background:#151512;border:1px solid rgba(197,163,108,.22);box-shadow:0 26px 65px rgba(18,16,12,.22);opacity:0;visibility:hidden;transform:translateY(-7px);transition:max-height .5s cubic-bezier(.2,.75,.2,1),opacity .25s ease,transform .35s ease,visibility .25s;padding:0 7px}
+.phone-field.is-country-open .country-menu{max-height:330px;opacity:1;visibility:visible;transform:none;padding:7px}
+.inquiry-form .country-option{width:100%;margin:0!important;padding:10px 9px!important;border:0!important;border-bottom:1px solid rgba(255,255,255,.07)!important;background:transparent!important;color:#f4eee4!important;display:grid!important;grid-template-columns:25px 1fr auto;gap:10px;align-items:center;text-transform:none!important;letter-spacing:normal!important;transform:none!important;text-align:left}
+.inquiry-form .country-option:last-child{border-bottom:0!important}
+.inquiry-form .country-option:hover,.inquiry-form .country-option:focus-visible,.inquiry-form .country-option.is-selected{background:#24231f!important;transform:none!important;outline:none}
+.country-option .flag{font-size:16px}.country-option b{font:400 16px/1.1 "Libre Caslon Display","Bodoni Moda",Georgia,serif}.country-option small{font:500 8px/1 var(--sans);letter-spacing:.08em;color:#c7a76e}
+
+/* Bespoke call scheduler */
+.call-schedule{z-index:23;padding-bottom:4px!important}
+.call-schedule legend{margin-bottom:8px!important}.call-schedule-fields{grid-template-columns:1fr 1fr!important;gap:12px!important;align-items:start!important}
+.call-control{position:relative;min-width:0}.call-control+ .call-control:before{content:"";position:absolute;left:-6px;top:2px;height:31px;width:1px;background:rgba(40,37,31,.12)}
+.call-control>span{display:block;font:500 6px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:#a0927d;margin-bottom:4px}
+.inquiry-form .call-control-button{
+  width:100%;height:31px;margin:0!important;padding:0 23px 0 0!important;border:0!important;background:transparent!important;color:#24211c!important;
+  display:flex!important;align-items:center;justify-content:flex-start!important;text-transform:none!important;letter-spacing:normal!important;transform:none!important;box-shadow:none!important;position:relative
+}
+.inquiry-form .call-control-button:hover,.inquiry-form .call-control-button:focus-visible{background:transparent!important;transform:none!important;outline:none;color:#24211c!important}
+.call-control-button b{font:400 16px/1 "Libre Caslon Display","Bodoni Moda",Georgia,serif;color:#4b463d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.call-control-button.has-value b{color:#1e1d19}
+.calendar-glyph,.clock-glyph{position:absolute;right:1px;top:8px;width:13px;height:13px;opacity:.58}
+.calendar-glyph{border:1px solid #766d60;border-radius:1px}.calendar-glyph:before{content:"";position:absolute;left:-1px;right:-1px;top:3px;border-top:1px solid #766d60}.calendar-glyph:after{content:"";position:absolute;left:2px;right:2px;top:-3px;height:4px;border-left:1px solid #766d60;border-right:1px solid #766d60}
+.clock-glyph{border:1px solid #766d60;border-radius:50%}.clock-glyph:before{content:"";position:absolute;left:5px;top:2px;width:1px;height:5px;background:#766d60;transform-origin:bottom}.clock-glyph:after{content:"";position:absolute;left:5px;top:6px;width:4px;height:1px;background:#766d60;transform:rotate(25deg);transform-origin:left}
+.luxury-popover{position:absolute;z-index:75;top:calc(100% + 10px);left:0;width:285px;background:#151512;color:#f7f1e7;border:1px solid rgba(197,163,108,.22);box-shadow:0 28px 70px rgba(18,16,12,.25);opacity:0;visibility:hidden;transform:translateY(-8px) scale(.985);transform-origin:top left;transition:opacity .22s ease,transform .34s cubic-bezier(.2,.75,.2,1),visibility .22s;padding:14px}
+.call-control.is-open .luxury-popover{opacity:1;visibility:visible;transform:none}
+.calendar-head{display:grid;grid-template-columns:28px 1fr 28px;align-items:center;margin-bottom:13px}.calendar-head strong{text-align:center;font:400 17px/1 "Libre Caslon Display","Bodoni Moda",Georgia,serif}.inquiry-form .calendar-head button{width:28px;height:28px;margin:0!important;padding:0!important;background:transparent!important;color:#d8bd86!important;border:1px solid rgba(216,189,134,.18)!important;display:grid!important;place-items:center!important;transform:none!important;text-transform:none!important;letter-spacing:0!important}.inquiry-form .calendar-head button:hover{background:#24231f!important;transform:none!important}
+.calendar-weekdays,.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.calendar-weekdays{margin-bottom:5px}.calendar-weekdays span{text-align:center;font:500 6px/1 var(--sans);letter-spacing:.08em;color:#847d73;text-transform:uppercase;padding:4px 0}
+.inquiry-form .calendar-day{width:32px;height:32px;margin:0!important;padding:0!important;border:1px solid transparent!important;background:transparent!important;color:#e9e1d4!important;display:grid!important;place-items:center!important;font:500 9px/1 var(--sans);letter-spacing:0!important;text-transform:none!important;transform:none!important;border-radius:50%}
+.inquiry-form .calendar-day:hover,.inquiry-form .calendar-day:focus-visible{border-color:rgba(197,163,108,.46)!important;background:#24231f!important;transform:none!important;outline:none}.inquiry-form .calendar-day.is-today{color:#d9b878!important}.inquiry-form .calendar-day.is-selected{background:#d0ae75!important;color:#151512!important}.inquiry-form .calendar-day:disabled{opacity:.22;cursor:not-allowed}
+.time-popover{left:auto;right:0;width:260px}.time-popover>p{margin:0 0 11px;color:#989084;font:500 7px/1.4 var(--sans);letter-spacing:.09em;text-transform:uppercase}.time-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-height:215px;overflow:auto;padding-right:2px}
+.inquiry-form .time-option{margin:0!important;padding:9px 5px!important;background:#1e1e1b!important;color:#e9e1d4!important;border:1px solid rgba(255,255,255,.06)!important;display:block!important;text-align:center;font:500 8px/1 var(--sans);letter-spacing:.04em!important;text-transform:none!important;transform:none!important}.inquiry-form .time-option:hover,.inquiry-form .time-option:focus-visible{background:#2a2924!important;border-color:rgba(197,163,108,.36)!important;transform:none!important;outline:none}.inquiry-form .time-option.is-selected{background:#d0ae75!important;color:#151512!important}
+.inquiry-form .popover-clear{width:auto!important;margin:12px 0 0!important;padding:5px 0!important;border:0!important;border-bottom:1px solid rgba(216,189,134,.4)!important;background:transparent!important;color:#d8bd86!important;font:500 7px/1 var(--sans);letter-spacing:.12em!important;text-transform:uppercase!important;transform:none!important}.inquiry-form .popover-clear:hover{background:transparent!important;color:#fff!important;transform:none!important}
+.call-schedule.is-complete:before{top:-1px!important}
+
+@media (max-width:900px){
+  .inquiry-contact-row{grid-template-columns:1fr;gap:25px}
+  .luxury-popover{width:min(310px,calc(100vw - 76px))}
+  .time-popover{left:0;right:auto}
+}
+@media (max-width:600px){
+  .country-menu{position:relative;top:auto;width:100%;margin-top:8px}
+  .phone-field.is-country-open .country-menu{max-height:280px}
+  .call-schedule-fields{grid-template-columns:1fr 1fr!important;gap:10px!important}
+  .luxury-popover{position:fixed;z-index:1200;left:18px!important;right:18px!important;top:50%!important;width:auto!important;max-height:78vh;overflow:auto;transform:translateY(-46%) scale(.985);border-color:rgba(197,163,108,.28)}
+  .call-control.is-open .luxury-popover{transform:translateY(-50%) scale(1)}
+  .call-control.is-open:after{content:"";position:fixed;z-index:1199;inset:0;background:rgba(8,8,7,.62);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+  .calendar-day{justify-self:center}
+}
+@media (prefers-reduced-motion:reduce){.field-error,.country-menu,.luxury-popover,.country-trigger i:before,.country-trigger i:after{transition:none!important}.validated-field.is-valid:after,.phone-field.is-valid:after{animation:none!important}}
+
+
+/* ========================================================================== 
+   V40 — calmer contact layout, editorial phone composer, anchored scheduler
+   ========================================================================== */
+.inquiry-form--advisor{row-gap:28px}
+.inquiry-contact-row{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:22px!important;
+  margin-top:2px;
+}
+
+/* Phone: one quiet, intentional control instead of multiple fragments. */
+.phone-field{
+  z-index:30;
+  border:0!important;
+  padding:0!important;
+}
+.luxury-label{
+  margin-bottom:8px!important;
+  font:500 7px/1 var(--sans)!important;
+  letter-spacing:.15em!important;
+  text-transform:uppercase!important;
+  color:#76847c!important;
+}
+.phone-composer{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:0;
+  min-height:54px;
+  align-items:stretch;
+  border:1px solid rgba(47,42,34,.18);
+  background:rgba(255,255,255,.22);
+  transition:border-color .3s ease,background .3s ease,box-shadow .4s ease;
+}
+.phone-field:focus-within .phone-composer{
+  border-color:rgba(185,139,72,.72);
+  background:rgba(255,255,255,.5);
+  box-shadow:0 11px 30px rgba(44,38,29,.055);
+}
+.inquiry-form .country-trigger{
+  min-width:128px!important;
+  height:52px!important;
+  padding:0 15px!important;
+  border:0!important;
+  border-right:1px solid rgba(47,42,34,.12)!important;
+  background:transparent!important;
+  display:grid!important;
+  grid-template-columns:auto auto auto 10px!important;
+  gap:7px!important;
+  align-items:center!important;
+}
+.country-flag{font-size:18px;filter:saturate(.82)}
+.country-code{font:600 8px/1 var(--sans);letter-spacing:.12em;color:#5d584f}
+.country-dial{font:400 14px/1 "Libre Caslon Display","Bodoni Moda",Georgia,serif;color:#26231e}
+.inquiry-form .phone-composer input[type="tel"]{
+  height:52px!important;
+  padding:0 18px!important;
+  border:0!important;
+  background:transparent!important;
+  font:400 18px/1 "Libre Caslon Display","Bodoni Moda",Georgia,serif!important;
+  color:#25221e!important;
+  letter-spacing:-.01em;
+}
+.inquiry-form .phone-composer input[type="tel"]::placeholder{color:#a7a093}
+.phone-field.is-valid:after,.phone-field.is-invalid:after{display:none!important}
+.phone-field.is-invalid{border:0!important}
+.phone-field .field-error{display:none!important}
+.country-menu{top:calc(100% + 7px);width:min(360px,92vw)}
+
+/* Scheduler gets its own full-width editorial row. */
+.call-schedule{
+  position:relative;
+  z-index:26;
+  border:0!important;
+  padding:0!important;
+  margin:0!important;
+}
+.call-schedule legend{
+  margin:0 0 8px!important;
+  font:500 7px/1 var(--sans)!important;
+  letter-spacing:.15em!important;
+  text-transform:uppercase!important;
+  color:#76847c!important;
+}
+.call-schedule legend small,.luxury-label small{color:#a89d8b!important;font-size:6px!important}
+.call-schedule-fields{
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:0!important;
+  border:1px solid rgba(47,42,34,.18);
+  background:rgba(255,255,255,.22);
+  transition:border-color .3s ease,box-shadow .4s ease,background .3s ease;
+}
+.call-schedule:focus-within .call-schedule-fields{
+  border-color:rgba(185,139,72,.72);
+  background:rgba(255,255,255,.5);
+  box-shadow:0 11px 30px rgba(44,38,29,.055);
+}
+.call-control{position:static!important;min-width:0;padding:10px 15px 8px}
+.call-control + .call-control{border-left:1px solid rgba(47,42,34,.12)}
+.call-control + .call-control:before{display:none!important}
+.call-control>span{font-size:6px!important;margin-bottom:6px!important;color:#9a8f7d!important}
+.inquiry-form .call-control-button{
+  height:28px!important;
+  padding:0 23px 0 0!important;
+}
+.call-control-button b{font-size:17px!important;color:#5e584e!important}
+.call-control-button.has-value b{color:#23201c!important}
+.calendar-glyph,.clock-glyph{top:7px;right:0}
+
+/* Popovers are anchored to the scheduler block, never allowed to crash into
+   the advisor portrait. */
+.luxury-popover{
+  top:calc(100% + 9px)!important;
+  width:318px!important;
+  padding:18px!important;
+  box-shadow:0 30px 80px rgba(15,14,11,.3)!important;
+}
+.calendar-popover{left:0!important;right:auto!important}
+.time-popover{left:auto!important;right:0!important;width:292px!important}
+.calendar-head{margin-bottom:16px}
+.calendar-head strong{font-size:19px}
+.calendar-weekdays,.calendar-grid{gap:5px}
+.inquiry-form .calendar-day{width:34px;height:34px;font-size:9px}
+.time-grid{grid-template-columns:repeat(3,1fr);gap:6px}
+.inquiry-form .time-option{padding:10px 5px!important}
+
+/* The advisor section needs a little distance from the scheduling tools. */
+.advisor-select-label{margin-top:4px}
+
+@media (max-width:900px){
+  .inquiry-contact-row{gap:20px!important}
+  .luxury-popover{width:min(318px,calc(100vw - 72px))!important}
+}
+@media (max-width:600px){
+  .phone-composer{grid-template-columns:auto minmax(0,1fr)}
+  .inquiry-form .country-trigger{min-width:116px!important;padding-inline:12px!important}
+  .country-code{display:none}
+  .call-schedule-fields{grid-template-columns:1fr!important}
+  .call-control + .call-control{border-left:0;border-top:1px solid rgba(47,42,34,.12)}
+  .call-control{padding:11px 14px 9px}
+  .luxury-popover{position:fixed!important;left:18px!important;right:18px!important;top:50%!important;width:auto!important}
+}
+
+/* ==========================================================================\n   V41 — phone prefix cleanup + calendar day optical centering\n   ========================================================================== */
+/* Some Windows/browser emoji stacks render regional flag emoji as the two-letter
+   country code. Hide the additional text code so the prefix never reads CA CA +1. */
+.inquiry-form .country-trigger .country-code{display:none!important}
+.inquiry-form .country-trigger{
+  min-width:104px!important;
+  grid-template-columns:auto auto 10px!important;
+  justify-content:start!important;
+}
+.inquiry-form .country-trigger .country-dial{white-space:nowrap}
+
+/* Keep every date numeral geometrically centered inside its circular hit area. */
+.calendar-grid{justify-items:center!important;align-items:center!important}
+.inquiry-form .calendar-day{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  box-sizing:border-box!important;
+  width:34px!important;
+  height:34px!important;
+  padding:0!important;
+  margin:0!important;
+  line-height:1!important;
+  text-align:center!important;
+  text-indent:0!important;
+}
+.inquiry-form .calendar-day.is-selected{
+  border-color:#d0ae75!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.10),0 0 0 1px rgba(208,174,117,.08);
+}
+
+@media (max-width:600px){
+  .inquiry-form .country-trigger{min-width:96px!important;padding-inline:10px!important}
+}
+
+/* ==========================================================================\n   V42 — refined user-entered form typography\n   Keep editorial serif placeholders, but use a crisp luxury sans for actual\n   entered values so completed fields feel cleaner and more intentional.\n   ========================================================================== */
+.inquiry-form input:not([type="hidden"]),
+.inquiry-form textarea{
+  font-family:"Manrope",Arial,sans-serif!important;
+  font-weight:450!important;
+  font-size:15px!important;
+  line-height:1.45!important;
+  letter-spacing:-.012em!important;
+  color:#24211d!important;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* Preserve the softer editorial voice before the visitor starts typing. */
+.inquiry-form input::placeholder,
+.inquiry-form textarea::placeholder{
+  font-family:"Libre Caslon Display","Bodoni Moda",Georgia,serif!important;
+  font-weight:400!important;
+  font-size:18px!important;
+  letter-spacing:-.018em!important;
+  color:#a7aea8!important;
+  opacity:1;
+}
+
+/* Phone follows the same completed-field typography instead of looking like a
+   separate utility widget. */
+.inquiry-form .phone-composer input[type="tel"]{
+  font-family:"Manrope",Arial,sans-serif!important;
+  font-weight:450!important;
+  font-size:15px!important;
+  letter-spacing:.005em!important;
+  color:#24211d!important;
+}
+.inquiry-form .phone-composer input[type="tel"]::placeholder{
+  font-family:"Libre Caslon Display","Bodoni Moda",Georgia,serif!important;
+  font-size:17px!important;
+  letter-spacing:-.01em!important;
+  color:#a7a093!important;
+}
+
+/* Selected date/time values also use the cleaner completed-field face. */
+.call-control-button.has-value b{
+  font-family:"Manrope",Arial,sans-serif!important;
+  font-weight:500!important;
+  font-size:14px!important;
+  letter-spacing:-.01em!important;
+}
+
+@media (max-width:600px){
+  .inquiry-form input:not([type="hidden"]),
+  .inquiry-form textarea{font-size:16px!important}
+  .inquiry-form .phone-composer input[type="tel"]{font-size:16px!important}
+}
+
+/* ==========================================================================
+   V43 — true mobile inquiry layout
+   The V35 desktop grid was declared after the original responsive rules and
+   could override the single-column mobile layout. These rules intentionally
+   live last so the inquiry behaves as one composed mobile experience.
+   ========================================================================== */
+@media (max-width:900px){
+  .inquire{padding:42px 0!important;overflow:visible}
+  .inquire-inner{
+    width:min(calc(100% - 32px),720px)!important;
+    grid-template-columns:minmax(0,1fr)!important;
+    min-height:0!important;
+    box-shadow:0 20px 55px rgba(24,22,19,.08)!important;
+  }
+  .inquire-copy{
+    min-height:0!important;
+    padding:54px 42px 48px!important;
+    justify-content:flex-start!important;
+  }
+  .inquire h2{
+    max-width:590px;
+    font-size:clamp(56px,10vw,78px)!important;
+    line-height:.89!important;
+  }
+  .inquire-copy>p:not(.eyebrow){max-width:520px!important;margin-top:24px!important}
+  .inquire-signature{margin-top:38px!important}
+
+  .inquiry-form--advisor{
+    display:flex!important;
+    flex-direction:column!important;
+    width:100%!important;
+    min-width:0!important;
+    padding:44px 42px 48px!important;
+    gap:27px!important;
+    overflow:visible!important;
+  }
+  .inquiry-form--advisor>*{min-width:0!important;width:100%!important}
+  .inquiry-form--advisor .form-row{grid-template-columns:1fr 1fr!important;gap:22px!important}
+  .inquiry-contact-row{grid-template-columns:1fr!important;gap:22px!important}
+
+  /* Use natural source order on mobile/tablet. */
+  .inquiry-form--advisor .form-row,
+  .inquiry-form--advisor .inquiry-form-main,
+  .inquiry-form--advisor .advisor-select-label,
+  .inquiry-form--advisor .advisor-selection-card{order:initial!important}
+
+  .advisor-selection-card{
+    display:grid!important;
+    grid-template-columns:minmax(210px,.72fr) minmax(0,1fr)!important;
+    grid-template-rows:1fr!important;
+    min-height:330px!important;
+    width:100%!important;
+  }
+  .advisor-selection-media{
+    min-height:330px!important;
+    height:100%!important;
+    aspect-ratio:auto!important;
+    max-height:none!important;
+  }
+  .advisor-selection-copy{align-self:center;padding:30px 30px!important}
+  .advisor-selection-copy h3{font-size:clamp(34px,6vw,46px)!important}
+  .advisor-selection-bio{font-size:15px!important}
+
+  .advisor-picker-menu{max-height:min(420px,52vh)!important}
+  .luxury-popover{z-index:80!important}
+}
+
+@media (max-width:600px){
+  .inquire{padding:0!important}
+  .inquire-inner{width:100%!important;box-shadow:none!important}
+  .inquire-copy{
+    padding:48px 24px 42px!important;
+    min-height:auto!important;
+  }
+  .inquire-copy .eyebrow{margin-bottom:18px!important}
+  .inquire h2{
+    font-size:clamp(52px,15vw,72px)!important;
+    line-height:.86!important;
+    letter-spacing:-.055em!important;
+  }
+  .inquire-copy>p:not(.eyebrow){font-size:15px!important;line-height:1.55!important;margin-top:24px!important}
+  .inquire-signature{margin-top:34px!important}
+
+  .inquiry-form--advisor{
+    padding:38px 20px 44px!important;
+    gap:25px!important;
+  }
+  .inquiry-form--advisor .form-row{grid-template-columns:1fr!important;gap:24px!important}
+  .inquiry-contact-row{gap:20px!important}
+
+  .phone-composer{width:100%!important;grid-template-columns:auto minmax(0,1fr)!important}
+  .inquiry-form .country-trigger{min-width:96px!important;max-width:108px!important}
+  .inquiry-form .phone-composer input[type="tel"]{min-width:0!important;width:100%!important}
+
+  .call-schedule-fields{grid-template-columns:1fr 1fr!important}
+  .call-control + .call-control{border-top:0!important;border-left:1px solid rgba(47,42,34,.12)!important}
+  .call-control{padding:11px 12px 9px!important}
+  .call-control-button b{font-size:15px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .call-control-button.has-value b{font-size:13px!important}
+
+  /* Mobile popovers behave like a centered sheet, never a detached box that
+     can extend beyond the form or cover the next section awkwardly. */
+  .luxury-popover{
+    position:fixed!important;
+    left:50%!important;
+    right:auto!important;
+    top:50%!important;
+    width:min(360px,calc(100vw - 32px))!important;
+    max-height:min(560px,78vh)!important;
+    transform:translate(-50%,-46%) scale(.985)!important;
+    overflow:auto!important;
+    border-radius:0!important;
+  }
+  .luxury-popover.is-open{transform:translate(-50%,-50%) scale(1)!important}
+
+  .advisor-picker-trigger{min-height:76px!important;padding:13px 14px!important}
+  .advisor-trigger-row strong{font-size:21px!important;line-height:1.05!important}
+  .advisor-picker-menu{
+    position:fixed!important;
+    z-index:95!important;
+    left:16px!important;
+    right:16px!important;
+    top:50%!important;
+    width:auto!important;
+    max-height:72vh!important;
+    transform:translateY(-48%) scale(.985)!important;
+    box-shadow:0 34px 90px rgba(12,11,9,.35)!important;
+  }
+  .advisor-picker.is-open .advisor-picker-menu{transform:translateY(-50%) scale(1)!important}
+  .advisor-picker-option{min-height:64px!important;padding:13px 14px!important}
+  .advisor-picker-option b{font-size:19px!important}
+
+  .advisor-selection-card{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto!important;
+    min-height:0!important;
+  }
+  .advisor-selection-media{
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    aspect-ratio:4/3!important;
+    max-height:none!important;
+  }
+  .advisor-selection-copy{padding:25px 22px 27px!important}
+  .advisor-selection-copy h3{font-size:38px!important}
+  .advisor-selection-bio{font-size:15px!important;line-height:1.55!important}
+
+  .inquiry-form textarea{min-height:112px!important}
+  .inquiry-form button.inquiry-form-main{min-height:54px!important}
+}
+
+@media (max-width:380px){
+  .inquiry-form--advisor{padding-inline:16px!important}
+  .inquire-copy{padding-inline:20px!important}
+  .call-schedule-fields{grid-template-columns:1fr!important}
+  .call-control + .call-control{border-left:0!important;border-top:1px solid rgba(47,42,34,.12)!important}
+  .advisor-selection-copy h3{font-size:34px!important}
+  .advisor-trigger-row strong{font-size:19px!important}
+}
+
+
+/* ==========================================================================
+   V44 — Postcard editorial rotator
+   ========================================================================== */
+.postcard-edit{width:min(1440px,calc(100% - 5vw));margin:0 auto 120px;display:grid;grid-template-columns:minmax(0,1.42fr) minmax(340px,.58fr);gap:0;background:#e7dfd2;overflow:visible;min-height:640px}
+.postcard-stage{position:relative;padding:30px;background:linear-gradient(180deg,#e7dfd2 0%,#e7dfd2 58%,#dfd5c7 100%);overflow:hidden}
+.postcard-stage:before{content:"";position:absolute;inset:16px;border:1px solid rgba(25,25,23,.08);pointer-events:none}
+.postcard-stage:after{content:"AIR MAIL · MFM LUXURY TRAVEL";position:absolute;left:40px;bottom:32px;font-family:var(--sans);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:rgba(25,25,23,.34)}
+.postcard-deck{position:relative;height:100%;min-height:580px;perspective:1500px}
+.postcard-card{position:absolute;inset:0 0 26px 0;margin:auto;width:100%;height:100%;max-height:580px;background:#f7f1e8;border-radius:3px;border:1px solid rgba(29,28,24,.14);box-shadow:0 28px 55px rgba(24,21,18,.18),0 8px 20px rgba(24,21,18,.10);overflow:hidden;transform-origin:center center;transition:transform .85s cubic-bezier(.22,.8,.2,1),opacity .7s ease,filter .7s ease,box-shadow .85s ease;will-change:transform,opacity;backface-visibility:hidden}
+.postcard-card:before{content:"";position:absolute;inset:18px;border:1px solid rgba(255,255,255,.42);pointer-events:none;z-index:3}
+.postcard-card:after{content:"POSTCARD";position:absolute;right:26px;top:20px;z-index:4;font-family:var(--sans);font-size:8px;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+.postcard-card>img:first-child{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.01);transition:transform 5.5s ease}
+.postcard-card figcaption{position:absolute;left:0;right:0;bottom:0;z-index:4;display:flex;justify-content:space-between;align-items:end;gap:18px;padding:18px 22px 20px;color:#fff;background:linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.58) 100%);font-family:var(--sans);font-size:7px;letter-spacing:.18em;text-transform:uppercase}
+.postcard-card figcaption b{display:block;font-size:8px;color:#f3d6a5;letter-spacing:.18em;font-weight:600;text-align:right;max-width:48%}
+.postcard-stamp{position:absolute;z-index:4;pointer-events:none;mix-blend-mode:multiply;opacity:.8;filter:drop-shadow(0 10px 18px rgba(0,0,0,.12));transition:transform .85s cubic-bezier(.22,.8,.2,1),opacity .65s ease}
+.postcard-stamp--passport{width:230px;right:-12px;top:22px;transform:rotate(7deg)}
+.postcard-stamp--mail{width:210px;left:-18px;top:24px;transform:rotate(-8deg)}
+.postcard-card.is-active{opacity:1;z-index:4;transform:translate3d(0,0,0) rotate(0deg) scale(1);filter:none}
+.postcard-card.is-active>img:first-child{transform:scale(1.04)}
+.postcard-card.is-active .postcard-stamp{animation:postcardStampFloat 8s ease-in-out infinite}
+.postcard-card.is-next{opacity:1;z-index:3;transform:translate3d(34px,28px,0) rotate(3.5deg) scale(.97);filter:saturate(.92) brightness(.96)}
+.postcard-card.is-next .postcard-stamp{opacity:.42}
+.postcard-card.is-prev{opacity:.92;z-index:2;transform:translate3d(-28px,-18px,0) rotate(-4deg) scale(.94);filter:saturate(.88) brightness(.9)}
+.postcard-card.is-prev .postcard-stamp{opacity:.22}
+.postcard-card.is-hidden{opacity:0;z-index:1;transform:translate3d(0,64px,0) rotate(0deg) scale(.9);pointer-events:none}
+.postcard-pips{position:absolute;right:38px;bottom:30px;z-index:10;display:flex;gap:8px}
+.postcard-pips button{width:10px;height:10px;border-radius:999px;border:1px solid rgba(25,25,23,.24);background:transparent;padding:0;cursor:pointer;transition:transform .28s ease,background .28s ease,border-color .28s ease}
+.postcard-pips button.is-active{background:#b88b4a;border-color:#b88b4a;transform:scale(1.12)}
+.postcard-copy{position:relative;padding:54px 45px 48px;display:flex;flex-direction:column;justify-content:center;border-left:1px solid rgba(25,25,23,.12);background:linear-gradient(180deg,#e7dfd2 0%,#e5dccf 100%);overflow:hidden}
+.postcard-copy:before{content:"";position:absolute;right:-30px;top:15px;width:150px;height:150px;background:url('assets/images/postcards/passport-stamps.png') center/contain no-repeat;opacity:.12;mix-blend-mode:multiply;transform:rotate(10deg);pointer-events:none}
+.postcard-copy:after{content:"";position:absolute;inset:auto 34px 34px auto;width:110px;height:110px;background:url('assets/images/postcards/mail-stamps.png') center/contain no-repeat;opacity:.10;mix-blend-mode:multiply;pointer-events:none}
+.postcard-copy.is-refreshing h2,.postcard-copy.is-refreshing [data-postcard-copy],.postcard-copy.is-refreshing .hand-note,.postcard-copy.is-refreshing .editorial-number,.postcard-copy.is-refreshing [data-postcard-kicker]{animation:postcardCopySwap .72s cubic-bezier(.2,.78,.2,1)}
+.postcard-copy-meta{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:38px;padding-top:18px;border-top:1px solid rgba(25,25,23,.12);font-family:var(--sans);font-size:8px;letter-spacing:.16em;text-transform:uppercase;color:#807869}
+.postcard-copy-meta b{font-weight:600;color:#363229}
+@keyframes postcardStampFloat{0%,100%{transform:translate3d(0,0,0) rotate(var(--stamp-rotate,0deg))}50%{transform:translate3d(0,-8px,0) rotate(calc(var(--stamp-rotate,0deg) + 2deg))}}
+.postcard-stamp--passport{--stamp-rotate:7deg}
+.postcard-stamp--mail{--stamp-rotate:-8deg}
+@keyframes postcardCopySwap{0%{opacity:.32;transform:translateY(10px)}45%{opacity:1}100%{opacity:1;transform:translateY(0)}}
+
+@media (max-width:1100px){
+  .postcard-edit{grid-template-columns:1fr}.postcard-copy{border-left:0;border-top:1px solid rgba(25,25,23,.12)}
+  .postcard-stage{padding-bottom:58px}.postcard-deck{min-height:500px}.postcard-card{max-height:500px}
+}
+@media (max-width:760px){
+  .postcard-edit{width:calc(100% - 28px);margin-bottom:78px}.postcard-stage{padding:16px 16px 54px}.postcard-stage:before{inset:10px}.postcard-stage:after{left:18px;bottom:16px;font-size:7px}.postcard-deck{min-height:60vw;height:60vw;max-height:430px}.postcard-card{max-height:none}.postcard-card.is-next{transform:translate3d(14px,16px,0) rotate(2.8deg) scale(.97)}.postcard-card.is-prev{transform:translate3d(-10px,-10px,0) rotate(-3deg) scale(.95)}.postcard-stamp--passport{width:138px;right:-8px;top:16px}.postcard-stamp--mail{width:128px;left:-12px;top:18px}.postcard-card:after{right:16px;top:14px}.postcard-card figcaption{padding:14px 15px 16px;display:block}.postcard-card figcaption b{max-width:none;text-align:left;margin-top:5px}.postcard-pips{right:18px;bottom:18px}.postcard-copy{padding:32px 22px 30px;min-height:auto}.postcard-copy-meta{margin-top:26px;padding-top:14px}
+}
+@media (max-width:520px){
+  .postcard-edit{width:100%}.postcard-stage{padding:14px 14px 50px}.postcard-deck{height:72vw;min-height:260px}.postcard-card.is-next{transform:translate3d(8px,12px,0) rotate(2.2deg) scale(.97)}.postcard-card.is-prev{transform:translate3d(-6px,-8px,0) rotate(-2.5deg) scale(.96)}.postcard-stamp{display:none}.postcard-copy:before,.postcard-copy:after{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .postcard-card,.postcard-stamp,.postcard-pips button,.postcard-copy *{transition:none!important;animation:none!important}
+}

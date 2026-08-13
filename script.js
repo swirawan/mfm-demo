@@ -828,19 +828,474 @@
     });
   }
 
+  /* V35 inquiry advisor selector — reuses the same seven team portraits and editorial voice. */
+  const advisorProfiles = {
+    'no-preference': {
+      index: 'MFM / 01', eyebrow: 'Your starting point', name: 'Maddy Moffitt',
+      role: 'Owner & Travel Advisor · MFM team lead', image: 'assets/images/team/maddy.webp', position: 'center 27%',
+      bio: 'Not sure who to choose? Start with Maddy. Share the trip you have in mind and MFM will connect you with the team member whose experience and planning style best fit it.',
+      tags: ['PERSONAL MATCH','MFM TEAM','WORLDWIDE']
+    },
+    maddy: {
+      index: '01 / 07', eyebrow: 'Selected advisor', name: 'Maddy Moffitt', role: 'Owner & Travel Advisor', image: 'assets/images/team/maddy.webp', position: 'center 27%',
+      bio: 'Founder and the thread running through the MFM point of view: thoughtful structure, room for spontaneity, and journeys that feel personal rather than programmed.',
+      tags: ['FOUNDER','CURATION','WORLDWIDE']
+    },
+    neelie: {
+      index: '02 / 07', eyebrow: 'Selected advisor', name: 'Neelie Shore', role: 'Travel Advisor', image: 'assets/images/team/neelie.webp', position: '43% 47%',
+      bio: 'A hospitality insider whose experience spans The Peninsula Beverly Hills, Mandarin Oriental and international hotel operations, with an instinct for service that feels natural.',
+      tags: ['HOSPITALITY','SERVICE','FAMILY']
+    },
+    amy: {
+      index: '03 / 07', eyebrow: 'Selected advisor', name: 'Amy Gennaro', role: 'Travel Advisor', image: 'assets/images/team/amy.webp', position: 'center 33%',
+      bio: 'Luxury-fashion instincts translated into travel: considered curation, a strong eye for detail, and lived experience across Europe and Southeast Asia.',
+      tags: ['FASHION','CURATION','EUROPE']
+    },
+    lisi: {
+      index: '04 / 07', eyebrow: 'Selected advisor', name: 'Lisi Garcia', role: 'Travel Advisor', image: 'assets/images/team/lisi.webp', position: '52% 46%',
+      bio: 'Family travel, local culture and lasting connections — backed by a decade of operations and client-service leadership and a love of trips that bring people together.',
+      tags: ['FAMILY','CULTURE','CONNECTION']
+    },
+    morgan: {
+      index: '05 / 07', eyebrow: 'Selected advisor', name: 'Morgan Hanley', role: 'Travel Advisor', image: 'assets/images/team/morgan.webp', position: '50% 51%',
+      bio: 'A devoted researcher and planner with a soft spot for exceptional hotels, memorable restaurants and the small details that make a trip feel effortless.',
+      tags: ['RESEARCH','HOTELS','DETAIL']
+    },
+    ellen: {
+      index: '06 / 07', eyebrow: 'Selected team member', name: 'Ellen Gurley', role: 'Travel Coordinator', image: 'assets/images/team/ellen.webp', position: 'center 48%',
+      bio: 'Raised with travel in Indonesia and shaped by the hotel industry, Ellen brings exacting coordination together with a love of history, art, culture and nature.',
+      tags: ['COORDINATION','CULTURE','HOSPITALITY']
+    },
+    rachael: {
+      index: '07 / 07', eyebrow: 'Selected advisor', name: 'Rachael Levy', role: 'Travel Advisor', image: 'assets/images/team/rachael.webp', position: '50% 29%',
+      bio: 'Precision from a real-estate-finance background, balanced with an exploratory spirit and a belief that travel should create lasting perspective.',
+      tags: ['PRECISION','DISCOVERY','PLANNING']
+    }
+  };
+  const advisorSelect = document.querySelector('[data-advisor-select]');
+  const advisorCard = document.querySelector('[data-advisor-card]');
+  const advisorPhoto = document.querySelector('[data-advisor-photo]');
+  const advisorCollage = document.querySelector('[data-advisor-collage]');
+  const advisorIndex = document.querySelector('[data-advisor-index]');
+  const advisorEyebrow = document.querySelector('[data-advisor-eyebrow]');
+  const advisorName = document.querySelector('[data-advisor-name]');
+  const advisorRole = document.querySelector('[data-advisor-role]');
+  const advisorBio = document.querySelector('[data-advisor-bio]');
+  const advisorTags = document.querySelector('[data-advisor-tags]');
+
+  let advisorRenderTimer = null;
+  let advisorCelebrateTimer = null;
+  const renderAdvisorSelection = (key = 'no-preference', { celebrate = false, preview = false } = {}) => {
+    const profile = advisorProfiles[key] || advisorProfiles['no-preference'];
+    window.clearTimeout(advisorRenderTimer);
+    advisorCard?.classList.add('is-changing');
+    advisorCard?.classList.toggle('is-previewing', preview);
+    advisorRenderTimer = window.setTimeout(() => {
+      if (advisorIndex) advisorIndex.textContent = profile.index;
+      if (advisorEyebrow) advisorEyebrow.textContent = preview ? 'Preview advisor' : profile.eyebrow;
+      if (advisorName) advisorName.textContent = profile.name;
+      if (advisorRole) advisorRole.textContent = profile.role;
+      if (advisorBio) advisorBio.textContent = profile.bio;
+      if (advisorTags) {
+        advisorTags.replaceChildren(...profile.tags.map((tag) => {
+          const span = document.createElement('span'); span.textContent = tag; return span;
+        }));
+      }
+      if (profile.image && advisorPhoto) {
+        advisorPhoto.src = profile.image;
+        advisorPhoto.alt = `${profile.name}, ${profile.role}`;
+        advisorPhoto.style.objectPosition = profile.position;
+        advisorPhoto.hidden = false;
+        if (advisorCollage) advisorCollage.hidden = true;
+      } else {
+        if (advisorPhoto) { advisorPhoto.hidden = true; advisorPhoto.alt = ''; }
+        if (advisorCollage) advisorCollage.hidden = false;
+      }
+      advisorCard?.classList.remove('is-changing');
+      if (celebrate && advisorCard && !reduceMotion) {
+        window.clearTimeout(advisorCelebrateTimer);
+        advisorCard.classList.remove('is-selected-moment');
+        void advisorCard.offsetWidth;
+        advisorCard.classList.add('is-selected-moment');
+        advisorCelebrateTimer = window.setTimeout(() => advisorCard.classList.remove('is-selected-moment'), 1250);
+      }
+    }, preview ? 80 : 145);
+  };
+  advisorSelect?.addEventListener('change', () => renderAdvisorSelection(advisorSelect.value));
+
+  /* V36 bespoke advisor picker — keeps the real select for form submission,
+     but presents a fully styled, keyboard-accessible editorial listbox. */
+  const advisorPicker = document.querySelector('[data-advisor-picker]');
+  const advisorTrigger = document.querySelector('[data-advisor-trigger]');
+  const advisorMenu = document.querySelector('[data-advisor-menu]');
+  const advisorTriggerName = document.querySelector('[data-advisor-trigger-name]');
+  const advisorTriggerMeta = document.querySelector('[data-advisor-trigger-meta]');
+  const advisorOptions = [...document.querySelectorAll('[data-advisor-option]')];
+  let advisorFocusIndex = 0;
+
+  const getAdvisorOptionIndex = (key) => Math.max(0, advisorOptions.findIndex((option) => option.dataset.advisorOption === key));
+  const syncAdvisorPicker = (key = 'no-preference') => {
+    const profile = advisorProfiles[key] || advisorProfiles['no-preference'];
+    advisorFocusIndex = getAdvisorOptionIndex(key);
+    advisorOptions.forEach((option, index) => {
+      const selected = index === advisorFocusIndex;
+      option.classList.toggle('is-selected', selected);
+      option.setAttribute('aria-selected', String(selected));
+    });
+    if (advisorTriggerName) advisorTriggerName.textContent = key === 'no-preference' ? 'No preference — match me with the best fit' : profile.name;
+    if (advisorTriggerMeta) advisorTriggerMeta.textContent = key === 'no-preference' ? 'PERSONAL MATCH · MFM TEAM' : `${profile.index} · ${profile.role.toUpperCase()}`;
+  };
+
+  const setAdvisorPickerOpen = (open, focusMenu = false) => {
+    if (!advisorPicker || !advisorTrigger || !advisorMenu) return;
+    advisorPicker.classList.toggle('is-open', open);
+    advisorTrigger.setAttribute('aria-expanded', String(open));
+    if (open) {
+      advisorFocusIndex = getAdvisorOptionIndex(advisorSelect?.value || 'no-preference');
+      advisorOptions[advisorFocusIndex]?.classList.add('is-keyboard-focus');
+      if (focusMenu) advisorOptions[advisorFocusIndex]?.focus({ preventScroll: true });
+    } else {
+      advisorOptions.forEach((option) => option.classList.remove('is-keyboard-focus'));
+    }
+  };
+
+  const chooseAdvisor = (key, returnFocus = true) => {
+    if (!advisorSelect) return;
+    advisorSelect.value = key;
+    syncAdvisorPicker(key);
+    renderAdvisorSelection(key, { celebrate: true });
+    advisorPicker?.classList.remove('has-selection-pulse');
+    if (!reduceMotion) {
+      void advisorPicker?.offsetWidth;
+      advisorPicker?.classList.add('has-selection-pulse');
+      window.setTimeout(() => advisorPicker?.classList.remove('has-selection-pulse'), 900);
+    }
+    setAdvisorPickerOpen(false);
+    if (returnFocus) advisorTrigger?.focus({ preventScroll: true });
+  };
+
+  advisorTrigger?.addEventListener('click', () => {
+    const open = advisorPicker?.classList.contains('is-open');
+    setAdvisorPickerOpen(!open, !open);
+  });
+
+  advisorOptions.forEach((option) => {
+    option.addEventListener('click', () => chooseAdvisor(option.dataset.advisorOption));
+    option.addEventListener('mouseenter', () => {
+      advisorOptions.forEach((item) => item.classList.remove('is-keyboard-focus'));
+      option.classList.add('is-keyboard-focus');
+      advisorFocusIndex = advisorOptions.indexOf(option);
+      renderAdvisorSelection(option.dataset.advisorOption, { preview: true });
+    });
+    option.addEventListener('focus', () => {
+      advisorFocusIndex = advisorOptions.indexOf(option);
+      renderAdvisorSelection(option.dataset.advisorOption, { preview: true });
+    });
+  });
+  advisorMenu?.addEventListener('mouseleave', () => {
+    if (advisorPicker?.classList.contains('is-open')) renderAdvisorSelection(advisorSelect?.value || 'no-preference');
+  });
+
+  const moveAdvisorFocus = (nextIndex) => {
+    advisorFocusIndex = (nextIndex + advisorOptions.length) % advisorOptions.length;
+    advisorOptions.forEach((option, index) => option.classList.toggle('is-keyboard-focus', index === advisorFocusIndex));
+    advisorOptions[advisorFocusIndex]?.focus({ preventScroll: true });
+    advisorOptions[advisorFocusIndex]?.scrollIntoView({ block: 'nearest' });
+  };
+
+  const handleAdvisorKeys = (event) => {
+    const isOpen = advisorPicker?.classList.contains('is-open');
+    if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!isOpen) setAdvisorPickerOpen(true, true);
+      else moveAdvisorFocus(advisorFocusIndex + (event.key === 'ArrowDown' ? 1 : -1));
+    } else if (event.key === 'Home' && isOpen) {
+      event.preventDefault(); moveAdvisorFocus(0);
+    } else if (event.key === 'End' && isOpen) {
+      event.preventDefault(); moveAdvisorFocus(advisorOptions.length - 1);
+    } else if ((event.key === 'Enter' || event.key === ' ') && isOpen && document.activeElement?.matches('[data-advisor-option]')) {
+      event.preventDefault(); chooseAdvisor(advisorOptions[advisorFocusIndex].dataset.advisorOption);
+    } else if (event.key === 'Escape' && isOpen) {
+      event.preventDefault(); setAdvisorPickerOpen(false); advisorTrigger?.focus({ preventScroll: true });
+    }
+  };
+  advisorTrigger?.addEventListener('keydown', handleAdvisorKeys);
+  advisorMenu?.addEventListener('keydown', handleAdvisorKeys);
+  document.addEventListener('pointerdown', (event) => {
+    if (advisorPicker?.classList.contains('is-open') && !advisorPicker.contains(event.target)) setAdvisorPickerOpen(false);
+  });
+
+  syncAdvisorPicker(advisorSelect?.value || 'no-preference');
+  renderAdvisorSelection(advisorSelect?.value || 'no-preference');
+
+  /* V39 premium contact + discovery-call controls. */
+  const emailField = document.querySelector('[data-email-field]');
+  const emailInput = emailField?.querySelector('input[name="email"]');
+  const emailError = document.querySelector('[data-email-error]');
+  const validateEmail = (show = true) => {
+    if (!emailInput) return true;
+    const value = emailInput.value.trim();
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(value);
+    const state = !value ? false : valid;
+    emailField?.classList.toggle('is-valid', state);
+    emailField?.classList.toggle('is-invalid', Boolean(value) && !valid);
+    if (emailError) emailError.textContent = show && value && !valid ? 'Please enter a valid email address.' : '';
+    return valid;
+  };
+  emailInput?.addEventListener('blur', () => validateEmail(true));
+  emailInput?.addEventListener('input', () => { if (emailField?.classList.contains('is-invalid')) validateEmail(true); });
+
+  /* International phone composer. The dial code is separate visually but is
+     included in the generated inquiry. North American numbers get familiar
+     parentheses; other countries remain readable without forcing one mask. */
+  const countryData = [
+    ['US','United States','+1'],['CA','Canada','+1'],['GB','United Kingdom','+44'],['AU','Australia','+61'],['NZ','New Zealand','+64'],
+    ['ID','Indonesia','+62'],['SG','Singapore','+65'],['MY','Malaysia','+60'],['TH','Thailand','+66'],['VN','Vietnam','+84'],['PH','Philippines','+63'],
+    ['JP','Japan','+81'],['KR','South Korea','+82'],['CN','China','+86'],['HK','Hong Kong','+852'],['TW','Taiwan','+886'],['IN','India','+91'],
+    ['AE','United Arab Emirates','+971'],['QA','Qatar','+974'],['SA','Saudi Arabia','+966'],['IL','Israel','+972'],['TR','Türkiye','+90'],
+    ['FR','France','+33'],['IT','Italy','+39'],['ES','Spain','+34'],['PT','Portugal','+351'],['DE','Germany','+49'],['NL','Netherlands','+31'],['BE','Belgium','+32'],
+    ['CH','Switzerland','+41'],['AT','Austria','+43'],['GR','Greece','+30'],['IE','Ireland','+353'],['IS','Iceland','+354'],['NO','Norway','+47'],['SE','Sweden','+46'],['DK','Denmark','+45'],['FI','Finland','+358'],
+    ['CZ','Czechia','+420'],['PL','Poland','+48'],['HR','Croatia','+385'],['ZA','South Africa','+27'],['BW','Botswana','+267'],['KE','Kenya','+254'],['TZ','Tanzania','+255'],['MA','Morocco','+212'],['EG','Egypt','+20'],
+    ['MX','Mexico','+52'],['BR','Brazil','+55'],['AR','Argentina','+54'],['CL','Chile','+56'],['PE','Peru','+51'],['CO','Colombia','+57'],['CR','Costa Rica','+506'],['BS','Bahamas','+1'],
+    ['JM','Jamaica','+1'],['BB','Barbados','+1'],['DO','Dominican Republic','+1'],['PR','Puerto Rico','+1']
+  ].map(([code,name,dial]) => ({ code, name, dial }));
+  const flagFor = (code) => code.replace(/./g, char => String.fromCodePoint(127397 + char.charCodeAt(0)));
+  const phoneField = document.querySelector('[data-phone-field]');
+  const phoneInput = document.querySelector('[data-phone-input]');
+  const countryTrigger = document.querySelector('[data-country-trigger]');
+  const countryMenu = document.querySelector('[data-country-menu]');
+  const countryFlag = document.querySelector('[data-country-flag]');
+  const countryDial = document.querySelector('[data-country-dial]');
+  const countryCodeDisplay = document.querySelector('[data-country-code-display]');
+  const phoneCountry = document.querySelector('[data-phone-country]');
+  const phoneDialCode = document.querySelector('[data-phone-dial-code]');
+  let selectedCountry = countryData[0];
+
+  const formatNationalPhone = (value, country = selectedCountry) => {
+    const digits = value.replace(/\D/g,'').slice(0, 15);
+    if (!digits) return '';
+    if ((country.code === 'US' || country.code === 'CA' || country.dial === '+1') && digits.length <= 10) {
+      if (digits.length <= 3) return digits.length === 3 ? `(${digits})` : digits;
+      if (digits.length <= 6) return `(${digits.slice(0,3)}) ${digits.slice(3)}`;
+      return `(${digits.slice(0,3)}) ${digits.slice(3,6)}-${digits.slice(6,10)}`;
+    }
+    if (country.code === 'GB') {
+      if (digits.length <= 4) return digits;
+      if (digits.length <= 7) return `${digits.slice(0,4)} ${digits.slice(4)}`;
+      return `${digits.slice(0,4)} ${digits.slice(4,7)} ${digits.slice(7,11)}`;
+    }
+    return digits.replace(/(\d{3})(?=\d)/g,'$1 ').trim();
+  };
+  const paintCountry = (country) => {
+    selectedCountry = country;
+    if (countryFlag) countryFlag.textContent = flagFor(country.code);
+    if (countryDial) countryDial.textContent = country.dial;
+    if (countryCodeDisplay) countryCodeDisplay.textContent = country.code;
+    if (phoneCountry) phoneCountry.value = country.code;
+    if (phoneDialCode) phoneDialCode.value = country.dial;
+    countryMenu?.querySelectorAll('[data-country-code]').forEach(btn => btn.classList.toggle('is-selected', btn.dataset.countryCode === country.code));
+    if (phoneInput?.value) phoneInput.value = formatNationalPhone(phoneInput.value, country);
+  };
+  if (countryMenu) {
+    const frag = document.createDocumentFragment();
+    countryData.forEach(country => {
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 'country-option'; btn.dataset.countryCode = country.code; btn.setAttribute('role','option');
+      btn.innerHTML = `<span class="flag">${flagFor(country.code)}</span><b>${country.name}</b><small>${country.dial}</small>`;
+      btn.addEventListener('click', () => { paintCountry(country); phoneField?.classList.remove('is-country-open'); countryTrigger?.setAttribute('aria-expanded','false'); phoneInput?.focus(); });
+      frag.appendChild(btn);
+    });
+    countryMenu.appendChild(frag);
+  }
+  paintCountry(selectedCountry);
+  countryTrigger?.addEventListener('click', () => {
+    const open = !phoneField?.classList.contains('is-country-open');
+    phoneField?.classList.toggle('is-country-open', open); countryTrigger.setAttribute('aria-expanded', String(open));
+  });
+  phoneInput?.addEventListener('input', () => { phoneInput.value = formatNationalPhone(phoneInput.value); });
+
+  /* Bespoke calendar + time picker — avoids browser-native date/time chrome. */
+  const callSchedule = document.querySelector('[data-call-schedule]');
+  const callDate = document.querySelector('[data-call-date]');
+  const callTime = document.querySelector('[data-call-time]');
+  const dateTrigger = document.querySelector('[data-date-trigger]');
+  const timeTrigger = document.querySelector('[data-time-trigger]');
+  const dateDisplay = document.querySelector('[data-date-display]');
+  const timeDisplay = document.querySelector('[data-time-display]');
+  const datePopover = document.querySelector('[data-date-popover]');
+  const timePopover = document.querySelector('[data-time-popover]');
+  const calMonth = document.querySelector('[data-cal-month]');
+  const calGrid = document.querySelector('[data-cal-grid]');
+  const timeGrid = document.querySelector('[data-time-grid]');
+  const dateControl = dateTrigger?.closest('.call-control');
+  const timeControl = timeTrigger?.closest('.call-control');
+  const today = new Date(); today.setHours(0,0,0,0);
+  let calendarCursor = new Date(today.getFullYear(), today.getMonth(), 1);
+  let selectedDate = null;
+
+  const isoDate = date => `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+  const friendlyDate = date => new Intl.DateTimeFormat(undefined,{weekday:'short',month:'short',day:'numeric'}).format(date);
+  const closeCallPopovers = (except = null) => {
+    [[dateControl,dateTrigger],[timeControl,timeTrigger]].forEach(([control,trigger]) => {
+      if (control !== except) { control?.classList.remove('is-open'); trigger?.setAttribute('aria-expanded','false'); }
+    });
+  };
+  const updateCallScheduleState = (celebrate = false) => {
+    const complete = Boolean(callDate?.value && callTime?.value);
+    callSchedule?.classList.toggle('is-complete', complete);
+    if (complete && celebrate && callSchedule && !reduceMotion) {
+      callSchedule.classList.remove('is-just-completed'); void callSchedule.offsetWidth; callSchedule.classList.add('is-just-completed');
+    }
+  };
+  const renderCalendar = () => {
+    if (!calGrid || !calMonth) return;
+    calMonth.textContent = new Intl.DateTimeFormat(undefined,{month:'long',year:'numeric'}).format(calendarCursor);
+    calGrid.replaceChildren();
+    const first = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth(), 1);
+    const last = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth()+1, 0);
+    for (let i=0;i<first.getDay();i++){ const spacer=document.createElement('span'); calGrid.appendChild(spacer); }
+    for (let day=1; day<=last.getDate(); day++) {
+      const date = new Date(calendarCursor.getFullYear(), calendarCursor.getMonth(), day); date.setHours(0,0,0,0);
+      const btn = document.createElement('button'); btn.type='button'; btn.className='calendar-day'; btn.textContent=String(day);
+      const value=isoDate(date); btn.dataset.date=value; btn.setAttribute('aria-label', friendlyDate(date));
+      if (date < today) btn.disabled=true;
+      if (date.getTime()===today.getTime()) btn.classList.add('is-today');
+      if (selectedDate && isoDate(selectedDate)===value) btn.classList.add('is-selected');
+      btn.addEventListener('click', () => {
+        selectedDate=date; if(callDate) callDate.value=value; if(dateDisplay) dateDisplay.textContent=friendlyDate(date); dateTrigger?.classList.add('has-value');
+        renderCalendar(); dateControl?.classList.remove('is-open'); dateTrigger?.setAttribute('aria-expanded','false'); updateCallScheduleState(true);
+      });
+      calGrid.appendChild(btn);
+    }
+  };
+  document.querySelector('[data-cal-prev]')?.addEventListener('click', () => {
+    const prev=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()-1,1);
+    const floor=new Date(today.getFullYear(),today.getMonth(),1);
+    if(prev>=floor){calendarCursor=prev;renderCalendar();}
+  });
+  document.querySelector('[data-cal-next]')?.addEventListener('click', () => { calendarCursor=new Date(calendarCursor.getFullYear(),calendarCursor.getMonth()+1,1);renderCalendar(); });
+  document.querySelector('[data-date-clear]')?.addEventListener('click', () => { selectedDate=null;if(callDate)callDate.value='';if(dateDisplay)dateDisplay.textContent='Select date';dateTrigger?.classList.remove('has-value');renderCalendar();dateControl?.classList.remove('is-open');dateTrigger?.setAttribute('aria-expanded','false');updateCallScheduleState(); });
+  dateTrigger?.addEventListener('click', () => { const open=!dateControl?.classList.contains('is-open'); closeCallPopovers(open?dateControl:null);dateControl?.classList.toggle('is-open',open);dateTrigger.setAttribute('aria-expanded',String(open));if(open)renderCalendar(); });
+  renderCalendar();
+
+  const formatTime = value => {
+    const [h,m]=value.split(':').map(Number); return new Intl.DateTimeFormat(undefined,{hour:'numeric',minute:'2-digit'}).format(new Date(2020,0,1,h,m));
+  };
+  if (timeGrid) {
+    for(let minutes=8*60;minutes<=20*60;minutes+=30){
+      const h=Math.floor(minutes/60),m=minutes%60,value=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+      const btn=document.createElement('button');btn.type='button';btn.className='time-option';btn.dataset.time=value;btn.setAttribute('role','option');btn.textContent=formatTime(value);
+      btn.addEventListener('click',()=>{if(callTime)callTime.value=value;if(timeDisplay)timeDisplay.textContent=formatTime(value);timeTrigger?.classList.add('has-value');timeGrid.querySelectorAll('.time-option').forEach(x=>x.classList.toggle('is-selected',x===btn));timeControl?.classList.remove('is-open');timeTrigger?.setAttribute('aria-expanded','false');updateCallScheduleState(true);});
+      timeGrid.appendChild(btn);
+    }
+  }
+  document.querySelector('[data-time-clear]')?.addEventListener('click',()=>{if(callTime)callTime.value='';if(timeDisplay)timeDisplay.textContent='Select time';timeTrigger?.classList.remove('has-value');timeGrid?.querySelectorAll('.time-option').forEach(x=>x.classList.remove('is-selected'));timeControl?.classList.remove('is-open');timeTrigger?.setAttribute('aria-expanded','false');updateCallScheduleState();});
+  timeTrigger?.addEventListener('click',()=>{const open=!timeControl?.classList.contains('is-open');closeCallPopovers(open?timeControl:null);timeControl?.classList.toggle('is-open',open);timeTrigger.setAttribute('aria-expanded',String(open));});
+
+  document.addEventListener('pointerdown', event => {
+    if (phoneField?.classList.contains('is-country-open') && !phoneField.contains(event.target)) { phoneField.classList.remove('is-country-open'); countryTrigger?.setAttribute('aria-expanded','false'); }
+    if (dateControl?.classList.contains('is-open') && !dateControl.contains(event.target)) { dateControl.classList.remove('is-open'); dateTrigger?.setAttribute('aria-expanded','false'); }
+    if (timeControl?.classList.contains('is-open') && !timeControl.contains(event.target)) { timeControl.classList.remove('is-open'); timeTrigger?.setAttribute('aria-expanded','false'); }
+  });
+
   /* Inquiry */
   const form = document.querySelector('[data-inquiry-form]');
   const formNote = document.querySelector('[data-form-note]');
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
+    const emailOkay = validateEmail(true);
+    if (!emailOkay) {
+      emailInput?.focus();
+      if (formNote) formNote.textContent = 'Please check the highlighted email address.';
+      return;
+    }
     const data = new FormData(form);
     const name = data.get('name') || '';
     const email = data.get('email') || '';
+    const phone = data.get('phone') || '';
+    const phoneDial = data.get('phoneDialCode') || '';
+    const phoneCountryValue = data.get('phoneCountry') || '';
+    const fullPhone = phone ? `${phoneDial} ${phone}`.trim() : '';
     const destination = data.get('destination') || '';
+    const callDateValue = data.get('callDate') || '';
+    const callTimeValue = data.get('callTime') || '';
+    const advisorKey = data.get('advisor') || 'no-preference';
+    const advisor = advisorProfiles[advisorKey] || advisorProfiles['no-preference'];
+    const advisorChoice = advisorKey === 'no-preference' ? 'No preference — please match me with the best fit' : `${advisor.name} — ${advisor.role}`;
     const message = data.get('message') || '';
     const subject = encodeURIComponent(`Travel inquiry from ${name}${destination ? ` — ${destination}` : ''}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nDestination / idea: ${destination}\n\n${message}`);
+    const preferredCall = callDateValue || callTimeValue ? `${callDateValue || 'Date flexible'}${callTimeValue ? ` at ${callTimeValue}` : ' · time flexible'}` : 'Not specified';
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${fullPhone || 'Not provided'}\nDestination / idea: ${destination}\nPreferred advisor: ${advisorChoice}\nPreferred call: ${preferredCall}\n\n${message}`);
     if (formNote) formNote.textContent = 'Opening your email app…';
     window.location.href = `mailto:maddy@MFMLuxuryTravel.com?subject=${subject}&body=${body}`;
   });
+
+  /* Postcard rotator */
+  const postcardRoot = document.querySelector('[data-postcard-rotator]');
+  if (postcardRoot) {
+    const cards = [...postcardRoot.querySelectorAll('[data-postcard-card]')];
+    const copyWrap = postcardRoot.querySelector('.postcard-copy');
+    const copyKicker = postcardRoot.querySelector('[data-postcard-kicker]');
+    const copyNumber = postcardRoot.querySelector('[data-postcard-number]');
+    const copyTitle = postcardRoot.querySelector('[data-postcard-title]');
+    const copyBody = postcardRoot.querySelector('[data-postcard-copy]');
+    const copyNote = postcardRoot.querySelector('[data-postcard-note]');
+    const nav = postcardRoot.querySelector('[data-postcard-nav]');
+    let postcardIndex = 0;
+    let postcardTimer = null;
+
+    const renderPostcardCopy = card => {
+      if (!card) return;
+      copyWrap?.classList.remove('is-refreshing');
+      void copyWrap?.offsetWidth;
+      if (copyKicker) copyKicker.textContent = card.dataset.kicker || '';
+      if (copyNumber) copyNumber.textContent = card.dataset.number || '';
+      if (copyTitle) copyTitle.innerHTML = card.dataset.title || '';
+      if (copyBody) copyBody.textContent = card.dataset.copy || '';
+      if (copyNote) copyNote.textContent = card.dataset.note || '';
+      copyWrap?.classList.add('is-refreshing');
+    };
+
+    const paintPostcards = index => {
+      postcardIndex = index;
+      cards.forEach((card, i) => {
+        const delta = (i - index + cards.length) % cards.length;
+        const reverse = (index - i + cards.length) % cards.length;
+        card.classList.remove('is-active','is-next','is-prev','is-hidden');
+        if (i === index) card.classList.add('is-active');
+        else if (delta === 1) card.classList.add('is-next');
+        else if (reverse === 1) card.classList.add('is-prev');
+        else card.classList.add('is-hidden');
+      });
+      nav?.querySelectorAll('button').forEach((btn, i) => btn.classList.toggle('is-active', i === index));
+      renderPostcardCopy(cards[index]);
+    };
+
+    if (nav) {
+      cards.forEach((card, i) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.setAttribute('aria-label', `Show postcard ${i + 1}`);
+        btn.addEventListener('click', () => { paintPostcards(i); startPostcardLoop(); });
+        nav.appendChild(btn);
+      });
+    }
+
+    const nextPostcard = () => paintPostcards((postcardIndex + 1) % cards.length);
+    const startPostcardLoop = () => {
+      if (reduceMotion || cards.length < 2) return;
+      clearInterval(postcardTimer);
+      postcardTimer = window.setInterval(nextPostcard, 5200);
+    };
+    const stopPostcardLoop = () => { if (postcardTimer) clearInterval(postcardTimer); };
+
+    postcardRoot.addEventListener('mouseenter', stopPostcardLoop);
+    postcardRoot.addEventListener('mouseleave', startPostcardLoop);
+    postcardRoot.addEventListener('focusin', stopPostcardLoop);
+    postcardRoot.addEventListener('focusout', startPostcardLoop);
+
+    paintPostcards(0);
+    startPostcardLoop();
+  }
+
 })();

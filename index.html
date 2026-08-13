@@ -210,17 +210,42 @@
       </div>
     </section>
 
-    <section class="slow-morning" aria-label="MFM editorial travel moment">
-      <figure class="slow-morning-media reveal">
-        <img src="assets/images/slow-morning.webp" width="1920" height="1080" alt="Breakfast overlooking calm water with coffee and a newspaper" loading="lazy" decoding="async" />
-        <figcaption>02 / The unhurried morning</figcaption>
-      </figure>
-      <div class="slow-morning-copy reveal">
-        <p class="eyebrow eyebrow--gold">The details that stay with you</p>
-        <span class="editorial-number">02</span>
-        <h2>The best part of the itinerary may be the hour with <em>nothing on it.</em></h2>
-        <p>Morning coffee. Water outside. No transfer waiting downstairs. MFM leaves space for the moments that are impossible to schedule but easy to remember.</p>
-        <span class="hand-note">leave room for this →</span>
+    <section class="slow-morning postcard-edit" aria-label="MFM postcard moments" data-postcard-rotator>
+      <div class="postcard-stage reveal">
+        <div class="postcard-deck" data-postcard-deck>
+          <article class="postcard-card is-active" data-postcard-card data-number="02" data-kicker="The details that stay with you" data-title="The best part of the itinerary may be the hour with <em>nothing on it.</em>" data-copy="Morning coffee. Water outside. No transfer waiting downstairs. MFM leaves space for the moments that are impossible to schedule but easy to remember." data-note="leave room for this →">
+            <img src="assets/images/slow-morning.webp" width="1920" height="1080" alt="Breakfast overlooking calm water with coffee and a newspaper" loading="lazy" decoding="async">
+            <img class="postcard-stamp postcard-stamp--passport" src="assets/images/postcards/passport-stamps.png" alt="" aria-hidden="true" loading="lazy">
+            <figcaption><span>02 / The unhurried morning</span><b>Lac Léman · breakfast afloat</b></figcaption>
+          </article>
+          <article class="postcard-card" data-postcard-card data-number="03" data-kicker="Worth the road that gets you there" data-title="Some hotels become part of the route, not just a stop on it." data-copy="A bend in the road, a storm over the mountains, and an address you remember long after checkout. The journey feels richer when the setting has character." data-note="save this detour →">
+            <img src="assets/images/postcards/belvedere.jpg" width="1680" height="1120" alt="Historic alpine hotel on a winding mountain road" loading="lazy" decoding="async">
+            <img class="postcard-stamp postcard-stamp--mail" src="assets/images/postcards/mail-stamps.png" alt="" aria-hidden="true" loading="lazy">
+            <figcaption><span>03 / The long approach</span><b>Belvedere · the dramatic stopover</b></figcaption>
+          </article>
+          <article class="postcard-card" data-postcard-card data-number="04" data-kicker="Evening arrives better by water" data-title="The right city feels different once the day crowds drift away." data-copy="Canals after dusk, low light on the water, and one slow boat in the middle of it all. MFM plans for the scene and the feeling, not just the reservation." data-note="linger after dark →">
+            <img src="assets/images/postcards/venice.jpg" width="1680" height="1120" alt="Venice canal at dusk with glowing lights" loading="lazy" decoding="async">
+            <img class="postcard-stamp postcard-stamp--passport" src="assets/images/postcards/passport-stamps.png" alt="" aria-hidden="true" loading="lazy">
+            <figcaption><span>04 / Blue hour passage</span><b>Venice · after-hours waterline</b></figcaption>
+          </article>
+          <article class="postcard-card" data-postcard-card data-number="05" data-kicker="A classic, still worth arriving for" data-title="Some landmarks only become unforgettable when the timing is exactly right." data-copy="Early sun on stone, a little room to stand still, and the city opening around you. The postcard image stays classic, but the experience feels personal." data-note="arrive before the crowd →">
+            <img src="assets/images/postcards/rome.jpg" width="1680" height="1120" alt="Trevi Fountain in Rome in bright daylight" loading="lazy" decoding="async">
+            <img class="postcard-stamp postcard-stamp--mail" src="assets/images/postcards/mail-stamps.png" alt="" aria-hidden="true" loading="lazy">
+            <figcaption><span>05 / First light in the city</span><b>Rome · fountain side</b></figcaption>
+          </article>
+        </div>
+        <div class="postcard-pips" data-postcard-nav aria-label="Postcard navigation"></div>
+      </div>
+      <div class="slow-morning-copy postcard-copy reveal">
+        <p class="eyebrow eyebrow--gold" data-postcard-kicker>The details that stay with you</p>
+        <span class="editorial-number" data-postcard-number>02</span>
+        <h2 data-postcard-title>The best part of the itinerary may be the hour with <em>nothing on it.</em></h2>
+        <p data-postcard-copy>Morning coffee. Water outside. No transfer waiting downstairs. MFM leaves space for the moments that are impossible to schedule but easy to remember.</p>
+        <span class="hand-note" data-postcard-note>leave room for this →</span>
+        <div class="postcard-copy-meta">
+          <span>Postcard edit · rotating travel moments</span>
+          <b>Collected by MFM Luxury Travel</b>
+        </div>
       </div>
     </section>
 
@@ -454,15 +479,113 @@
           <p>Bring the half-formed idea: a season, a hotel, a celebration, a place you keep saving. We will shape the rest.</p>
           <div class="inquire-signature"><span>MFM</span><small>HOUSTON · WORLDWIDE</small></div>
         </div>
-        <form class="inquiry-form reveal" data-inquiry-form>
-          <div class="form-row">
+        <form class="inquiry-form inquiry-form--advisor reveal" data-inquiry-form>
+          <div class="form-row inquiry-form-main">
             <label><span>Name</span><input name="name" autocomplete="name" required placeholder="Your name"></label>
-            <label><span>Email</span><input type="email" name="email" autocomplete="email" required placeholder="you@example.com"></label>
+            <label class="validated-field" data-email-field><span>Email</span><input type="email" name="email" autocomplete="email" required placeholder="you@example.com" aria-describedby="email-error"><small class="field-error" id="email-error" data-email-error aria-live="polite"></small></label>
           </div>
-          <label><span>Where are you dreaming of?</span><input name="destination" placeholder="Italy, Japan, safari…"></label>
-          <label><span>Tell us a little more</span><textarea name="message" rows="4" placeholder="Who is traveling, timing, what matters most…"></textarea></label>
-          <button type="submit">Start the conversation <span>↗</span></button>
-          <p class="form-note" data-form-note>Opens your email app with the details filled in.</p>
+          <label class="inquiry-form-main"><span>Where are you dreaming of?</span><input name="destination" placeholder="Italy, Japan, safari…"></label>
+
+          <div class="form-row inquiry-form-main inquiry-contact-row">
+            <div class="luxury-field phone-field" data-phone-field>
+              <span class="luxury-label">Phone number <small>Optional</small></span>
+              <div class="phone-composer">
+                <button class="country-trigger" type="button" data-country-trigger aria-haspopup="listbox" aria-expanded="false" aria-label="Choose calling country">
+                  <span class="country-flag" data-country-flag>🇺🇸</span><span class="country-code" data-country-code-display>US</span><span class="country-dial" data-country-dial>+1</span><i aria-hidden="true"></i>
+                </button>
+                <input type="tel" name="phone" data-phone-input autocomplete="tel" inputmode="tel" placeholder="Phone number">
+                <input type="hidden" name="phoneCountry" value="US" data-phone-country>
+                <input type="hidden" name="phoneDialCode" value="+1" data-phone-dial-code>
+              </div>
+              <div class="country-menu" data-country-menu role="listbox" aria-label="Calling country"></div>
+            </div>
+
+            <fieldset class="call-schedule" data-call-schedule>
+              <legend>Preferred call <small>Optional</small></legend>
+              <div class="call-schedule-fields">
+                <div class="call-control">
+                  <span>Date</span>
+                  <button type="button" class="call-control-button" data-date-trigger aria-haspopup="dialog" aria-expanded="false"><b data-date-display>Select date</b><i class="calendar-glyph" aria-hidden="true"></i></button>
+                  <input type="hidden" name="callDate" data-call-date>
+                  <div class="luxury-popover calendar-popover" data-date-popover role="dialog" aria-label="Choose preferred call date">
+                    <div class="calendar-head"><button type="button" data-cal-prev aria-label="Previous month">←</button><strong data-cal-month></strong><button type="button" data-cal-next aria-label="Next month">→</button></div>
+                    <div class="calendar-weekdays" aria-hidden="true"><span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span></div>
+                    <div class="calendar-grid" data-cal-grid></div>
+                    <button type="button" class="popover-clear" data-date-clear>Clear date</button>
+                  </div>
+                </div>
+                <div class="call-control">
+                  <span>Time</span>
+                  <button type="button" class="call-control-button" data-time-trigger aria-haspopup="listbox" aria-expanded="false"><b data-time-display>Select time</b><i class="clock-glyph" aria-hidden="true"></i></button>
+                  <input type="hidden" name="callTime" data-call-time>
+                  <div class="luxury-popover time-popover" data-time-popover role="listbox" aria-label="Choose preferred call time">
+                    <p>Local time for your call</p>
+                    <div class="time-grid" data-time-grid></div>
+                    <button type="button" class="popover-clear" data-time-clear>Clear time</button>
+                  </div>
+                </div>
+              </div>
+              <span class="call-schedule-glow" aria-hidden="true"></span>
+            </fieldset>
+          </div>
+
+          <div class="advisor-select-label inquiry-form-main">
+            <span class="advisor-field-label" id="advisor-select-label">Preferred Travel Advisor</span>
+            <select class="advisor-native-select" name="advisor" data-advisor-select aria-hidden="true" tabindex="-1">
+              <option value="no-preference">No preference — match me with the best fit</option>
+              <option value="maddy">Maddy Moffitt — Owner &amp; Travel Advisor</option>
+              <option value="neelie">Neelie Shore — Travel Advisor</option>
+              <option value="amy">Amy Gennaro — Travel Advisor</option>
+              <option value="lisi">Lisi Garcia — Travel Advisor</option>
+              <option value="morgan">Morgan Hanley — Travel Advisor</option>
+              <option value="ellen">Ellen Gurley — Travel Coordinator</option>
+              <option value="rachael">Rachael Levy — Travel Advisor</option>
+            </select>
+            <div class="advisor-picker" data-advisor-picker>
+              <button class="advisor-picker-trigger" type="button" data-advisor-trigger aria-haspopup="listbox" aria-expanded="false" aria-labelledby="advisor-select-label advisor-trigger-name" aria-describedby="advisor-selection-help">
+                <span class="advisor-trigger-meta" data-advisor-trigger-meta>PERSONAL MATCH · MFM TEAM</span>
+                <span class="advisor-trigger-row">
+                  <strong id="advisor-trigger-name" data-advisor-trigger-name>No preference — match me with the best fit</strong>
+                  <i class="advisor-picker-chevron" aria-hidden="true"></i>
+                </span>
+              </button>
+              <div class="advisor-picker-menu" data-advisor-menu role="listbox" aria-labelledby="advisor-select-label" tabindex="-1">
+                <button type="button" class="advisor-picker-option is-selected" role="option" aria-selected="true" data-advisor-option="no-preference"><span><b>Match me</b><small>No preference · MFM will choose the best fit</small></span><i>00</i></button>
+                <button type="button" class="advisor-picker-option" role="option" aria-selected="false" data-advisor-option="maddy"><span><b>Maddy Moffitt</b><small>Owner &amp; Travel Advisor</small></span><i>01</i></button>
+                <button type="button" class="advisor-picker-option" role="option" aria-selected="false" data-advisor-option="neelie"><span><b>Neelie Shore</b><small>Travel Advisor</small></span><i>02</i></button>
+                <button type="button" class="advisor-picker-option" role="option" aria-selected="false" data-advisor-option="amy"><span><b>Amy Gennaro</b><small>Travel Advisor</small></span><i>03</i></button>
+                <button type="button" class="advisor-picker-option" role="option" aria-selected="false" data-advisor-option="lisi"><span><b>Lisi Garcia</b><small>Travel Advisor</small></span><i>04</i></button>
+                <button type="button" class="advisor-picker-option" role="option" aria-selected="false" data-advisor-option="morgan"><span><b>Morgan Hanley</b><small>Travel Advisor</small></span><i>05</i></button>
+                <button type="button" class="advisor-picker-option" role="option" aria-selected="false" data-advisor-option="ellen"><span><b>Ellen Gurley</b><small>Travel Coordinator</small></span><i>06</i></button>
+                <button type="button" class="advisor-picker-option" role="option" aria-selected="false" data-advisor-option="rachael"><span><b>Rachael Levy</b><small>Travel Advisor</small></span><i>07</i></button>
+              </div>
+            </div>
+            <small id="advisor-selection-help">Choose someone you already know, or let MFM match your trip to the right point of view.</small>
+          </div>
+
+          <aside class="advisor-selection-card" data-advisor-card aria-live="polite">
+            <figure class="advisor-selection-media">
+              <div class="advisor-selection-collage" data-advisor-collage aria-hidden="true">
+                <img src="assets/images/team/maddy.webp" alt="" loading="lazy" decoding="async">
+                <img src="assets/images/team/neelie.webp" alt="" loading="lazy" decoding="async">
+                <img src="assets/images/team/amy.webp" alt="" loading="lazy" decoding="async">
+                <img src="assets/images/team/lisi.webp" alt="" loading="lazy" decoding="async">
+              </div>
+              <img class="advisor-selection-photo" data-advisor-photo src="assets/images/team/maddy.webp" alt="" loading="lazy" decoding="async" hidden>
+              <span class="advisor-selection-index" data-advisor-index>MFM / 07</span>
+            </figure>
+            <div class="advisor-selection-copy">
+              <p class="advisor-selection-eyebrow" data-advisor-eyebrow>Your MFM travel team</p>
+              <h3 data-advisor-name>Let us make the match.</h3>
+              <p class="advisor-selection-role" data-advisor-role>Seven points of view · one standard of care</p>
+              <p class="advisor-selection-bio" data-advisor-bio>Tell us where you want to go and how you want the journey to feel. We’ll connect you with the team member whose experience and planning style best fit the trip.</p>
+              <div class="advisor-selection-tags" data-advisor-tags><span>PERSONAL MATCH</span><span>HOUSTON</span><span>WORLDWIDE</span></div>
+            </div>
+          </aside>
+
+          <label class="inquiry-form-main"><span>Tell us a little more</span><textarea name="message" rows="4" placeholder="Who is traveling, timing, what matters most…"></textarea></label>
+          <button class="inquiry-form-main" type="submit">Start the conversation <span>↗</span></button>
+          <p class="form-note inquiry-form-main" data-form-note>Opens your email app with the details filled in.</p>
         </form>
       </div>
     </section>

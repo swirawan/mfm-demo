@@ -14,4 +14,4 @@ Key V28 changes:
 Open index.html locally or deploy the folder to static hosting.
 
 
-V34: Added private invitation-only access gate before the portfolio disclaimer. Correct access key is provided separately by the site owner. Successful access is remembered in localStorage on that device. Note: this is a client-side gate for static hosting, not server-side authentication.
+V37: Added private invitation-only access gate before the portfolio disclaimer. Correct access key is provided separately by the site owner. Successful access is remembered in localStorage on that device. Note: this is a client-side gate for static hosting, not server-side authentication.
