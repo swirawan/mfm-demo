@@ -74,6 +74,8 @@
   const demoNoticeClose = document.querySelector('[data-close-demo-notice]');
   const demoNoticeRemember = document.querySelector('[data-demo-notice-remember]');
   const demoNoticeOpenButtons = document.querySelectorAll('[data-open-demo-notice]');
+  const demoNoticePanel = demoNotice?.querySelector('.demo-notice-panel');
+  const demoNoticeTitle = document.getElementById('demo-notice-title');
   const DEMO_NOTICE_KEY = 'mfm-portfolio-demo-notice-dismissed-v1';
   let demoNoticePreviousFocus = null;
 
@@ -88,7 +90,14 @@
     demoNotice.classList.add('is-open');
     demoNotice.setAttribute('aria-hidden', 'false');
     document.body.classList.add('demo-notice-open');
-    window.setTimeout(() => demoNoticeClose?.focus(), reduceMotion ? 0 : 180);
+
+    // Always present the notice from its beginning. Focusing the bottom "View demo"
+    // button previously made some browsers restore/scroll the panel to the middle.
+    if (demoNoticePanel) demoNoticePanel.scrollTop = 0;
+    window.setTimeout(() => {
+      if (demoNoticePanel) demoNoticePanel.scrollTop = 0;
+      demoNoticeTitle?.focus?.({ preventScroll: true });
+    }, reduceMotion ? 0 : 180);
   };
 
   const closeDemoNotice = () => {
@@ -1229,4 +1238,75 @@
     if (formNote) formNote.textContent = 'Opening your email app…';
     window.location.href = `mailto:maddy@MFMLuxuryTravel.com?subject=${subject}&body=${body}`;
   });
+
+  /* Hero editorial typewriter — keeps Travel, fixed and types the signature line. */
+  const heroTypeTitle = document.querySelector('.hero-type-title');
+  const heroTypeBeautiful = document.querySelector('[data-hero-type-beautiful]');
+  const heroTypeArranged = document.querySelector('[data-hero-type-arranged]');
+  const heroTypeCaret = heroTypeTitle?.querySelector('.hero-type-caret');
+  const heroTypeFirstLine = heroTypeBeautiful?.closest('.hero-type-line');
+  const heroTypeSecondLine = heroTypeArranged?.closest('.hero-type-line');
+  if (heroTypeTitle && heroTypeBeautiful && heroTypeArranged && heroTypeCaret && heroTypeFirstLine && heroTypeSecondLine) {
+    const beautifulWord = 'beautifully';
+    const arrangedWord = 'arranged.';
+    const heroReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let heroTypeTimer = null;
+
+    const moveHeroCaret = line => {
+      if (line === 'second') heroTypeSecondLine.appendChild(heroTypeCaret);
+      else heroTypeFirstLine.appendChild(heroTypeCaret);
+    };
+
+    const showCompleteHeroType = () => {
+      heroTypeBeautiful.textContent = beautifulWord;
+      heroTypeArranged.textContent = arrangedWord;
+      moveHeroCaret('second');
+      heroTypeTitle.classList.add('is-on-second-line','is-paused');
+    };
+
+    if (heroReduceMotion) {
+      showCompleteHeroType();
+    } else {
+      const wait = ms => new Promise(resolve => { heroTypeTimer = window.setTimeout(resolve, ms); });
+      const typeInto = async (el, word, delay) => {
+        for (let i = 1; i <= word.length; i++) {
+          el.textContent = word.slice(0, i);
+          await wait(delay + Math.random() * 34);
+        }
+      };
+      const eraseFrom = async (el, delay) => {
+        while (el.textContent.length) {
+          el.textContent = el.textContent.slice(0, -1);
+          await wait(delay + Math.random() * 18);
+        }
+      };
+      const heroTypeLoop = async () => {
+        while (document.documentElement.contains(heroTypeTitle)) {
+          heroTypeTitle.classList.remove('is-on-second-line','is-paused');
+          moveHeroCaret('first');
+          heroTypeBeautiful.textContent = '';
+          heroTypeArranged.textContent = '';
+          await wait(420);
+          await typeInto(heroTypeBeautiful, beautifulWord, 105);
+          await wait(190);
+          heroTypeTitle.classList.add('is-on-second-line');
+          moveHeroCaret('second');
+          await typeInto(heroTypeArranged, arrangedWord, 118);
+          heroTypeTitle.classList.add('is-paused');
+          await wait(2850);
+          heroTypeTitle.classList.remove('is-paused');
+          await eraseFrom(heroTypeArranged, 62);
+          heroTypeTitle.classList.remove('is-on-second-line');
+          moveHeroCaret('first');
+          await eraseFrom(heroTypeBeautiful, 66);
+          await wait(900);
+        }
+      };
+      heroTypeLoop();
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden && heroTypeTimer) window.clearTimeout(heroTypeTimer);
+      });
+    }
+  }
+
 })();
