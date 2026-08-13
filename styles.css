@@ -2519,3 +2519,105 @@ body.access-gate-open{overflow:hidden}
   .advisor-selection-copy h3{font-size:34px!important}
   .advisor-trigger-row strong{font-size:19px!important}
 }
+
+/* ==========================================================================\n   V47 — mobile optical centering pass (V43 base only)\n   One consistent ivory gutter for the large editorial chapters on phones.\n   ========================================================================== */
+@media (max-width:600px){
+  :root{--mobile-gutter:14px}
+
+  /* Prevent any transformed/animated child from creating an apparent side drift. */
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  main{width:100%;max-width:100%;overflow-x:clip}
+
+  /* The large chapter objects all share the exact same centered footprint. */
+  .departure,
+  .team-archive,
+  .slow-morning,
+  .inquire,
+  .site-footer{
+    width:calc(100% - (var(--mobile-gutter) * 2))!important;
+    max-width:calc(100% - (var(--mobile-gutter) * 2))!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  /* Slow morning previously became width:100%, which visually pinned it left. */
+  .slow-morning{
+    margin-top:0!important;
+    margin-bottom:70px!important;
+  }
+
+  /* Departure is now a centered black editorial card; its internal shell fills it. */
+  .departure{overflow:hidden!important}
+  .departure>.section-shell{
+    width:100%!important;
+    margin-inline:0!important;
+    padding-inline:20px!important;
+  }
+  .departure .split-board{
+    width:100%!important;
+    margin-left:0!important;
+    margin-right:0!important;
+  }
+
+  /* Team chapter: center the whole black object instead of only its headline. */
+  .team-archive-head,
+  .team-archive-foot{
+    width:100%!important;
+    margin-inline:0!important;
+    padding-left:20px!important;
+    padding-right:20px!important;
+  }
+  .team-roster{width:100%!important;margin-inline:0!important}
+  .team-card-toggle{padding-left:20px!important;padding-right:20px!important}
+  .team-card-detail{padding-left:20px!important;padding-right:20px!important}
+  .team-card.is-active .team-card-detail{padding-left:20px!important;padding-right:20px!important}
+
+  /* Method already used a gutter, but normalize it to the same 14px on both sides. */
+  .services{width:100%!important;margin-inline:0!important;padding-left:0!important;padding-right:0!important}
+  .method-shell{
+    width:calc(100% - (var(--mobile-gutter) * 2))!important;
+    max-width:calc(100% - (var(--mobile-gutter) * 2))!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  /* Reviews use the same centered card geometry as Method. */
+  .reviews{width:100%!important;padding-left:var(--mobile-gutter)!important;padding-right:var(--mobile-gutter)!important}
+  .reviews-layout{width:100%!important;margin-left:auto!important;margin-right:auto!important}
+
+  /* Inquiry no longer sits edge-to-edge while all surrounding chapters have gutters. */
+  .inquire{padding:0!important;overflow:visible!important}
+  .inquire-inner{
+    width:100%!important;
+    max-width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  /* Footer aligns exactly with the inquiry and other black editorial blocks. */
+  .site-footer{padding-left:20px!important;padding-right:20px!important}
+
+  /* Regular editorial shells retain a centered 20px text gutter. */
+  .section-shell:not(.method-shell):not(.inquire-inner):not(.team-archive-head):not(.team-archive-foot):not(.reviews-layout){
+    width:calc(100% - 40px)!important;
+    max-width:calc(100% - 40px)!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  /* Keep the Instagram chapter visually aligned with ordinary editorial content. */
+  .instagram-edit.section-shell{
+    width:calc(100% - 40px)!important;
+    max-width:calc(100% - 40px)!important;
+    padding-left:0!important;
+    padding-right:0!important;
+  }
+}
+
+@media (max-width:380px){
+  :root{--mobile-gutter:10px}
+  .departure>.section-shell,
+  .team-archive-head,
+  .team-archive-foot,
+  .site-footer{padding-left:18px!important;padding-right:18px!important}
+}
