@@ -11658,3 +11658,371 @@ body.access-gate-open{overflow:hidden}
     background-size:62px 22px!important;
   }
 }
+
+/* ========================================================================== */
+/* V100 — COMPACT-DESKTOP TICKET FLOW + MOBILE META BREATHING ROOM            */
+/* 1) Chrome "Desktop site" on phones typically lands around a ~980px CSS     */
+/*    viewport. At that width the couture concierge stub must join the flow    */
+/*    instead of stealing 244px from the editorial copy.                       */
+/* 2) On true phone layouts, give Best season / Best for a clearer pause.      */
+/* ========================================================================== */
+
+@media (min-width:901px) and (max-width:1180px){
+  /* Keep the approved horizontal couture ticket, but stop treating the Lens
+     insert as a fixed right-hand stub at this narrower desktop viewport. */
+  .edit-panel--departures .destination-card-copy,
+  .edit-panel--voyages .voyage-copy{
+    padding:32px 34px 28px!important;
+  }
+  .edit-panel--departures .destination-card-copy:after,
+  .edit-panel--voyages .voyage-copy:after{
+    display:none!important;
+  }
+  .edit-panel--departures .destination-detail-grid,
+  .edit-panel--voyages .voyage-detail-grid{
+    display:grid!important;
+    grid-template-columns:minmax(0,1fr) minmax(190px,220px)!important;
+    gap:24px!important;
+    align-items:start!important;
+  }
+  .edit-panel--departures .destination-note-block,
+  .edit-panel--voyages .voyage-note-block{
+    position:relative!important;
+    inset:auto!important;
+    top:auto!important;
+    right:auto!important;
+    width:100%!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:20px 14px 16px!important;
+  }
+  .edit-panel--departures .destination-note-block:after,
+  .edit-panel--voyages .voyage-note-block:after{
+    margin-top:10px!important;
+  }
+  .edit-panel--departures .destination-card-copy footer,
+  .edit-panel--voyages .voyage-copy footer{
+    margin-top:22px!important;
+  }
+}
+
+@media (max-width:430px){
+  /* The three metadata items become a single editorial column here. Preserve
+     the rules, but create a visible pause between the season/date and Best for. */
+  .edit-panel--departures .destination-meta>div,
+  .edit-panel--voyages .voyage-meta>div{
+    padding-top:18px!important;
+    padding-bottom:19px!important;
+  }
+  .edit-panel--departures .destination-meta>div:nth-child(2),
+  .edit-panel--voyages .voyage-meta>div:nth-child(2){
+    padding-bottom:24px!important;
+  }
+  .edit-panel--departures .destination-meta>div:nth-child(3),
+  .edit-panel--voyages .voyage-meta>div:nth-child(3){
+    padding-top:24px!important;
+  }
+  .edit-panel--departures .destination-meta small,
+  .edit-panel--voyages .voyage-meta small{
+    margin-bottom:10px!important;
+  }
+}
+
+/* ========================================================================== */
+/* V101 — compact-desktop voyage note repair + stronger mobile meta spacing   */
+/* 1) When the card is viewed via Chrome 'Desktop site' on a phone, keep the  */
+/*    Maddy's Lens insert readable: never use the old 3-up mini tiles.        */
+/* 2) On narrow phones, create a clearer pause between Best season and Best    */
+/*    for so the metadata breathes.                                            */
+/* ========================================================================== */
+
+/* Compact desktop / desktop-site-on-phone: the right-hand Lens insert stays
+   as one clean vertical stack instead of collapsing into three tiny columns. */
+@media (min-width:821px) and (max-width:1180px){
+  .edit-panel--voyages .voyage-detail-grid,
+  .edit-panel--departures .destination-detail-grid{
+    grid-template-columns:1fr!important;
+    gap:22px!important;
+  }
+
+  .edit-panel--voyages .voyage-note-block,
+  .edit-panel--departures .destination-note-block{
+    width:100%!important;
+    max-width:none!important;
+    margin-top:0!important;
+    padding:22px 18px 18px!important;
+  }
+
+  .edit-panel--voyages .voyage-note-block .lens-note-list,
+  .edit-panel--departures .destination-note-block .lens-note-list,
+  .edit-panel--departures .destination-note-block [data-destination-note-list]{
+    grid-template-columns:1fr!important;
+    margin-left:0!important;
+    gap:10px!important;
+  }
+
+  .edit-panel--voyages .voyage-note-block .lens-note-list li,
+  .edit-panel--departures .destination-note-block .lens-note-list li,
+  .edit-panel--departures .destination-note-block [data-destination-note-list] li{
+    min-height:46px!important;
+    padding:11px 14px 11px 30px!important;
+    text-align:left!important;
+  }
+
+  .edit-panel--voyages .voyage-copy footer,
+  .edit-panel--departures .destination-card-copy footer{
+    margin-top:20px!important;
+  }
+}
+
+/* True phone layout: make the season/date block and Best for feel separated,
+   while preserving the engraved ticket dividers. */
+@media (max-width:430px){
+  .edit-panel--departures .destination-meta,
+  .edit-panel--voyages .voyage-meta{
+    row-gap:0!important;
+  }
+
+  .edit-panel--departures .destination-meta>div,
+  .edit-panel--voyages .voyage-meta>div{
+    padding-top:20px!important;
+    padding-bottom:20px!important;
+  }
+
+  .edit-panel--departures .destination-meta>div:nth-child(2),
+  .edit-panel--voyages .voyage-meta>div:nth-child(2){
+    padding-bottom:28px!important;
+  }
+
+  .edit-panel--departures .destination-meta>div:nth-child(3),
+  .edit-panel--voyages .voyage-meta>div:nth-child(3){
+    padding-top:28px!important;
+  }
+
+  .edit-panel--departures .destination-meta small,
+  .edit-panel--voyages .voyage-meta small{
+    margin-bottom:11px!important;
+  }
+
+  .edit-panel--departures .destination-meta strong,
+  .edit-panel--voyages .voyage-meta strong{
+    line-height:1.28!important;
+  }
+}
+
+/* ========================================================================== */
+/* V102 — mobile metadata optical spacing pass                                */
+/* Best For should breathe like Ideal Stay / Best Season. Increase the         */
+/* label-to-content gap and give the third row the same calm editorial rhythm. */
+/* ========================================================================== */
+@media (max-width:430px){
+  .edit-panel--departures .destination-meta>div,
+  .edit-panel--voyages .voyage-meta>div{
+    padding-top:22px!important;
+    padding-bottom:22px!important;
+  }
+
+  .edit-panel--departures .destination-meta small,
+  .edit-panel--voyages .voyage-meta small{
+    display:block!important;
+    margin-bottom:14px!important;
+  }
+
+  .edit-panel--departures .destination-meta strong,
+  .edit-panel--voyages .voyage-meta strong{
+    display:block!important;
+    margin-top:4px!important;
+    line-height:1.3!important;
+  }
+
+  .edit-panel--departures .destination-meta>div:nth-child(2),
+  .edit-panel--voyages .voyage-meta>div:nth-child(2){
+    padding-bottom:30px!important;
+  }
+
+  .edit-panel--departures .destination-meta>div:nth-child(3),
+  .edit-panel--voyages .voyage-meta>div:nth-child(3){
+    padding-top:30px!important;
+  }
+}
+
+/* ========================================================================== */
+/* V103 — match Best For label-to-value spacing to Ideal Stay                 */
+/* The issue is not the row gap; it is the inner spacing inside the third     */
+/* metadata card. Add the same visual pause before the value.                 */
+/* ========================================================================== */
+.edit-panel--departures .destination-meta>div:nth-child(3) strong,
+.edit-panel--voyages .voyage-meta>div:nth-child(3) strong{
+  margin-top:18px!important;
+}
+
+@media (max-width:980px){
+  .edit-panel--departures .destination-meta>div:nth-child(3) strong,
+  .edit-panel--voyages .voyage-meta>div:nth-child(3) strong{
+    margin-top:20px!important;
+  }
+}
+
+@media (max-width:430px){
+  .edit-panel--departures .destination-meta>div:nth-child(3) strong,
+  .edit-panel--voyages .voyage-meta>div:nth-child(3) strong{
+    margin-top:22px!important;
+  }
+}
+
+/* ========================================================================== */
+/* V104 — mobile meta inset + centered note cards                             */
+/* 1) Give Best Season / Best For the same comfortable left/right inset as the */
+/*    Ideal Stay row so they stop feeling flush to the edge.                   */
+/* 2) Center the note-card text blocks (Private Boat / Long Lunch / etc.).    */
+/* ========================================================================== */
+
+/* Center the note-card copy cleanly. Remove the left-bullet feel. */
+.edit-panel--departures .destination-note-block .lens-note-list li,
+.edit-panel--voyages .voyage-note-block .lens-note-list li,
+.edit-panel--departures .destination-note-block [data-destination-note-list] li{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  text-align:center!important;
+  padding:14px 18px!important;
+}
+.edit-panel--departures .destination-note-block .lens-note-list li:before,
+.edit-panel--voyages .voyage-note-block .lens-note-list li:before,
+.edit-panel--departures .destination-note-block [data-destination-note-list] li:before{
+  display:none!important;
+  content:none!important;
+}
+
+/* Mobile / narrow view: stronger inset so rows 2 and 3 stop feeling like
+   they touch the left rail. Keep row rhythm equal across Ideal Stay,
+   Best Season, and Best For. */
+@media (max-width:430px){
+  .edit-panel--departures .destination-meta>div,
+  .edit-panel--voyages .voyage-meta>div{
+    padding-left:24px!important;
+    padding-right:24px!important;
+  }
+
+  .edit-panel--departures .destination-meta small,
+  .edit-panel--departures .destination-meta strong,
+  .edit-panel--voyages .voyage-meta small,
+  .edit-panel--voyages .voyage-meta strong{
+    text-align:left!important;
+  }
+
+  .edit-panel--departures .destination-meta>div:nth-child(2) strong,
+  .edit-panel--voyages .voyage-meta>div:nth-child(2) strong,
+  .edit-panel--departures .destination-meta>div:nth-child(3) strong,
+  .edit-panel--voyages .voyage-meta>div:nth-child(3) strong{
+    margin-left:0!important;
+  }
+}
+
+/* ========================================================================== */
+/* V105 — stronger mobile inset for rows 2/3 + cleaner voyage meta alignment  */
+/* 1) Best Season / Best For need a visibly deeper inset to match the feel of  */
+/*    Ideal Stay on phone.                                                     */
+/* 2) Voyage top meta cells should share one clean top alignment.              */
+/* ========================================================================== */
+
+@media (max-width:430px){
+  /* Push the second and third departure/voyage rows further inward so they
+     stop reading as flush-left compared with Ideal Stay. */
+  .edit-panel--departures .destination-meta>div,
+  .edit-panel--voyages .voyage-meta>div{
+    padding-left:38px!important;
+    padding-right:26px!important;
+  }
+
+  .edit-panel--departures .destination-meta>div:nth-child(2),
+  .edit-panel--departures .destination-meta>div:nth-child(3),
+  .edit-panel--voyages .voyage-meta>div:nth-child(2),
+  .edit-panel--voyages .voyage-meta>div:nth-child(3),
+  .edit-panel--voyages .voyage-meta>div:nth-child(4){
+    padding-left:40px!important;
+  }
+}
+
+/* Voyage card metadata: force equal top alignment and consistent internal
+   structure so the four compartments read as one aligned ticket band. */
+.edit-panel--voyages .voyage-meta{
+  align-items:stretch!important;
+}
+.edit-panel--voyages .voyage-meta>div{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  align-items:flex-start!important;
+  min-height:132px!important;
+  padding-top:16px!important;
+}
+.edit-panel--voyages .voyage-meta>div small,
+.edit-panel--voyages .voyage-meta>div strong,
+.edit-panel--voyages .voyage-meta>div em{
+  width:100%!important;
+}
+
+@media (max-width:980px){
+  .edit-panel--voyages .voyage-meta>div{
+    min-height:118px!important;
+  }
+}
+
+/* ========================================================================== */
+/* V106 — mobile chapter top clearance                                        */
+/* The fixed header is clipping the first editorial line of the Departure /   */
+/* Travel Edit chapter on phone. Give the chapter a little more top air.      */
+/* ========================================================================== */
+@media (max-width:640px){
+  .travel-edit,
+  .departure{
+    scroll-margin-top:92px!important;
+  }
+
+  .travel-edit{
+    padding-top:112px!important;
+  }
+
+  .travel-edit-head{
+    padding-top:8px!important;
+  }
+}
+
+/* ========================================================================== */
+/* V107 — metadata alignment correction                                       */
+/* Best For and Suite Category should align with the rest of the meta band.   */
+/* Keep spacing on stacked mobile rows through container padding, not by       */
+/* pushing the value text down inside the 3rd cell.                            */
+/* ========================================================================== */
+
+/* Reset the earlier value-offset on the third metadata cell so multi-column
+   layouts line up cleanly again. */
+.edit-panel--departures .destination-meta>div:nth-child(3) strong,
+.edit-panel--voyages .voyage-meta>div:nth-child(3) strong{
+  margin-top:0!important;
+}
+
+/* Voyage suite-category cell should share the same top rhythm as the others. */
+.edit-panel--voyages .voyage-meta>div:nth-child(3){
+  justify-content:flex-start!important;
+  align-items:flex-start!important;
+}
+.edit-panel--voyages .voyage-meta>div:nth-child(3) strong,
+.edit-panel--voyages .voyage-meta>div:nth-child(3) em{
+  align-self:flex-start!important;
+}
+
+/* On the narrow stacked phone layout, preserve breathing room by the cell's
+   own padding instead of offsetting the value text. */
+@media (max-width:430px){
+  .edit-panel--departures .destination-meta>div:nth-child(3),
+  .edit-panel--voyages .voyage-meta>div:nth-child(3){
+    padding-top:30px!important;
+    padding-bottom:22px!important;
+  }
+  .edit-panel--departures .destination-meta>div:nth-child(3) strong,
+  .edit-panel--voyages .voyage-meta>div:nth-child(3) strong{
+    margin-top:0!important;
+  }
+}

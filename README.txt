@@ -232,7 +232,7 @@ V98 CORRECTION
 - Removed legacy boarding-pass labels and pseudo-elements that conflicted with the approved mock.
 - Mobile keeps the same visual language while stacking the card safely for readable typography and controls.
 
-V99 CORRECTION
+V100 CORRECTION
 - Separated the Maddy's Lens crest from the title into its own ornament row and removed the leftover pill/background styling from the title label, eliminating the collision.
 - Restored Voyage split-flap characters to the exact Departure board scale and typography instead of compressing four rows into the height of one Departure row.
 - Kept Voyages as a four-row selectable list; the board is naturally taller because it contains four sailings, while the visual density now matches Departure.
