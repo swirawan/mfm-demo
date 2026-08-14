@@ -305,7 +305,7 @@
         if (flipTop) flipTop.textContent = nextChar;
         tile.dataset.char = nextChar;
         tile.classList.remove('is-flipping');
-      }, 520);
+      }, 700);
     }, delay);
   };
 
@@ -318,11 +318,146 @@
   };
 
   const boardEdits = [
-    { destination: 'LAKE COMO', mood: 'LAKESIDE / SLOW', stay: '3–5 NIGHTS', note: 'PRIVATE BOAT · LONG LUNCH · ONE PERFECT HOTEL' },
-    { destination: 'KYOTO', mood: 'CULTURE / DESIGN', stay: '4–6 NIGHTS', note: 'EARLY TEMPLES · SMALL STREETS · QUIET RYOKAN' },
-    { destination: 'SOUTHERN AFRICA', mood: 'SAFARI / WILD', stay: '8–12 NIGHTS', note: 'CAPE TOWN · WINELANDS · SAFARI AT DUSK' },
-    { destination: 'FRENCH POLYNESIA', mood: 'ISLAND / EXHALE', stay: '5–8 NIGHTS', note: 'OVERWATER MORNING · LAGOON AFTERNOON · NOTHING RUSHED' },
-    { destination: 'WHISTLER', mood: 'ALPINE / FAMILY', stay: '4–7 NIGHTS', note: 'MOUNTAIN AIR · FIRESIDE DINNER · FAMILY TIME' }
+    {
+      key: 'lake-como',
+      title: 'Lake Como',
+      destination: 'LAKE COMO',
+      mood: 'LAKESIDE / SLOW',
+      stay: '3–5 NIGHTS',
+      note: 'PRIVATE BOAT · LONG LUNCH · ONE PERFECT HOTEL',
+      season: 'May · June · September',
+      bestFor: 'Couples · milestone trips',
+      subtitle: 'For travelers who want classic beauty, one perfect hotel, and days with room to breathe.',
+      image: 'assets/images/hero-lake.webp',
+      imageAlt: 'Lake Como view',
+      highlights: ['Private boat afternoons', 'Long lakeside lunches', 'One exceptional hotel base'],
+      template: `Hello MFM team,
+
+I would love to learn more about the Lake Como departure edit.
+
+Destination: Lake Como
+Mood: Lakeside / Slow
+Ideal stay: 3–5 nights
+Best season: May · June · September
+
+Travelers:
+Hotel style preferences:
+Flexibility around dates:
+What matters most on this trip:
+`
+    },
+    {
+      key: 'kyoto',
+      title: 'Kyoto',
+      destination: 'KYOTO',
+      mood: 'CULTURE / DESIGN',
+      stay: '4–6 NIGHTS',
+      note: 'EARLY TEMPLES · SMALL STREETS · QUIET RYOKAN',
+      season: 'March · April · October',
+      bestFor: 'Culture lovers · design-minded travelers',
+      subtitle: 'A beautifully paced city break with early temple mornings, thoughtful meals, and a serene ryokan base.',
+      image: 'assets/images/kyoto-evening.webp',
+      imageAlt: 'Kyoto evening street',
+      highlights: ['Temple visits before the crowds', 'Small streets and neighborhood shops', 'Quiet ryokan evenings'],
+      template: `Hello MFM team,
+
+I would love to learn more about the Kyoto departure edit.
+
+Destination: Kyoto
+Mood: Culture / Design
+Ideal stay: 4–6 nights
+Best season: March · April · October
+
+Travelers:
+Hotel style preferences:
+Flexibility around dates:
+What matters most on this trip:
+`
+    },
+    {
+      key: 'southern-africa',
+      title: 'Southern Africa',
+      destination: 'SOUTHERN AFRICA',
+      mood: 'SAFARI / WILD',
+      stay: '8–12 NIGHTS',
+      note: 'CAPE TOWN · WINELANDS · SAFARI AT DUSK',
+      season: 'May · June · July',
+      bestFor: 'Big experiences · celebratory journeys',
+      subtitle: 'An edited multi-stop journey pairing Cape Town polish, the Winelands, and unforgettable safari days.',
+      image: 'assets/images/safari-sunset.webp',
+      imageAlt: 'Safari sunset scene',
+      highlights: ['Cape Town city stay', 'Winelands interlude', 'Twice-daily game drives'],
+      template: `Hello MFM team,
+
+I would love to learn more about the Southern Africa departure edit.
+
+Destination: Southern Africa
+Mood: Safari / Wild
+Ideal stay: 8–12 nights
+Best season: May · June · July
+
+Travelers:
+Lodge style preferences:
+Flexibility around dates:
+What matters most on this trip:
+`
+    },
+    {
+      key: 'french-polynesia',
+      title: 'French Polynesia',
+      destination: 'FRENCH POLYNESIA',
+      mood: 'ISLAND / EXHALE',
+      stay: '5–8 NIGHTS',
+      note: 'OVERWATER MORNING · LAGOON AFTERNOON · NOTHING RUSHED',
+      season: 'April · May · September',
+      bestFor: 'Honeymoons · total unwind',
+      subtitle: 'The kind of trip where the days feel long, the water does the talking, and every detail is softened.',
+      image: 'assets/images/bora-bora.webp',
+      imageAlt: 'French Polynesia overwater villas',
+      highlights: ['Overwater villa stays', 'Lagoon time built in', 'A pace designed for exhale'],
+      template: `Hello MFM team,
+
+I would love to learn more about the French Polynesia departure edit.
+
+Destination: French Polynesia
+Mood: Island / Exhale
+Ideal stay: 5–8 nights
+Best season: April · May · September
+
+Travelers:
+Villa style preferences:
+Flexibility around dates:
+What matters most on this trip:
+`
+    },
+    {
+      key: 'whistler',
+      title: 'Whistler',
+      destination: 'WHISTLER',
+      mood: 'ALPINE / FAMILY',
+      stay: '4–7 NIGHTS',
+      note: 'MOUNTAIN AIR · FIRESIDE DINNER · FAMILY TIME',
+      season: 'December · January · February',
+      bestFor: 'Families · winter reset',
+      subtitle: 'A polished mountain escape with fresh air, easy logistics, and room for everyone to truly settle in.',
+      image: 'assets/images/whistler.webp',
+      imageAlt: 'Whistler mountain village',
+      highlights: ['Easy family-friendly logistics', 'Mountain views from start to finish', 'Warm fireside evenings'],
+      template: `Hello MFM team,
+
+I would love to learn more about the Whistler departure edit.
+
+Destination: Whistler
+Mood: Alpine / Family
+Ideal stay: 4–7 nights
+Best season: December · January · February
+
+Travelers:
+Hotel style preferences:
+Flexibility around dates:
+What matters most on this trip:
+`
+    }
   ];
 
   const flapDestination = document.querySelector('[data-flap-destination]');
@@ -331,28 +466,124 @@
   const boardNumber = document.querySelector('[data-board-number]');
   const boardNote = document.querySelector('[data-board-note]');
   const boardCountdown = document.querySelector('[data-board-countdown]');
+  const destinationCardTitle = document.querySelector('[data-destination-title]');
+  const destinationCardKicker = document.querySelector('[data-destination-kicker]');
+  const destinationCardSubtitle = document.querySelector('[data-destination-subtitle]');
+  const destinationCardStay = document.querySelector('[data-destination-stay]');
+  const destinationCardSeason = document.querySelector('[data-destination-season]');
+  const destinationCardBestFor = document.querySelector('[data-destination-bestfor]');
+  const destinationCardNote = document.querySelector('[data-destination-note-list]');
+  const destinationCardImage = document.querySelector('[data-destination-image]');
+  const destinationCardHighlights = document.querySelector('[data-destination-highlights]');
+  const destinationCard = document.querySelector('[data-destination-card]');
+  const destinationCardCopy = destinationCard?.querySelector('.destination-card-copy');
   setupFlap(flapDestination, 16);
   setupFlap(flapMood, 16);
   setupFlap(flapStay, 11);
 
   let boardIndex = 0;
-  let secondsToBoardTurn = 5;
+  let secondsToBoardTurn = 6;
+  let boardAutoplay = !reduceMotion;
+  const boardPrevTrigger = document.querySelector('[data-departure-prev]');
+  const boardNextTrigger = document.querySelector('[data-departure-next]');
+  const boardPlayTrigger = document.querySelector('[data-departure-play]');
+  const updateBoardAutoplayUi = () => {
+    if (!boardPlayTrigger) return;
+    boardPlayTrigger.setAttribute('aria-pressed', boardAutoplay ? 'true' : 'false');
+    boardPlayTrigger.textContent = boardAutoplay ? 'Pause autoplay' : 'Resume autoplay';
+    boardPlayTrigger.classList.toggle('is-paused', !boardAutoplay);
+  };
+  const animateDestinationRefresh = () => {
+    if (reduceMotion || !destinationCard) return;
+    destinationCard.classList.remove('is-refreshing');
+    window.clearTimeout(window.__mfmDepartureRefreshTimer);
+    window.cancelAnimationFrame(window.__mfmDepartureRefreshRafA || 0);
+    window.cancelAnimationFrame(window.__mfmDepartureRefreshRafB || 0);
+    window.__mfmDepartureRefreshRafA = window.requestAnimationFrame(() => {
+      window.__mfmDepartureRefreshRafB = window.requestAnimationFrame(() => {
+        destinationCard.classList.add('is-refreshing');
+      });
+    });
+    window.__mfmDepartureRefreshTimer = window.setTimeout(() => {
+      destinationCard.classList.remove('is-refreshing');
+    }, 1260);
+  };
+
+  let destinationHasPainted = false;
+  const transitionDestinationCard = (edit) => {
+    if (!destinationCard || reduceMotion || !destinationHasPainted) {
+      applyDestinationCard(edit);
+      destinationHasPainted = true;
+      animateDestinationRefresh();
+      return;
+    }
+    window.clearTimeout(window.__mfmDepartureSwapTimer);
+    window.clearTimeout(window.__mfmDepartureRefreshTimer);
+    destinationCard.classList.remove('is-refreshing');
+    destinationCard.classList.add('is-switching-out');
+    window.__mfmDepartureSwapTimer = window.setTimeout(() => {
+      applyDestinationCard(edit);
+      destinationCard.classList.remove('is-switching-out');
+      void destinationCard.offsetWidth;
+      animateDestinationRefresh();
+    }, 210);
+  };
+
+  const toJourneyTag = (value = '') => value
+    .toLowerCase()
+    .replace(/\s+/g, ' ')
+    .trim()
+    .replace(/(^|[\s/])([a-z])/g, (match, prefix, char) => `${prefix}${char.toUpperCase()}`);
+
+  const renderDestinationNoteTags = (note = '') => {
+    if (!destinationCardNote) return;
+    const parts = String(note).split('·').map(part => part.trim()).filter(Boolean);
+    const items = (parts.length ? parts : [String(note).trim()]).filter(Boolean);
+    destinationCardNote.setAttribute('aria-label', note);
+    destinationCardNote.innerHTML = items.map(item => `<li>${toJourneyTag(item)}</li>`).join('');
+  };
+
+  const applyDestinationCard = (edit) => {
+    if (destinationCardTitle) destinationCardTitle.textContent = edit.title;
+    if (destinationCardKicker) destinationCardKicker.textContent = edit.mood;
+    if (destinationCardSubtitle) destinationCardSubtitle.textContent = edit.subtitle;
+    if (destinationCardStay) destinationCardStay.textContent = edit.stay.toLowerCase();
+    if (destinationCardSeason) destinationCardSeason.textContent = edit.season;
+    if (destinationCardBestFor) destinationCardBestFor.textContent = edit.bestFor;
+    renderDestinationNoteTags(edit.note);
+    if (destinationCardImage) {
+      destinationCardImage.src = edit.image;
+      destinationCardImage.alt = edit.imageAlt;
+    }
+    if (destinationCardHighlights) {
+      destinationCardHighlights.innerHTML = edit.highlights.map(item => `<li>${item}</li>`).join('');
+    }
+    const departureCta = document.querySelector('[data-plan-destination]');
+    if (departureCta) departureCta.dataset.planDestination = edit.key;
+  };
+
   const paintBoard = (index) => {
     const edit = boardEdits[index];
     setFlapText(flapDestination, edit.destination, 0);
     setFlapText(flapMood, edit.mood, 120);
     setFlapText(flapStay, edit.stay, 240);
     if (boardNumber) boardNumber.textContent = `EDIT ${String(index + 1).padStart(2, '0')} / ${String(boardEdits.length).padStart(2, '0')}`;
-    if (boardNote) {
-      boardNote.animate?.([{ opacity: .2 }, { opacity: 1 }], { duration: 650, easing: 'ease' });
-      boardNote.textContent = edit.note;
-    }
-    secondsToBoardTurn = 5;
-    if (boardCountdown) boardCountdown.textContent = '05';
+    if (boardNote) boardNote.textContent = edit.note;
+    transitionDestinationCard(edit);
+    secondsToBoardTurn = 6;
+    if (boardCountdown) boardCountdown.textContent = boardAutoplay ? '06' : 'PA';
+  };
+  const goToBoard = (index, manual = false) => {
+    boardIndex = (index + boardEdits.length) % boardEdits.length;
+    if (manual) boardAutoplay = false;
+    updateBoardAutoplayUi();
+    paintBoard(boardIndex);
   };
   window.setTimeout(() => paintBoard(0), reduceMotion ? 0 : 350);
+  updateBoardAutoplayUi();
   if (!reduceMotion) {
     setInterval(() => {
+      if (!boardAutoplay) return;
       secondsToBoardTurn -= 1;
       if (secondsToBoardTurn <= 0) {
         boardIndex = (boardIndex + 1) % boardEdits.length;
@@ -362,6 +593,148 @@
       }
     }, 1000);
   }
+  boardPrevTrigger?.addEventListener('click', () => goToBoard(boardIndex - 1, true));
+  boardNextTrigger?.addEventListener('click', () => goToBoard(boardIndex + 1, true));
+  boardPlayTrigger?.addEventListener('click', () => {
+    boardAutoplay = !boardAutoplay;
+    if (boardAutoplay) secondsToBoardTurn = 6;
+    updateBoardAutoplayUi();
+    if (boardCountdown) boardCountdown.textContent = boardAutoplay ? '06' : 'PA';
+  });
+
+  /* V89 voyage selector — Departure board visual system, list interaction preserved. */
+  const voyageCards=[...document.querySelectorAll('[data-voyage-card]')];
+  const voyageSound=document.querySelector('[data-voyage-sound]');
+  const voyageRows=[...document.querySelectorAll('[data-voyage-select]')];
+
+  const voyageEdits=[
+    {key:'mediterranean',title:'MEDITERRANEAN VOYAGE',ship:'SEABOURN OVATION',date:'JUN 14'},
+    {key:'alaska',title:'ALASKAN PASSAGE',ship:'SILVER NOVA',date:'AUG 02'},
+    {key:'fjords',title:'NORWEGIAN FJORDS',ship:'VIKING SKY',date:'SEP 12'},
+    {key:'caribbean',title:'CARIBBEAN ESCAPE',ship:'REGENT SEVEN SEAS',date:'DEC 06'}
+  ];
+
+  /* Each list row uses the exact same flap renderer as the Departure board. */
+  voyageRows.forEach((row,index)=>{
+    const edit=voyageEdits[index];
+    const title=row.querySelector('[data-voyage-row-title]');
+    const ship=row.querySelector('[data-voyage-row-ship]');
+    const date=row.querySelector('[data-voyage-row-date]');
+    setupFlap(title,21);
+    setupFlap(ship,18);
+    setupFlap(date,6);
+    setFlapText(title,edit.title,0);
+    setFlapText(ship,edit.ship,70);
+    setFlapText(date,edit.date,140);
+
+    /* Dedicated overflow tracks for voyage + ship. Both use the same flap
+       renderer, but only fields that genuinely overflow are allowed to glide. */
+    [title,ship].forEach(viewport=>{
+      if (viewport && !viewport.querySelector('.voyage-flap-track')) {
+        const track=document.createElement('span');
+        track.className='voyage-flap-track';
+        [...viewport.children].forEach(tile=>track.appendChild(tile));
+        viewport.appendChild(track);
+      }
+    });
+  });
+
+  const sizeVoyageMarquees=()=>{
+    voyageRows.forEach(row=>{
+      row.querySelectorAll('[data-voyage-row-title],[data-voyage-row-ship]').forEach(viewport=>{
+        const track=viewport.querySelector('.voyage-flap-track');
+        if(!track)return;
+        track.classList.remove('is-marquee');
+        track.style.removeProperty('--marquee-distance');
+        track.style.removeProperty('--marquee-duration');
+        requestAnimationFrame(()=>{
+          const distance=Math.max(0,Math.ceil(track.scrollWidth-viewport.clientWidth));
+          if(distance>5){
+            track.style.setProperty('--marquee-distance',`${distance}px`);
+            track.style.setProperty('--marquee-duration',`${Math.max(8.2,7.2+distance/28).toFixed(1)}s`);
+            track.classList.add('is-marquee');
+          }
+        });
+      });
+    });
+  };
+  sizeVoyageMarquees();
+  window.addEventListener('resize',()=>window.requestAnimationFrame(sizeVoyageMarquees),{passive:true});
+
+  let voyageSoundOn=false, voyageCtx=null;
+  const voyageClick=()=>{
+    if(!voyageSoundOn)return;
+    const A=window.AudioContext||window.webkitAudioContext;
+    if(!A)return;
+    voyageCtx ||= new A();
+    if(voyageCtx.state==='suspended') voyageCtx.resume();
+    const c=voyageCtx, n=c.currentTime;
+    const strike=(when,freq,gainValue)=>{
+      const o=c.createOscillator(),g=c.createGain();
+      o.type='square';
+      o.frequency.setValueAtTime(freq,when);
+      o.frequency.exponentialRampToValueAtTime(Math.max(52,freq*.58),when+.045);
+      g.gain.setValueAtTime(gainValue,when);
+      g.gain.exponentialRampToValueAtTime(.0001,when+.05);
+      o.connect(g).connect(c.destination);o.start(when);o.stop(when+.055);
+    };
+    strike(n,150,.02); strike(n+.035,104,.015);
+  };
+
+  const selectVoyage=(key,playSound=true)=>{
+    voyageRows.forEach(row=>{
+      const active=row.dataset.voyageSelect===key;
+      row.classList.toggle('is-active',active);
+      row.setAttribute('aria-selected',active?'true':'false');
+    });
+    voyageCards.forEach(card=>card.classList.toggle('is-active',card.dataset.voyageCard===key));
+    if(playSound)voyageClick();
+  };
+
+  voyageRows.forEach(row=>row.addEventListener('click',()=>selectVoyage(row.dataset.voyageSelect,true)));
+  voyageSound?.addEventListener('click',()=>{
+    voyageSoundOn=!voyageSoundOn;
+    voyageSound.setAttribute('aria-pressed',voyageSoundOn?'true':'false');
+    voyageSound.textContent=voyageSoundOn?'SOUND ON':'SOUND OFF';
+    voyageClick();
+  });
+  selectVoyage('mediterranean',false);
+
+  /* Curated Edit toggle */
+  const editTabs = [...document.querySelectorAll('[data-edit-trigger]')];
+  const editViews = [...document.querySelectorAll('[data-edit-view]')];
+  const travelEditSection = document.querySelector('.travel-edit');
+  const travelEditTitle = document.getElementById('travel-edit-title');
+  const travelEditLead = document.querySelector('.travel-edit-lead');
+  const editHeadingCopy = {
+    departures: {
+      title: 'The Departure <em>Edit</em>',
+      lead: 'Thoughtfully paced destinations, simplified beautifully. Browse the departure board, pause when something catches your eye, and let MFM handle the details.'
+    },
+    voyages: {
+      title: 'Voyages worth <em>remembering.</em>',
+      lead: 'Hand-selected sailings for travelers who value ease, clarity, and beautifully handled details. Choose a sailing and open its private voyage brief below.'
+    }
+  };
+  const setEditView = (viewKey) => {
+    editTabs.forEach(tab => {
+      const active = tab.dataset.editTrigger === viewKey;
+      tab.classList.toggle('is-active', active);
+      tab.setAttribute('aria-selected', active ? 'true' : 'false');
+    });
+    editViews.forEach(view => {
+      const active = view.dataset.editView === viewKey;
+      view.classList.toggle('is-active', active);
+      view.hidden = !active;
+      view.classList.remove('is-panel-entering');
+    });
+    travelEditSection?.classList.toggle('is-voyages-view', viewKey === 'voyages');
+    travelEditSection?.classList.toggle('is-departures-view', viewKey === 'departures');
+    if (travelEditTitle && editHeadingCopy[viewKey]) travelEditTitle.innerHTML = editHeadingCopy[viewKey].title;
+    if (travelEditLead && editHeadingCopy[viewKey]) travelEditLead.textContent = editHeadingCopy[viewKey].lead;
+  };
+  editTabs.forEach(tab => tab.addEventListener('click', () => setEditView(tab.dataset.editTrigger || 'departures')));
+  setEditView(document.querySelector('[data-edit-trigger].is-active')?.dataset.editTrigger || 'departures');
 
   /* Maddy Lens V30 - exact uploaded 20-page magazine rendered at 200 DPI.
      Desktop pairs the cover by itself, then 02/03, 04/05 ... 18/19, with page 20 closing the issue.
@@ -1219,6 +1592,71 @@
   /* Inquiry */
   const form = document.querySelector('[data-inquiry-form]');
   const formNote = document.querySelector('[data-form-note]');
+  const inquiryDestinationField = form?.querySelector('input[name="destination"]');
+  const inquiryMessageField = form?.querySelector('textarea[name="message"]');
+  const autoSizeInquiryMessage = () => {
+    if (!inquiryMessageField) return;
+    inquiryMessageField.style.height = 'auto';
+    inquiryMessageField.style.height = `${Math.max(112, inquiryMessageField.scrollHeight + 2)}px`;
+  };
+  inquiryMessageField?.addEventListener('input', autoSizeInquiryMessage);
+  window.addEventListener('resize', autoSizeInquiryMessage, { passive: true });
+  autoSizeInquiryMessage();
+  const journeyPlanLinks = [...document.querySelectorAll('[data-plan-journey]')];
+  const destinationPlanLinks = [...document.querySelectorAll('[data-plan-destination]')];
+
+  const focusPrefilledForm = (noteText) => {
+    if (formNote) formNote.textContent = noteText;
+    document.getElementById('inquire')?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+    window.setTimeout(() => {
+      inquiryMessageField?.focus({ preventScroll: true });
+      if (inquiryMessageField?.setSelectionRange) {
+        const len = inquiryMessageField.value.length;
+        inquiryMessageField.setSelectionRange(len, len);
+      }
+    }, reduceMotion ? 0 : 360);
+  };
+
+  const prefillVoyageInquiry = (key) => {
+    if (!form) return;
+    const card = document.querySelector(`[data-voyage-card="${key}"]`);
+    if (!card) return;
+    const voyageTitle = card.dataset.voyageTitle || 'Selected voyage';
+    const destination = card.dataset.voyageDestination || voyageTitle;
+    const template = decodeURIComponent(card.dataset.voyageTemplate || `Hello MFM team,
+
+I would love to learn more about the ${voyageTitle}.
+`);
+    if (inquiryDestinationField) inquiryDestinationField.value = destination;
+    if (inquiryMessageField) inquiryMessageField.value = template;
+    autoSizeInquiryMessage();
+    focusPrefilledForm(`${voyageTitle} has been added below — tailor anything before sending.`);
+  };
+
+  const prefillDepartureInquiry = (key) => {
+    if (!form) return;
+    const edit = boardEdits.find(item => item.key === key) || boardEdits[0];
+    if (!edit) return;
+    if (inquiryDestinationField) inquiryDestinationField.value = edit.title;
+    if (inquiryMessageField) inquiryMessageField.value = edit.template;
+    autoSizeInquiryMessage();
+    focusPrefilledForm(`${edit.title} has been added below — tailor anything before sending.`);
+  };
+
+  journeyPlanLinks.forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      prefillVoyageInquiry(link.dataset.planJourney || '');
+    });
+  });
+
+  destinationPlanLinks.forEach(link => {
+    link.addEventListener('click', event => {
+      event.preventDefault();
+      prefillDepartureInquiry(link.dataset.planDestination || '');
+    });
+  });
+
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
     const emailOkay = validateEmail(true);

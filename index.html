@@ -8,7 +8,7 @@
   <title>MFM Luxury Travel — Travel, Beautifully Arranged</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,ital,wght@6..96,400;6..96,500&family=Libre+Bodoni:ital,wght@0,400;0,500;1,400&family=Libre+Caslon+Display&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,ital,wght@6..96,400;6..96,500&family=Cormorant+Garamond:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;500&family=Libre+Bodoni:ital,wght@0,400;0,500;1,400&family=Libre+Caslon+Display&family=Manrope:wght@400;500;600&family=Prata&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
   <script src="script.js" defer></script>
 </head>
@@ -124,41 +124,338 @@
         </div>
       </div>
     </section>
+    <section class="travel-edit" id="approach" aria-labelledby="travel-edit-title">
+      <div class="section-shell">
+        <header class="travel-edit-head reveal">
+          <div>
+            <p class="eyebrow eyebrow--warm">The MFM curated desk</p>
+            <h2 id="travel-edit-title">The Departure <em>Edit</em></h2>
+            <p class="travel-edit-lead">One signature section, two moods: MFM’s nostalgic destination board and its curated voyage selector. Toggle between them and explore the editorial brief below.</p>
+          </div>
+          <div class="travel-edit-toggle" role="tablist" aria-label="Switch between departure and voyage boards">
+            <button class="travel-edit-tab is-active" type="button" role="tab" aria-selected="true" data-edit-trigger="departures">Departure</button>
+            <button class="travel-edit-tab" type="button" role="tab" aria-selected="false" data-edit-trigger="voyages">Voyages</button>
+          </div>
+        </header>
 
-    <section class="departure" id="approach">
-      <div class="departure-head section-shell reveal">
-        <div>
-          <p class="eyebrow eyebrow--warm">The MFM destination desk</p>
-          <h2>The Departure <em>Edit</em></h2>
-        </div>
-        <p>A live editorial board of places worth lingering over. The old-airport split flaps turn automatically as the shortlist changes.</p>
-      </div>
+        <div class="edit-panel edit-panel--departures is-active" data-edit-view="departures">
+          <div class="split-board reveal" data-departure-board aria-label="Animated destination inspiration board">
+            <div class="split-board-mast">
+              <span><i class="status-light" aria-hidden="true"></i> MFM / DEPARTURES</span>
+              <span data-board-clock>20:47</span>
+              <span>HOUSTON · WORLDWIDE</span>
+            </div>
+            <div class="split-board-labels">
+              <span>DESTINATION</span><span>MOOD</span><span>IDEAL STAY</span>
+            </div>
+            <div class="split-board-live">
+              <div class="flap-display flap-display--destination" data-flap-destination aria-label="Destination"></div>
+              <div class="flap-display flap-display--mood" data-flap-mood aria-label="Mood"></div>
+              <div class="flap-display flap-display--stay" data-flap-stay aria-label="Ideal stay"></div>
+            </div>
+            <div class="split-board-foot">
+              <span data-board-number>EDIT 01 / 05</span>
+              <span data-board-note>PRIVATE BOAT · LONG LUNCH · ONE PERFECT HOTEL</span>
+              <span>NEXT EDIT <b data-board-countdown>05</b></span>
+            </div>
+          </div>
 
-      <div class="split-board reveal" data-departure-board aria-label="Animated destination inspiration board">
-        <div class="split-board-mast">
-          <span><i class="status-light" aria-hidden="true"></i> MFM / DEPARTURES</span>
-          <span data-board-clock>20:47</span>
-          <span>HOUSTON · WORLDWIDE</span>
-        </div>
-        <div class="split-board-labels">
-          <span>DESTINATION</span><span>MOOD</span><span>IDEAL STAY</span>
-        </div>
-        <div class="split-board-live">
-          <div class="flap-display flap-display--destination" data-flap-destination aria-label="Destination"></div>
-          <div class="flap-display flap-display--mood" data-flap-mood aria-label="Mood"></div>
-          <div class="flap-display flap-display--stay" data-flap-stay aria-label="Ideal stay"></div>
-        </div>
-        <div class="split-board-foot">
-          <span data-board-number>EDIT 01 / 05</span>
-          <span data-board-note>PRIVATE BOAT · LONG LUNCH · ONE PERFECT HOTEL</span>
-          <span>NEXT EDIT <b data-board-countdown>05</b></span>
-        </div>
-      </div>
+          <div class="departure-board-controls reveal" aria-label="Departure board controls">
+            <button type="button" class="departure-board-button" data-departure-prev>Previous</button>
+            <button type="button" class="departure-board-button is-primary" data-departure-play aria-pressed="true">Pause autoplay</button>
+            <button type="button" class="departure-board-button" data-departure-next>Next</button>
+          </div>
 
-      <div class="departure-ticker" aria-hidden="true" data-loop-marquee data-speed="30">
-        <div class="departure-ticker-track" data-loop-track>
-          <div class="departure-ticker-group" data-loop-segment>
-            <span>ROME → CAPRI</span><i>•</i><span>TOKYO → KYOTO</span><i>•</i><span>CAPE TOWN → SABI SANDS</span><i>•</i><span>TAHITI → BORA BORA</span><i>•</i><span>VANCOUVER → WHISTLER</span><i>•</i>
+          <div class="departure-ticker" aria-hidden="true" data-loop-marquee data-speed="30">
+            <div class="departure-ticker-track" data-loop-track>
+              <div class="departure-ticker-group" data-loop-segment>
+                <span>ROME → CAPRI</span><i>•</i><span>TOKYO → KYOTO</span><i>•</i><span>CAPE TOWN → SABI SANDS</span><i>•</i><span>TAHITI → BORA BORA</span><i>•</i><span>VANCOUVER → WHISTLER</span><i>•</i>
+              </div>
+            </div>
+          </div>
+
+          <article class="destination-card couture-ticket reveal" data-destination-card>
+            <figure class="destination-card-media">
+              <img data-destination-image src="assets/images/hero-lake.webp" alt="Lake Como view" loading="lazy" decoding="async">
+              <span>MFM<small>CURATED</small></span>
+            </figure>
+            <div class="destination-card-copy">
+              <header>
+                <div class="destination-stamp-copy">Hot departure prepared exclusively for you</div>
+                <p data-destination-kicker>LAKESIDE / SLOW</p>
+                <h3 data-destination-title>Lake Como</h3>
+                <div class="destination-subline" data-destination-subtitle>For travelers who want classic beauty, one perfect hotel, and days with room to breathe.</div>
+              </header>
+              <div class="destination-meta">
+                <div><small>Ideal stay</small><strong data-destination-stay>3–5 nights</strong></div>
+                <div><small>Best season</small><strong data-destination-season>May · June · September</strong></div>
+                <div><small>Best for</small><strong data-destination-bestfor>Couples · milestone trips</strong></div>
+              </div>
+              <div class="destination-detail-grid">
+                <div>
+                  <small>Why MFM likes it</small>
+                  <ul data-destination-highlights>
+                    <li>Private boat afternoons</li>
+                    <li>Long lakeside lunches</li>
+                    <li>One exceptional hotel base</li>
+                  </ul>
+                </div>
+                <div class="destination-note-block">
+                  <small>Maddy's lens</small>
+                  <ul class="lens-note-list" data-destination-note-list>
+                    <li>Private boat</li>
+                    <li>Long lunch</li>
+                    <li>One perfect hotel</li>
+                  </ul>
+                </div>
+              </div>
+              <footer>
+                <a class="voyage-plan-button" href="#inquire" data-plan-destination="lake-como">Plan this journey <span>→</span></a>
+              </footer>
+            </div>
+          </article>
+        </div>
+
+        <div class="edit-panel edit-panel--voyages" data-edit-view="voyages" hidden>
+          <div class="voyage-stage">
+            <aside class="voyage-intro reveal">
+              <p class="eyebrow eyebrow--warm">Curated cruise voyages</p>
+              <h3>Voyages worth <em>remembering.</em></h3>
+              <p class="voyage-intro-copy">Hot sailings now for travelers who want clarity, ease, and beautifully handled details. Every element is curated so the trip feels simple from the first click.</p>
+              <div class="voyage-intro-note">
+                <span>✦</span>
+                <p>Hot now: choose a sailing to open its private voyage brief. The selector keeps the nostalgic split-flap character you love, with a sound toggle and detail cards designed for easy, high-touch decision-making.</p>
+              </div>
+              <div class="voyage-intro-signature"><span>⚓</span> Tailored. Refined. Remarkable.</div>
+            </aside>
+            <div class="voyage-stage-main">
+              <div class="voyage-board-wrap reveal">
+                <div class="split-board voyage-selector-board" data-voyage-selector-board aria-label="Curated cruise sailing selector">
+                  <div class="split-board-mast">
+                    <span><i class="status-light" aria-hidden="true"></i> MFM / VOYAGES</span>
+                    <span>CURATED SAILINGS</span>
+                    <button type="button" class="voyage-sound-button voyage-sound-mast" data-voyage-sound aria-pressed="false">SOUND OFF</button>
+                  </div>
+                  <div class="split-board-labels">
+                    <span>VOYAGE</span><span>SHIP</span><span>SAILING</span>
+                  </div>
+                  <div class="voyage-selector-list" role="listbox" aria-label="Choose a voyage">
+                    <button class="split-board-live voyage-selector-row is-active" type="button" role="option" aria-selected="true" data-voyage-select="mediterranean">
+                      <span class="voyage-row-light" aria-hidden="true"></span>
+                      <span class="flap-display flap-display--destination" data-voyage-row-title="MEDITERRANEAN VOYAGE"></span>
+                      <span class="flap-display flap-display--mood" data-voyage-row-ship="SEABOURN OVATION"></span>
+                      <span class="flap-display flap-display--stay" data-voyage-row-date="JUN 14"></span>
+                    </button>
+                    <button class="split-board-live voyage-selector-row" type="button" role="option" aria-selected="false" data-voyage-select="alaska">
+                      <span class="voyage-row-light" aria-hidden="true"></span>
+                      <span class="flap-display flap-display--destination" data-voyage-row-title="ALASKAN PASSAGE"></span>
+                      <span class="flap-display flap-display--mood" data-voyage-row-ship="SILVER NOVA"></span>
+                      <span class="flap-display flap-display--stay" data-voyage-row-date="AUG 02"></span>
+                    </button>
+                    <button class="split-board-live voyage-selector-row" type="button" role="option" aria-selected="false" data-voyage-select="fjords">
+                      <span class="voyage-row-light" aria-hidden="true"></span>
+                      <span class="flap-display flap-display--destination" data-voyage-row-title="NORWEGIAN FJORDS"></span>
+                      <span class="flap-display flap-display--mood" data-voyage-row-ship="VIKING SKY"></span>
+                      <span class="flap-display flap-display--stay" data-voyage-row-date="SEP 12"></span>
+                    </button>
+                    <button class="split-board-live voyage-selector-row" type="button" role="option" aria-selected="false" data-voyage-select="caribbean">
+                      <span class="voyage-row-light" aria-hidden="true"></span>
+                      <span class="flap-display flap-display--destination" data-voyage-row-title="CARIBBEAN ESCAPE"></span>
+                      <span class="flap-display flap-display--mood" data-voyage-row-ship="REGENT SEVEN SEAS"></span>
+                      <span class="flap-display flap-display--stay" data-voyage-row-date="DEC 06"></span>
+                    </button>
+                  </div>
+                  <div class="split-board-foot voyage-selector-foot">
+                    <span>04 CURATED SAILINGS</span>
+                    <span>SELECT A VOYAGE TO OPEN ITS PRIVATE EDIT</span>
+                    <span>PRIVATE · CONSIDERED · PERSONAL</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="voyage-cards reveal">
+            <article class="voyage-card couture-ticket is-active" data-voyage-card="mediterranean" data-voyage-title="Mediterranean Voyage" data-voyage-destination="Mediterranean cruise" data-voyage-ship="Seabourn Ovation" data-voyage-sailing="June 14, 2025" data-voyage-embarkation="Barcelona, Spain" data-voyage-nights="7 nights" data-voyage-template="Hello MFM team,%0A%0AI would love to learn more about the Mediterranean Voyage.%0A%0AVoyage: Mediterranean Voyage%0AShip: Seabourn Ovation%0ASailing date: June 14, 2025%0AEmbarkation: Barcelona, Spain%0ALength: 7 nights%0A%0ATravelers:%0AStateroom or suite preferences:%0AFlexibility around dates:%0AWhat matters most on this trip:%0A">
+              <figure>
+                <img src="assets/images/santorini.webp" alt="Mediterranean coast" loading="lazy" decoding="async">
+                <span>MFM<small>CURATED</small></span>
+              </figure>
+              <div class="voyage-copy">
+                <header>
+                  <div class="voyage-stamp-copy">Hot sailing curated exclusively for you</div>
+                  <p>Seven nights</p>
+                  <h3>Mediterranean Voyage</h3>
+                  <div class="voyage-subline">Timeless coasts. Storied cities. Effortless luxury.</div>
+                </header>
+                <div class="voyage-meta">
+                  <div><small>Ship</small><strong>Seabourn Ovation</strong></div>
+                  <div><small>Embarkation</small><strong>Barcelona, Spain</strong></div>
+                  <div><small>Suite category</small><strong>Veranda Suite</strong><em>Category V3</em></div>
+                  <div><small>Sailing date</small><strong>June 14, 2025</strong></div>
+                </div>
+                <div class="voyage-detail-grid">
+                  <div>
+                    <small>Itinerary</small>
+                    <ul>
+                      <li>Barcelona, Spain</li>
+                      <li>Marseille, France</li>
+                      <li>Monte Carlo, Monaco</li>
+                      <li>Florence / Livorno, Italy</li>
+                      <li>Rome (Civitavecchia), Italy</li>
+                      <li>Amalfi, Italy</li>
+                    </ul>
+                  </div>
+                  <div class="voyage-note-block">
+                    <small>Maddy's lens</small>
+                    <ul class="lens-note-list">
+                      <li>Easy pacing</li>
+                      <li>Signature moments chosen</li>
+                      <li>Every detail handled</li>
+                    </ul>
+                  </div>
+                </div>
+                <footer>
+                  <a class="voyage-plan-button" href="#inquire" data-plan-journey="mediterranean">Plan this journey <span>→</span></a>
+                </footer>
+              </div>
+            </article>
+
+            <article class="voyage-card couture-ticket" data-voyage-card="alaska" data-voyage-title="Alaskan Passage" data-voyage-destination="Alaska cruise" data-voyage-ship="Silver Nova" data-voyage-sailing="August 02, 2025" data-voyage-embarkation="Vancouver, Canada" data-voyage-nights="7 nights" data-voyage-template="Hello MFM team,%0A%0AI would love to learn more about the Alaskan Passage.%0A%0AVoyage: Alaskan Passage%0AShip: Silver Nova%0ASailing date: August 02, 2025%0AEmbarkation: Vancouver, Canada%0ALength: 7 nights%0A%0ATravelers:%0AStateroom or suite preferences:%0AFlexibility around dates:%0AWhat matters most on this trip:%0A">
+              <figure>
+                <img src="assets/images/whistler.webp" alt="Mountain coastal passage" loading="lazy" decoding="async">
+                <span>MFM<small>CURATED</small></span>
+              </figure>
+              <div class="voyage-copy">
+                <header>
+                  <div class="voyage-stamp-copy">Hot sailing curated exclusively for you</div>
+                  <p>Seven nights</p>
+                  <h3>Alaskan Passage</h3>
+                  <div class="voyage-subline">Dramatic scenery, polished service, and days that feel quietly grand.</div>
+                </header>
+                <div class="voyage-meta">
+                  <div><small>Ship</small><strong>Silver Nova</strong></div>
+                  <div><small>Embarkation</small><strong>Vancouver, Canada</strong></div>
+                  <div><small>Suite category</small><strong>Classic Veranda</strong><em>Decks 6–8</em></div>
+                  <div><small>Sailing date</small><strong>August 02, 2025</strong></div>
+                </div>
+                <div class="voyage-detail-grid">
+                  <div>
+                    <small>Itinerary</small>
+                    <ul>
+                      <li>Vancouver, Canada</li>
+                      <li>Inside Passage cruising</li>
+                      <li>Juneau, Alaska</li>
+                      <li>Ketchikan, Alaska</li>
+                      <li>Skagway, Alaska</li>
+                      <li>Glacier Bay</li>
+                    </ul>
+                  </div>
+                  <div class="voyage-note-block">
+                    <small>Maddy's lens</small>
+                    <ul class="lens-note-list">
+                      <li>Easy pacing</li>
+                      <li>Signature moments chosen</li>
+                      <li>Every detail handled</li>
+                    </ul>
+                  </div>
+                </div>
+                <footer>
+                  <a class="voyage-plan-button" href="#inquire" data-plan-journey="alaska">Plan this journey <span>→</span></a>
+                </footer>
+              </div>
+            </article>
+
+            <article class="voyage-card couture-ticket" data-voyage-card="fjords" data-voyage-title="Norwegian Fjords" data-voyage-destination="Norwegian fjords cruise" data-voyage-ship="Viking Sky" data-voyage-sailing="September 12, 2025" data-voyage-embarkation="Oslo, Norway" data-voyage-nights="10 nights" data-voyage-template="Hello MFM team,%0A%0AI would love to learn more about the Norwegian Fjords sailing.%0A%0AVoyage: Norwegian Fjords%0AShip: Viking Sky%0ASailing date: September 12, 2025%0AEmbarkation: Oslo, Norway%0ALength: 10 nights%0A%0ATravelers:%0AStateroom or suite preferences:%0AFlexibility around dates:%0AWhat matters most on this trip:%0A">
+              <figure>
+                <img src="assets/images/hero-lake.webp" alt="Calm European waters and mountains for a Norwegian Fjords style sailing" loading="lazy" decoding="async">
+                <span>MFM<small>CURATED</small></span>
+              </figure>
+              <div class="voyage-copy">
+                <header>
+                  <div class="voyage-stamp-copy">Hot sailing curated exclusively for you</div>
+                  <p>Ten nights</p>
+                  <h3>Norwegian Fjords</h3>
+                  <div class="voyage-subline">Crisp air, cinematic waterways, and refined Scandinavian calm.</div>
+                </header>
+                <div class="voyage-meta">
+                  <div><small>Ship</small><strong>Viking Sky</strong></div>
+                  <div><small>Embarkation</small><strong>Oslo, Norway</strong></div>
+                  <div><small>Suite category</small><strong>Explorer Suite</strong><em>Panoramic views</em></div>
+                  <div><small>Sailing date</small><strong>September 12, 2025</strong></div>
+                </div>
+                <div class="voyage-detail-grid">
+                  <div>
+                    <small>Itinerary</small>
+                    <ul>
+                      <li>Oslo, Norway</li>
+                      <li>Geiranger</li>
+                      <li>Bergen</li>
+                      <li>Stavanger</li>
+                      <li>Flåm</li>
+                      <li>Scenic fjord cruising</li>
+                    </ul>
+                  </div>
+                  <div class="voyage-note-block">
+                    <small>Maddy's lens</small>
+                    <ul class="lens-note-list">
+                      <li>Easy pacing</li>
+                      <li>Signature moments chosen</li>
+                      <li>Every detail handled</li>
+                    </ul>
+                  </div>
+                </div>
+                <footer>
+                  <a class="voyage-plan-button" href="#inquire" data-plan-journey="fjords">Plan this journey <span>→</span></a>
+                </footer>
+              </div>
+            </article>
+
+            <article class="voyage-card couture-ticket" data-voyage-card="caribbean" data-voyage-title="Caribbean Escape" data-voyage-destination="Caribbean cruise" data-voyage-ship="Regent Seven Seas" data-voyage-sailing="December 06, 2025" data-voyage-embarkation="Miami, Florida" data-voyage-nights="8 nights" data-voyage-template="Hello MFM team,%0A%0AI would love to learn more about the Caribbean Escape.%0A%0AVoyage: Caribbean Escape%0AShip: Regent Seven Seas%0ASailing date: December 06, 2025%0AEmbarkation: Miami, Florida%0ALength: 8 nights%0A%0ATravelers:%0AStateroom or suite preferences:%0AFlexibility around dates:%0AWhat matters most on this trip:%0A">
+              <figure>
+                <img src="assets/images/bora-bora.webp" alt="Tropical Caribbean water" loading="lazy" decoding="async">
+                <span>MFM<small>CURATED</small></span>
+              </figure>
+              <div class="voyage-copy">
+                <header>
+                  <div class="voyage-stamp-copy">Hot sailing curated exclusively for you</div>
+                  <p>Eight nights</p>
+                  <h3>Caribbean Escape</h3>
+                  <div class="voyage-subline">Sunlit water, easy elegance, and a sailing made for total exhale.</div>
+                </header>
+                <div class="voyage-meta">
+                  <div><small>Ship</small><strong>Regent Seven Seas</strong></div>
+                  <div><small>Embarkation</small><strong>Miami, Florida</strong></div>
+                  <div><small>Suite category</small><strong>Concierge Suite</strong><em>Priority shore access</em></div>
+                  <div><small>Sailing date</small><strong>December 06, 2025</strong></div>
+                </div>
+                <div class="voyage-detail-grid">
+                  <div>
+                    <small>Itinerary</small>
+                    <ul>
+                      <li>Miami, Florida</li>
+                      <li>St. Barts</li>
+                      <li>Antigua</li>
+                      <li>St. Lucia</li>
+                      <li>Barbados</li>
+                      <li>Relaxed days at sea</li>
+                    </ul>
+                  </div>
+                  <div class="voyage-note-block">
+                    <small>Maddy's lens</small>
+                    <ul class="lens-note-list">
+                      <li>Easy pacing</li>
+                      <li>Signature moments chosen</li>
+                      <li>Every detail handled</li>
+                    </ul>
+                  </div>
+                </div>
+                <footer>
+                  <a class="voyage-plan-button" href="#inquire" data-plan-journey="caribbean">Plan this journey <span>→</span></a>
+                </footer>
+              </div>
+            </article>
+          </div>
+            </div>
           </div>
         </div>
       </div>

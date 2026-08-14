@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 48" fill="none">
+  <g stroke="#a8793e" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 24h40c6 0 10-4 12-9M148 24h-40c-6 0-10-4-12-9" opacity=".55"/>
+    <path d="M2 24c8-7 16-7 24 0-8 7-16 7-24 0ZM148 24c-8-7-16-7-24 0 8 7 16 7 24 0Z" opacity=".75"/>
+    <circle cx="75" cy="24" r="20"/>
+    <path d="M55 24h-8M103 24h-8"/>
+  </g>
+  <text x="75" y="28" text-anchor="middle" fill="#956c39" font-family="Georgia, 'Times New Roman', serif" font-size="13" letter-spacing="2">MFM</text>
+</svg>
