@@ -336,6 +336,7 @@
       season: 'May · June · September',
       bestFor: 'Couples · milestone trips',
       subtitle: 'For travelers who want classic beauty, one perfect hotel, and days with room to breathe.',
+      lensQuote: 'The lake is beautiful, but the real luxury is not rushing it.',
       image: 'assets/images/hero-lake.webp',
       imageAlt: 'Lake Como view',
       highlights: ['Private boat afternoons', 'Long lakeside lunches', 'One exceptional hotel base'],
@@ -364,6 +365,7 @@ What matters most on this trip:
       season: 'March · April · October',
       bestFor: 'Culture lovers · design-minded travelers',
       subtitle: 'A beautifully paced city break with early temple mornings, thoughtful meals, and a serene ryokan base.',
+      lensQuote: 'The quietest hours are the ones I would build the trip around.',
       image: 'assets/images/kyoto-evening.webp',
       imageAlt: 'Kyoto evening street',
       highlights: ['Temple visits before the crowds', 'Small streets and neighborhood shops', 'Quiet ryokan evenings'],
@@ -392,6 +394,7 @@ What matters most on this trip:
       season: 'May · June · July',
       bestFor: 'Big experiences · celebratory journeys',
       subtitle: 'An edited multi-stop journey pairing Cape Town polish, the Winelands, and unforgettable safari days.',
+      lensQuote: 'Give the journey room to change pace between city, wine country and the bush.',
       image: 'assets/images/safari-sunset.webp',
       imageAlt: 'Safari sunset scene',
       highlights: ['Cape Town city stay', 'Winelands interlude', 'Twice-daily game drives'],
@@ -420,6 +423,7 @@ What matters most on this trip:
       season: 'April · May · September',
       bestFor: 'Honeymoons · total unwind',
       subtitle: 'The kind of trip where the days feel long, the water does the talking, and every detail is softened.',
+      lensQuote: 'This is one of those places where doing less is the point.',
       image: 'assets/images/bora-bora.webp',
       imageAlt: 'French Polynesia overwater villas',
       highlights: ['Overwater villa stays', 'Lagoon time built in', 'A pace designed for exhale'],
@@ -448,6 +452,7 @@ What matters most on this trip:
       season: 'December · January · February',
       bestFor: 'Families · winter reset',
       subtitle: 'A polished mountain escape with fresh air, easy logistics, and room for everyone to truly settle in.',
+      lensQuote: 'The best mountain trips feel easy for everyone before they even arrive.',
       image: 'assets/images/whistler.webp',
       imageAlt: 'Whistler mountain village',
       highlights: ['Easy family-friendly logistics', 'Mountain views from start to finish', 'Warm fireside evenings'],
@@ -483,6 +488,8 @@ What matters most on this trip:
   const destinationCardNote = document.querySelector('[data-destination-note-list]');
   const destinationCardImage = document.querySelector('[data-destination-image]');
   const destinationCardHighlights = document.querySelector('[data-destination-highlights]');
+  const destinationCardLensQuote = document.querySelector('[data-destination-lens-quote]');
+  const destinationCardFolio = document.querySelector('[data-destination-folio]');
   const destinationCard = document.querySelector('[data-destination-card]');
   const destinationCardCopy = destinationCard?.querySelector('.destination-card-copy');
   setupFlap(flapDestination, 16);
@@ -559,6 +566,7 @@ What matters most on this trip:
     if (destinationCardSeason) destinationCardSeason.textContent = edit.season;
     if (destinationCardBestFor) destinationCardBestFor.textContent = edit.bestFor;
     renderDestinationNoteTags(edit.note);
+    if (destinationCardLensQuote) destinationCardLensQuote.textContent = `“${edit.lensQuote || edit.subtitle}”`;
     if (destinationCardImage) {
       destinationCardImage.src = edit.image;
       destinationCardImage.alt = edit.imageAlt;
@@ -576,6 +584,7 @@ What matters most on this trip:
     setFlapText(flapMood, edit.mood, 120);
     setFlapText(flapStay, edit.stay, 240);
     if (boardNumber) boardNumber.textContent = `EDIT ${String(index + 1).padStart(2, '0')} / ${String(boardEdits.length).padStart(2, '0')}`;
+    if (destinationCardFolio) destinationCardFolio.textContent = `MFM / EDIT ${String(index + 1).padStart(2, '0')}`;
     if (boardNote) boardNote.textContent = edit.note;
     transitionDestinationCard(edit);
     secondsToBoardTurn = 6;

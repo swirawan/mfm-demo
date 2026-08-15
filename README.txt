@@ -1,8 +1,10 @@
-MFM Editorial V110.4.2
+MFM Editorial V111.1 — refined private travel dossier
 
-Built from V110.
+MFM Editorial V111.2
 
-V110.4 ADVISOR-MATCH LOGIC CORRECTION
+Built from V111.
+
+V111 ADVISOR-MATCH LOGIC CORRECTION
 - Rebalanced the four-question advisor quiz so all four questions materially influence the result.
 - Question 4 is now a moderate +3 specialty signal rather than a +10 deciding key.
 - Q1 party profile, Q2 pace, and Q3 destination style can override Q4 when the combined trip profile points to another advisor.
@@ -12,11 +14,11 @@ V110.4 ADVISOR-MATCH LOGIC CORRECTION
 - The advisor directly associated with Q4 wins only 117/336 paths (~35%), confirming the final question no longer controls the result.
 - Added transparent quiz microcopy: “Every answer shapes the match - no single question decides it.”
 
-MFM Editorial V110
+MFM Editorial V111
 
 Built from V109.5.
 
-V110 ADVISOR-MATCH UPGRADE
+V111 ADVISOR-MATCH UPGRADE
 - Expanded Advisor Match from three to four questions.
 - New fourth question asks what the traveler values most in the planning relationship, using seven specialty descriptions grounded in the existing Team bios.
 - First three questions continue to describe the trip and feed the inquiry handoff; the fourth planning-style signal is intentionally decisive.

@@ -1131,3 +1131,1168 @@ main section[id]{scroll-margin-top:82px}
     grid-template-columns:minmax(410px,.70fr) minmax(0,1.30fr)!important;
   }
 }
+
+/* ========================================================================== */
+/* V111 — PRIVATE TRAVEL DOSSIER / COUTURE TICKET                            */
+/* Stronger hierarchy, a true Maddy's Lens rail, tactile editorial light,    */
+/* and a purpose-built mobile reading order.                                  */
+/* ========================================================================== */
+
+:root{
+  --v111-paper:#f6efe3;
+  --v111-paper-soft:#fbf7ef;
+  --v111-ink:#21150f;
+  --v111-wine:#6f2228;
+  --v111-gold:#b58a49;
+  --v111-muted:#7b6957;
+}
+
+.edit-panel--departures .destination-card.couture-ticket,
+.edit-panel--voyages .voyage-card.couture-ticket.is-active{
+  --ticket-light-x:50%;
+  --ticket-light-y:35%;
+  grid-template-columns:minmax(330px,36%) minmax(0,1fr) minmax(220px,21%)!important;
+  grid-template-rows:minmax(0,1fr) auto!important;
+  width:min(1380px,calc(100% - 44px))!important;
+  max-width:1380px!important;
+  min-height:540px!important;
+  align-items:stretch!important;
+  background:
+    radial-gradient(circle at 86% 5%,rgba(255,255,255,.72),transparent 28%),
+    repeating-linear-gradient(0deg,rgba(95,61,35,.014) 0 1px,transparent 1px 4px),
+    var(--v111-paper)!important;
+  box-shadow:0 30px 76px rgba(0,0,0,.29),0 1px 0 rgba(255,255,255,.86) inset!important;
+  transition:box-shadow .6s cubic-bezier(.22,1,.36,1)!important;
+}
+
+.edit-panel--departures .destination-card.couture-ticket:hover,
+.edit-panel--voyages .voyage-card.couture-ticket.is-active:hover{
+  box-shadow:0 38px 88px rgba(0,0,0,.34),0 1px 0 rgba(255,255,255,.9) inset!important;
+}
+
+/* The image is now an editorial plate. It spans the full ticket height. */
+.edit-panel--departures .destination-card-media,
+.edit-panel--voyages .voyage-card figure{
+  grid-column:1!important;
+  grid-row:1 / 3!important;
+  min-height:540px!important;
+  height:100%!important;
+  border-right:1px solid rgba(181,138,73,.43)!important;
+  border-bottom:0!important;
+}
+.edit-panel--departures .destination-card-media img,
+.edit-panel--voyages .voyage-card figure img{
+  min-height:540px!important;
+  transition:transform 1.1s cubic-bezier(.22,1,.36,1),filter .65s ease!important;
+  will-change:transform;
+}
+.edit-panel--departures .destination-card.couture-ticket:hover .destination-card-media img,
+.edit-panel--voyages .voyage-card.couture-ticket.is-active:hover figure img{
+  transform:scale(1.012)!important;
+  filter:saturate(.98) contrast(1.025)!important;
+}
+
+/* Folio language ties the ticket back to the magazine system. */
+.edit-panel--departures .destination-card-media>.ticket-folio,
+.edit-panel--voyages .voyage-card figure>.ticket-folio{
+  position:absolute!important;
+  left:26px!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:24px!important;
+  width:auto!important;
+  height:auto!important;
+  min-width:0!important;
+  padding:7px 9px 6px!important;
+  display:inline-flex!important;
+  border:1px solid rgba(255,255,255,.34)!important;
+  border-radius:0!important;
+  background:rgba(12,12,10,.42)!important;
+  backdrop-filter:blur(5px)!important;
+  color:#fff!important;
+  font:600 7px/1 var(--sans)!important;
+  letter-spacing:.18em!important;
+  box-shadow:none!important;
+  z-index:5!important;
+}
+
+/* Main dossier copy — no fake reserved stub; the Lens is a real third column. */
+.edit-panel--departures .destination-card-copy,
+.edit-panel--voyages .voyage-copy{
+  grid-column:2!important;
+  grid-row:1!important;
+  min-width:0!important;
+  padding:40px 34px 20px 38px!important;
+  background:transparent!important;
+  display:block!important;
+}
+.edit-panel--departures .destination-card-copy:after,
+.edit-panel--voyages .voyage-copy:after{display:none!important}
+
+.edit-panel--departures .destination-card-copy:before,
+.edit-panel--voyages .voyage-copy:before{
+  display:block!important;
+  width:auto!important;
+  padding:0!important;
+  margin:0 0 16px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:#9a7546!important;
+  font:600 7.5px/1.2 var(--sans)!important;
+  letter-spacing:.24em!important;
+}
+.edit-panel--departures .destination-card-copy:before{content:"MFM / PRIVATE TRAVEL DOSSIER"!important}
+.edit-panel--voyages .voyage-copy:before{content:"MFM / PRIVATE VOYAGE DOSSIER"!important}
+
+.edit-panel--departures .destination-card-copy header,
+.edit-panel--voyages .voyage-copy header{
+  position:relative!important;
+  padding:0 48px 21px 0!important;
+  border-top:0!important;
+  border-bottom:1px solid rgba(181,138,73,.25)!important;
+}
+.edit-panel--departures .destination-card-copy>header:before,
+.edit-panel--voyages .voyage-copy>header:before{
+  right:0!important;
+  top:2px!important;
+  width:36px!important;
+  height:36px!important;
+  opacity:.78!important;
+}
+.edit-panel--departures .destination-card-copy header:after,
+.edit-panel--voyages .voyage-copy header:after{
+  position:static!important;
+  display:block!important;
+  margin-top:11px!important;
+  color:#987545!important;
+  font:600 7px/1 var(--sans)!important;
+  letter-spacing:.2em!important;
+}
+.edit-panel--departures .destination-card-copy header:after{content:"DESTINATION FILE"!important}
+.edit-panel--voyages .voyage-copy header:after{content:"VOYAGE FILE"!important}
+
+.edit-panel--departures .destination-card-copy h3,
+.edit-panel--voyages .voyage-copy h3{
+  max-width:620px!important;
+  font-size:clamp(50px,4.2vw,72px)!important;
+  line-height:.91!important;
+  letter-spacing:-.045em!important;
+}
+.edit-panel--departures .destination-subline,
+.edit-panel--voyages .voyage-subline{
+  max-width:660px!important;
+  margin-top:11px!important;
+  font-size:17px!important;
+  line-height:1.48!important;
+}
+
+/* Information compartment — crisp, quiet, and clearly secondary to the title. */
+.edit-panel--departures .destination-meta,
+.edit-panel--voyages .voyage-meta{
+  margin-top:22px!important;
+  background:rgba(255,255,255,.24)!important;
+  border-color:rgba(181,138,73,.28)!important;
+  box-shadow:none!important;
+}
+.edit-panel--departures .destination-meta>div,
+.edit-panel--voyages .voyage-meta>div{
+  min-height:92px!important;
+  padding:16px 15px 16px!important;
+}
+.edit-panel--departures .destination-meta small,
+.edit-panel--voyages .voyage-meta small{
+  margin-bottom:7px!important;
+  font-size:7px!important;
+}
+.edit-panel--departures .destination-meta strong,
+.edit-panel--voyages .voyage-meta strong{
+  font-size:16px!important;
+  line-height:1.28!important;
+}
+
+/* Why MFM likes it / itinerary is the final piece of the main reading column. */
+.edit-panel--departures .ticket-why,
+.edit-panel--voyages .ticket-itinerary{
+  display:block!important;
+  margin:24px 0 0!important;
+  padding:0!important;
+}
+.edit-panel--departures .ticket-why>div,
+.edit-panel--voyages .ticket-itinerary>div{
+  display:block!important;
+  max-width:none!important;
+}
+.edit-panel--departures .ticket-why>div>small,
+.edit-panel--voyages .ticket-itinerary>div>small{
+  display:block!important;
+  margin:0 0 12px!important;
+  color:var(--v111-wine)!important;
+  font:700 8px/1.2 var(--sans)!important;
+  letter-spacing:.22em!important;
+  text-transform:uppercase!important;
+}
+.edit-panel--departures .ticket-why ul,
+.edit-panel--voyages .ticket-itinerary ul{
+  margin:0!important;
+  padding:0!important;
+  list-style:none!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:9px 20px!important;
+}
+.edit-panel--departures .ticket-why li,
+.edit-panel--voyages .ticket-itinerary li{
+  position:relative!important;
+  margin:0!important;
+  padding-left:15px!important;
+  color:#40352c!important;
+  font-family:"Cormorant Garamond",var(--serif)!important;
+  font-size:15px!important;
+  line-height:1.4!important;
+}
+.edit-panel--departures .ticket-why li:before,
+.edit-panel--voyages .ticket-itinerary li:before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  top:.66em!important;
+  width:5px!important;
+  height:5px!important;
+  border-radius:50%!important;
+  background:var(--v111-gold)!important;
+  box-shadow:none!important;
+}
+/* Kill the old generated handling block; the real Lens rail replaces it. */
+.edit-panel--voyages .ticket-itinerary>div:after{display:none!important;content:none!important}
+
+/* Maddy's Lens: editorial marginalia, not three UI buttons. */
+.ticket-lens{
+  grid-column:3!important;
+  grid-row:1 / 3!important;
+  position:relative!important;
+  min-width:0!important;
+  padding:44px 26px 28px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:center!important;
+  border-left:1px dashed rgba(150,103,57,.36)!important;
+  color:var(--v111-ink)!important;
+  background:linear-gradient(180deg,rgba(255,255,255,.23),rgba(232,216,190,.14))!important;
+  transition:transform .7s cubic-bezier(.22,1,.36,1),background .5s ease!important;
+  z-index:2!important;
+}
+.ticket-lens:before{
+  content:"";
+  position:absolute;
+  inset:28px 18px;
+  border:1px solid rgba(181,138,73,.27);
+  background:
+    url("assets/ornaments/corner-tl.svg") left top/28px 28px no-repeat,
+    url("assets/ornaments/corner-tr.svg") right top/28px 28px no-repeat,
+    url("assets/ornaments/corner-bl.svg") left bottom/28px 28px no-repeat,
+    url("assets/ornaments/corner-br.svg") right bottom/28px 28px no-repeat;
+  pointer-events:none;
+  opacity:.72;
+}
+.ticket-lens-kicker{
+  position:relative;
+  z-index:1;
+  margin:0 0 20px;
+  padding-bottom:11px;
+  color:var(--v111-wine);
+  font:700 8px/1 var(--sans);
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  border-bottom:1px solid rgba(181,138,73,.24);
+}
+.ticket-lens-kicker:after{
+  content:"";
+  display:block;
+  width:54px;
+  height:8px;
+  margin:9px 0 -15px;
+  background:url("assets/ornaments/divider-gold.svg") center/contain no-repeat;
+}
+.ticket-lens-list{
+  position:relative;
+  z-index:1;
+  counter-reset:v111-lens;
+  margin:0!important;
+  padding:0!important;
+  list-style:none!important;
+  display:grid!important;
+  gap:0!important;
+}
+.ticket-lens-list li{
+  counter-increment:v111-lens;
+  display:grid!important;
+  grid-template-columns:28px 1fr!important;
+  align-items:center!important;
+  gap:8px!important;
+  padding:11px 0!important;
+  border-bottom:1px solid rgba(181,138,73,.18)!important;
+  color:#392d25!important;
+  font-family:"Cormorant Garamond",var(--serif)!important;
+  font-size:15px!important;
+  line-height:1.25!important;
+}
+.ticket-lens-list li:before{
+  content:counter(v111-lens,decimal-leading-zero)!important;
+  position:static!important;
+  width:auto!important;
+  height:auto!important;
+  border-radius:0!important;
+  background:none!important;
+  box-shadow:none!important;
+  color:#a87e45!important;
+  font:600 7px/1 var(--sans)!important;
+  letter-spacing:.12em!important;
+}
+.ticket-lens-quote{
+  position:relative;
+  z-index:1;
+  margin:20px 0 0!important;
+  color:#625246!important;
+  font-family:"Cormorant Garamond",var(--serif)!important;
+  font-size:14px!important;
+  font-style:italic!important;
+  line-height:1.46!important;
+}
+.ticket-lens-signature{
+  position:relative;
+  z-index:1;
+  align-self:center;
+  margin-top:22px;
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border:1px solid rgba(181,138,73,.34);
+  border-radius:50%;
+  color:#8d693e;
+  font:400 12px/1 var(--serif);
+  letter-spacing:.08em;
+}
+.edit-panel--departures .destination-card.couture-ticket:hover .ticket-lens,
+.edit-panel--voyages .voyage-card.couture-ticket.is-active:hover .ticket-lens{
+  transform:translateX(2px);
+  background:linear-gradient(180deg,rgba(255,255,255,.31),rgba(232,216,190,.17))!important;
+}
+
+/* CTA is now a true closing action and can sit after Lens on mobile. */
+.ticket-footer{
+  grid-column:2!important;
+  grid-row:2!important;
+  margin:0!important;
+  padding:2px 34px 32px 38px!important;
+  align-self:end!important;
+}
+.ticket-footer .voyage-plan-button{
+  min-width:245px!important;
+  min-height:48px!important;
+  padding:15px 20px!important;
+  border-radius:2px!important;
+  background:#241115!important;
+  border:1px solid rgba(181,138,73,.72)!important;
+  color:#f7efe4!important;
+  box-shadow:0 8px 20px rgba(40,18,20,.14)!important;
+  transition:transform .35s cubic-bezier(.22,1,.36,1),background .3s ease,box-shadow .3s ease!important;
+}
+.ticket-footer .voyage-plan-button:hover{
+  transform:translateY(-2px)!important;
+  background:#32151a!important;
+  box-shadow:0 12px 26px rgba(40,18,20,.20)!important;
+}
+
+/* Pointer-follow editorial glint. This is deliberately subtle. */
+.ticket-glint{
+  position:absolute;
+  inset:0;
+  z-index:7;
+  pointer-events:none;
+  opacity:0;
+  background:radial-gradient(circle at var(--ticket-light-x) var(--ticket-light-y),rgba(255,247,224,.19),rgba(255,247,224,.06) 16%,transparent 34%);
+  transition:opacity .45s ease;
+}
+@media(hover:hover) and (pointer:fine){
+  .edit-panel--departures .destination-card.couture-ticket:hover .ticket-glint,
+  .edit-panel--voyages .voyage-card.couture-ticket.is-active:hover .ticket-glint{opacity:1}
+  .edit-panel--departures .destination-card.couture-ticket:hover .destination-card-media>span:not(.ticket-folio),
+  .edit-panel--voyages .voyage-card.couture-ticket.is-active:hover figure>span:not(.ticket-folio){
+    box-shadow:0 10px 28px rgba(29,18,10,.18),0 0 0 4px rgba(249,242,231,.52),0 0 24px rgba(181,138,73,.14)!important;
+  }
+}
+
+/* Tablet: still dossier-like, but do not keep a squeezed 3-column ticket. */
+@media(max-width:1080px){
+  .edit-panel--departures .destination-card.couture-ticket,
+  .edit-panel--voyages .voyage-card.couture-ticket.is-active{
+    grid-template-columns:minmax(280px,34%) minmax(0,1fr)!important;
+    grid-template-rows:auto auto auto!important;
+  }
+  .edit-panel--departures .destination-card-media,
+  .edit-panel--voyages .voyage-card figure{grid-column:1!important;grid-row:1 / 4!important}
+  .edit-panel--departures .destination-card-copy,
+  .edit-panel--voyages .voyage-copy{grid-column:2!important;grid-row:1!important;padding-right:30px!important}
+  .ticket-lens{
+    grid-column:2!important;
+    grid-row:2!important;
+    margin:0 30px 20px 38px!important;
+    padding:20px 22px!important;
+    border-left:0!important;
+    border-top:1px dashed rgba(150,103,57,.34)!important;
+  }
+  .ticket-lens:before{inset:8px 0!important;background-size:22px 22px!important}
+  .ticket-lens-list{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}
+  .ticket-lens-list li{grid-template-columns:24px 1fr!important;border-bottom:0!important;padding:8px 0!important;font-size:14px!important}
+  .ticket-lens-quote{margin-top:13px!important}
+  .ticket-lens-signature{display:none!important}
+  .ticket-footer{grid-column:2!important;grid-row:3!important;padding:0 30px 28px 38px!important}
+}
+
+/* Mobile: deliberate reading order — photo → story → facts → Lens → CTA. */
+@media(max-width:760px){
+  .edit-panel--departures .destination-card.couture-ticket,
+  .edit-panel--voyages .voyage-card.couture-ticket.is-active{
+    display:grid!important;
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto auto auto!important;
+    width:calc(100% - 20px)!important;
+    min-height:0!important;
+    margin-top:22px!important;
+    border-radius:16px!important;
+  }
+  .edit-panel--departures .destination-card-media,
+  .edit-panel--voyages .voyage-card figure{
+    grid-column:1!important;
+    grid-row:1!important;
+    height:250px!important;
+    min-height:250px!important;
+    border-right:0!important;
+    border-bottom:1px solid rgba(181,138,73,.38)!important;
+  }
+  .edit-panel--departures .destination-card-media img,
+  .edit-panel--voyages .voyage-card figure img{min-height:250px!important}
+  .edit-panel--departures .destination-card-copy,
+  .edit-panel--voyages .voyage-copy{
+    grid-column:1!important;
+    grid-row:2!important;
+    padding:26px 20px 18px!important;
+  }
+  .edit-panel--departures .destination-card-copy header,
+  .edit-panel--voyages .voyage-copy header{padding-right:34px!important;padding-bottom:17px!important}
+  .edit-panel--departures .destination-card-copy>header:before,
+  .edit-panel--voyages .voyage-copy>header:before{width:28px!important;height:28px!important;right:0!important}
+  .edit-panel--departures .destination-card-copy h3,
+  .edit-panel--voyages .voyage-copy h3{font-size:clamp(42px,12vw,54px)!important;line-height:.93!important}
+  .edit-panel--departures .destination-subline,
+  .edit-panel--voyages .voyage-subline{font-size:16px!important;line-height:1.46!important}
+  .edit-panel--departures .destination-meta,
+  .edit-panel--voyages .voyage-meta{grid-template-columns:1fr 1fr!important;margin-top:18px!important}
+  .edit-panel--departures .destination-meta>div,
+  .edit-panel--voyages .voyage-meta>div{min-height:0!important;padding:15px 14px!important}
+  .edit-panel--departures .destination-meta strong,
+  .edit-panel--voyages .voyage-meta strong{font-size:16px!important}
+  .edit-panel--departures .ticket-why ul,
+  .edit-panel--voyages .ticket-itinerary ul{grid-template-columns:1fr!important;gap:8px!important}
+  .edit-panel--departures .ticket-why li,
+  .edit-panel--voyages .ticket-itinerary li{font-size:16px!important}
+  .ticket-lens{
+    grid-column:1!important;
+    grid-row:3!important;
+    margin:0 20px!important;
+    padding:20px 18px 18px!important;
+    border-left:0!important;
+    border-top:1px dashed rgba(150,103,57,.34)!important;
+    border-bottom:1px dashed rgba(150,103,57,.26)!important;
+    background:rgba(239,226,207,.48)!important;
+  }
+  .ticket-lens:before{inset:7px 0!important;background-size:20px 20px!important}
+  .ticket-lens-kicker{margin-bottom:14px!important}
+  .ticket-lens-list{grid-template-columns:1fr!important;gap:0!important}
+  .ticket-lens-list li{grid-template-columns:26px 1fr!important;padding:9px 0!important;border-bottom:1px solid rgba(181,138,73,.14)!important;font-size:15px!important}
+  .ticket-lens-quote{font-size:14px!important;margin-top:15px!important}
+  .ticket-lens-signature{display:none!important}
+  .ticket-footer{
+    grid-column:1!important;
+    grid-row:4!important;
+    padding:18px 20px 24px!important;
+  }
+  .ticket-footer .voyage-plan-button{width:100%!important;min-width:0!important;min-height:54px!important;justify-content:space-between!important}
+  .edit-panel--departures .destination-card-media>.ticket-folio,
+  .edit-panel--voyages .voyage-card figure>.ticket-folio{left:18px!important;bottom:17px!important}
+}
+
+@media(max-width:430px){
+  .edit-panel--departures .destination-meta,
+  .edit-panel--voyages .voyage-meta{grid-template-columns:1fr!important}
+  .edit-panel--departures .destination-card-media,
+  .edit-panel--voyages .voyage-card figure{height:225px!important;min-height:225px!important}
+  .edit-panel--departures .destination-card-media img,
+  .edit-panel--voyages .voyage-card figure img{min-height:225px!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .ticket-glint{display:none!important}
+  .edit-panel--departures .destination-card-media img,
+  .edit-panel--voyages .voyage-card figure img,
+  .ticket-lens,.ticket-footer .voyage-plan-button{transition:none!important;transform:none!important}
+}
+
+
+/* ========================================================================== */
+/* V111.1 — EDITORIAL DOSSIER REFINEMENT                                      */
+/* Less ornament, one grid, tighter rhythm, professional negative space.      */
+/* ========================================================================== */
+
+:root{
+  --v1111-rule:rgba(145,103,59,.26);
+  --v1111-rule-soft:rgba(145,103,59,.15);
+}
+
+/* One outer silhouette only. The earlier nested frames made the ticket busy. */
+.edit-panel--departures .destination-card.couture-ticket,
+.edit-panel--voyages .voyage-card.couture-ticket.is-active{
+  grid-template-columns:minmax(340px,34%) minmax(0,1fr) minmax(205px,18.5%)!important;
+  grid-template-rows:auto auto!important;
+  min-height:500px!important;
+  border-radius:3px!important;
+  background:
+    linear-gradient(90deg,rgba(255,255,255,.11),transparent 26%),
+    repeating-linear-gradient(0deg,rgba(95,61,35,.012) 0 1px,transparent 1px 5px),
+    #f6efe3!important;
+}
+.edit-panel--departures .destination-card.couture-ticket:before,
+.edit-panel--voyages .voyage-card.couture-ticket.is-active:before{
+  display:none!important;
+  content:none!important;
+}
+
+/* Editorial image plate: clean edge, no frame-on-frame decoration. */
+.edit-panel--departures .destination-card-media,
+.edit-panel--voyages .voyage-card figure{
+  min-height:500px!important;
+  grid-row:1 / 3!important;
+  border-right:1px solid rgba(145,103,59,.34)!important;
+}
+.edit-panel--departures .destination-card-media:before,
+.edit-panel--voyages .voyage-card figure:before{
+  display:none!important;
+  content:none!important;
+}
+.edit-panel--departures .destination-card-media img,
+.edit-panel--voyages .voyage-card figure img{min-height:500px!important}
+
+/* Keep the seal, but make it a mark rather than another framed object. */
+.edit-panel--departures .destination-card-media>span:not(.ticket-folio),
+.edit-panel--voyages .voyage-card figure>span:not(.ticket-folio){
+  top:24px!important;
+  left:24px!important;
+  width:70px!important;
+  height:70px!important;
+  font-size:17px!important;
+  border-color:rgba(151,108,58,.50)!important;
+  box-shadow:0 5px 16px rgba(43,25,13,.14)!important;
+}
+.edit-panel--departures .destination-card-media>span:not(.ticket-folio):before,
+.edit-panel--voyages .voyage-card figure>span:not(.ticket-folio):before{display:none!important;content:none!important}
+
+/* Main column: all text follows one left edge and one vertical rhythm. */
+.edit-panel--departures .destination-card-copy,
+.edit-panel--voyages .voyage-copy{
+  grid-column:2!important;
+  grid-row:1!important;
+  padding:34px 30px 20px 38px!important;
+}
+.edit-panel--departures .destination-card-copy:before,
+.edit-panel--voyages .voyage-copy:before{
+  margin-bottom:13px!important;
+  color:#8d6d45!important;
+  letter-spacing:.20em!important;
+}
+.edit-panel--departures .destination-card-copy>header,
+.edit-panel--voyages .voyage-copy>header{
+  padding:0 0 18px!important;
+  border-bottom:1px solid var(--v1111-rule)!important;
+}
+
+/* Remove the decorative flower and redundant DESTINATION/VOYAGE FILE footer. */
+.edit-panel--departures .destination-card-copy>header:before,
+.edit-panel--voyages .voyage-copy>header:before,
+.edit-panel--departures .destination-card-copy>header:after,
+.edit-panel--voyages .voyage-copy>header:after{
+  display:none!important;
+  content:none!important;
+}
+.edit-panel--departures .destination-card-copy header>p:before,
+.edit-panel--departures .destination-card-copy header>p:after,
+.edit-panel--voyages .voyage-copy header>p:before,
+.edit-panel--voyages .voyage-copy header>p:after{
+  display:none!important;
+  content:none!important;
+}
+.edit-panel--departures .destination-card-copy header>p,
+.edit-panel--voyages .voyage-copy header>p{
+  margin:0 0 8px!important;
+  font-size:8px!important;
+  letter-spacing:.22em!important;
+}
+.edit-panel--departures .destination-card-copy h3,
+.edit-panel--voyages .voyage-copy h3{
+  max-width:100%!important;
+  font-size:clamp(48px,4vw,68px)!important;
+  line-height:.92!important;
+}
+.edit-panel--departures .destination-subline,
+.edit-panel--voyages .voyage-subline{
+  max-width:600px!important;
+  margin-top:12px!important;
+  color:#77614e!important;
+  font-size:16px!important;
+  line-height:1.45!important;
+}
+
+/* Facts: one clean band, not three inset mini-cards. */
+.edit-panel--departures .destination-meta,
+.edit-panel--voyages .voyage-meta{
+  margin-top:20px!important;
+  border:0!important;
+  border-bottom:1px solid var(--v1111-rule)!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.edit-panel--departures .destination-meta>div,
+.edit-panel--voyages .voyage-meta>div{
+  min-height:86px!important;
+  padding:14px 14px 16px!important;
+  border-top:0!important;
+  background:transparent!important;
+}
+.edit-panel--departures .destination-meta>div:first-child,
+.edit-panel--voyages .voyage-meta>div:first-child{padding-left:0!important}
+.edit-panel--departures .destination-meta>div:last-child,
+.edit-panel--voyages .voyage-meta>div:last-child{padding-right:0!important}
+.edit-panel--departures .destination-meta small,
+.edit-panel--voyages .voyage-meta small{font-size:6.8px!important;letter-spacing:.15em!important}
+.edit-panel--departures .destination-meta strong,
+.edit-panel--voyages .voyage-meta strong{font-size:15.5px!important;line-height:1.24!important}
+
+/* Highlights: even columns eliminate the dangling third bullet / indent problem. */
+.edit-panel--departures .ticket-why,
+.edit-panel--voyages .ticket-itinerary{margin-top:20px!important}
+.edit-panel--departures .ticket-why>div>small,
+.edit-panel--voyages .ticket-itinerary>div>small{margin-bottom:10px!important;font-size:7.5px!important}
+.edit-panel--departures .ticket-why ul{
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:8px 14px!important;
+}
+.edit-panel--voyages .ticket-itinerary ul{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:7px 18px!important;
+}
+.edit-panel--departures .ticket-why li,
+.edit-panel--voyages .ticket-itinerary li{
+  padding-left:12px!important;
+  font-size:14.5px!important;
+  line-height:1.34!important;
+}
+.edit-panel--departures .ticket-why li:before,
+.edit-panel--voyages .ticket-itinerary li:before{
+  width:3px!important;
+  height:3px!important;
+  top:.67em!important;
+}
+
+/* Maddy's Lens becomes marginalia, not a decorated card inside a card. */
+.ticket-lens{
+  grid-column:3!important;
+  grid-row:1!important;
+  align-self:start!important;
+  justify-content:flex-start!important;
+  margin:35px 24px 0 0!important;
+  padding:22px 0 0 22px!important;
+  min-height:0!important;
+  border-left:1px solid var(--v1111-rule)!important;
+  border-top:1px solid var(--v1111-rule)!important;
+  border-bottom:0!important;
+  background:transparent!important;
+  transform:none!important;
+}
+.ticket-lens:before{display:none!important;content:none!important}
+.ticket-lens-kicker{
+  margin:0 0 14px!important;
+  padding:0 0 10px!important;
+  border-bottom:1px solid var(--v1111-rule-soft)!important;
+  font-size:7.5px!important;
+  letter-spacing:.20em!important;
+}
+.ticket-lens-kicker:after{display:none!important;content:none!important}
+.ticket-lens-list{display:grid!important;gap:0!important}
+.ticket-lens-list li{
+  grid-template-columns:22px 1fr!important;
+  gap:7px!important;
+  padding:9px 0!important;
+  border:0!important;
+  border-bottom:1px solid var(--v1111-rule-soft)!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  font-size:14px!important;
+}
+.ticket-lens-list li:before{font-size:6.5px!important}
+.ticket-lens-quote{
+  margin:15px 0 0!important;
+  padding:0!important;
+  color:#665648!important;
+  font-size:13.5px!important;
+  line-height:1.45!important;
+}
+.ticket-lens-signature{display:none!important}
+.edit-panel--departures .destination-card.couture-ticket:hover .ticket-lens,
+.edit-panel--voyages .voyage-card.couture-ticket.is-active:hover .ticket-lens{
+  transform:none!important;
+  background:transparent!important;
+}
+
+/* CTA closes the entire paper side, so no narrow column ends in dead space. */
+.ticket-footer{
+  grid-column:2 / 4!important;
+  grid-row:2!important;
+  align-self:end!important;
+  padding:8px 24px 28px 38px!important;
+  border-top:0!important;
+}
+.ticket-footer .voyage-plan-button{
+  width:min(330px,100%)!important;
+  min-width:0!important;
+  min-height:46px!important;
+  padding:14px 18px!important;
+}
+
+/* Folio is enough secondary decoration; keep it very quiet. */
+.edit-panel--departures .destination-card-media>.ticket-folio,
+.edit-panel--voyages .voyage-card figure>.ticket-folio{
+  left:22px!important;
+  bottom:20px!important;
+  padding:6px 8px 5px!important;
+  border-color:rgba(255,255,255,.25)!important;
+  background:rgba(18,14,11,.42)!important;
+  font-size:6.5px!important;
+}
+
+/* Tablet: simple image + paper. Lens becomes a clean horizontal note beneath facts. */
+@media(max-width:1080px){
+  .edit-panel--departures .destination-card.couture-ticket,
+  .edit-panel--voyages .voyage-card.couture-ticket.is-active{
+    grid-template-columns:minmax(280px,35%) minmax(0,1fr)!important;
+    grid-template-rows:auto auto auto!important;
+  }
+  .edit-panel--departures .destination-card-media,
+  .edit-panel--voyages .voyage-card figure{grid-column:1!important;grid-row:1 / 4!important}
+  .edit-panel--departures .destination-card-copy,
+  .edit-panel--voyages .voyage-copy{grid-column:2!important;grid-row:1!important;padding:30px 28px 18px 32px!important}
+  .ticket-lens{
+    grid-column:2!important;
+    grid-row:2!important;
+    margin:0 28px 12px 32px!important;
+    padding:16px 0 0!important;
+    border-left:0!important;
+    border-top:1px solid var(--v1111-rule)!important;
+  }
+  .ticket-lens-list{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:12px!important}
+  .ticket-lens-list li{border-bottom:0!important;padding:6px 0!important}
+  .ticket-footer{grid-column:2!important;grid-row:3!important;padding:6px 28px 26px 32px!important}
+}
+
+/* Mobile: remove virtually all ornament. The content itself becomes the luxury. */
+@media(max-width:760px){
+  .edit-panel--departures .destination-card.couture-ticket,
+  .edit-panel--voyages .voyage-card.couture-ticket.is-active{
+    grid-template-columns:1fr!important;
+    grid-template-rows:auto auto auto auto!important;
+    border-radius:10px!important;
+    clip-path:none!important;
+  }
+  .edit-panel--departures .destination-card-media,
+  .edit-panel--voyages .voyage-card figure{
+    grid-column:1!important;
+    grid-row:1!important;
+    min-height:235px!important;
+    height:235px!important;
+    border-right:0!important;
+    border-bottom:1px solid var(--v1111-rule)!important;
+  }
+  .edit-panel--departures .destination-card-media img,
+  .edit-panel--voyages .voyage-card figure img{min-height:235px!important}
+  .edit-panel--departures .destination-card-copy,
+  .edit-panel--voyages .voyage-copy{grid-column:1!important;grid-row:2!important;padding:24px 20px 16px!important}
+  .edit-panel--departures .destination-card-copy h3,
+  .edit-panel--voyages .voyage-copy h3{font-size:clamp(40px,12vw,52px)!important}
+  .edit-panel--departures .destination-meta,
+  .edit-panel--voyages .voyage-meta{grid-template-columns:1fr 1fr!important}
+  .edit-panel--departures .destination-meta>div,
+  .edit-panel--voyages .voyage-meta>div{padding:13px 12px 14px!important}
+  .edit-panel--departures .destination-meta>div:first-child,
+  .edit-panel--voyages .voyage-meta>div:first-child{padding-left:0!important}
+  .edit-panel--departures .ticket-why ul,
+  .edit-panel--voyages .ticket-itinerary ul{grid-template-columns:1fr!important}
+  .ticket-lens{
+    grid-column:1!important;
+    grid-row:3!important;
+    margin:0 20px!important;
+    padding:16px 0 0!important;
+    border-left:0!important;
+    border-top:1px solid var(--v1111-rule)!important;
+  }
+  .ticket-lens-list{grid-template-columns:1fr!important;gap:0!important}
+  .ticket-lens-list li{border-bottom:1px solid var(--v1111-rule-soft)!important;padding:8px 0!important}
+  .ticket-footer{grid-column:1!important;grid-row:4!important;padding:18px 20px 22px!important}
+  .ticket-footer .voyage-plan-button{width:100%!important}
+  .edit-panel--departures .destination-card-media>span:not(.ticket-folio),
+  .edit-panel--voyages .voyage-card figure>span:not(.ticket-folio){width:62px!important;height:62px!important;top:18px!important;left:18px!important;font-size:15px!important}
+}
+
+@media(max-width:430px){
+  .edit-panel--departures .destination-meta,
+  .edit-panel--voyages .voyage-meta{grid-template-columns:1fr!important}
+  .edit-panel--departures .destination-meta>div,
+  .edit-panel--voyages .voyage-meta>div{padding-left:0!important;padding-right:0!important;border-left:0!important;border-top:1px solid var(--v1111-rule-soft)!important}
+}
+
+
+/* V111.2 — bring back select ornamental luxury cues while fixing Maddy's Lens balance. */
+@media (min-width:1081px){
+  .edit-panel--departures .destination-card.couture-ticket,
+  .edit-panel--voyages .voyage-card.couture-ticket.is-active{
+    grid-template-columns:minmax(340px,34%) minmax(0,1fr) 232px!important;
+    min-height:500px!important;
+  }
+
+  .ticket-lens{
+    grid-column:3!important;
+    grid-row:1 / 3!important;
+    align-self:stretch!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:flex-start!important;
+    gap:0!important;
+    margin:20px 18px 20px 0!important;
+    padding:18px 16px 18px!important;
+    min-height:auto!important;
+    border:1px solid rgba(145,103,59,.26)!important;
+    border-left:1px solid rgba(145,103,59,.26)!important;
+    border-top:1px solid rgba(145,103,59,.26)!important;
+    background:linear-gradient(180deg,rgba(255,255,255,.38),rgba(255,255,255,.12))!important;
+    position:relative!important;
+    overflow:hidden!important;
+  }
+  .ticket-lens:before{
+    display:block!important;
+    content:""!important;
+    position:absolute!important;
+    inset:8px!important;
+    pointer-events:none!important;
+    background:
+      linear-gradient(rgba(176,136,84,.55),rgba(176,136,84,.55)) left top / 14px 1px no-repeat,
+      linear-gradient(rgba(176,136,84,.55),rgba(176,136,84,.55)) left top / 1px 14px no-repeat,
+      linear-gradient(rgba(176,136,84,.55),rgba(176,136,84,.55)) right top / 14px 1px no-repeat,
+      linear-gradient(rgba(176,136,84,.55),rgba(176,136,84,.55)) right top / 1px 14px no-repeat,
+      linear-gradient(rgba(176,136,84,.55),rgba(176,136,84,.55)) left bottom / 14px 1px no-repeat,
+      linear-gradient(rgba(176,136,84,.55),rgba(176,136,84,.55)) left bottom / 1px 14px no-repeat,
+      linear-gradient(rgba(176,136,84,.55),rgba(176,136,84,.55)) right bottom / 14px 1px no-repeat,
+      linear-gradient(rgba(176,136,84,.55),rgba(176,136,84,.55)) right bottom / 1px 14px no-repeat!important;
+    opacity:.52!important;
+  }
+  .ticket-lens-kicker{
+    margin:0 0 14px!important;
+    padding:0 0 11px!important;
+    border-bottom:1px solid rgba(145,103,59,.17)!important;
+    position:relative!important;
+  }
+  .ticket-lens-kicker:after{
+    display:block!important;
+    content:""!important;
+    position:absolute!important;
+    left:0!important;
+    bottom:-1px!important;
+    width:18px!important;
+    height:1px!important;
+    background:#b58a49!important;
+  }
+  .ticket-lens-list{display:grid!important;gap:11px!important;position:relative!important;z-index:1!important}
+  .ticket-lens-list li{
+    grid-template-columns:22px 1fr!important;
+    gap:8px!important;
+    padding:11px 12px!important;
+    border:1px solid rgba(145,103,59,.17)!important;
+    border-radius:4px!important;
+    background:rgba(255,251,245,.56)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.4)!important;
+    font-size:14px!important;
+    line-height:1.28!important;
+  }
+  .ticket-lens-list li:before{
+    align-self:start!important;
+    width:auto!important;
+    height:auto!important;
+    top:auto!important;
+    font-size:7px!important;
+    letter-spacing:.16em!important;
+    color:#9a7749!important;
+  }
+  .ticket-lens-quote{
+    margin:15px 0 0!important;
+    padding-top:14px!important;
+    border-top:1px solid rgba(145,103,59,.12)!important;
+    font-size:13.5px!important;
+    line-height:1.5!important;
+  }
+  .ticket-lens-signature{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    margin-top:auto!important;
+    padding-top:16px!important;
+    color:#b08754!important;
+    font:500 9px/1 var(--sans)!important;
+    letter-spacing:.16em!important;
+    text-transform:uppercase!important;
+    position:relative!important;
+  }
+  .ticket-lens-signature:before, .ticket-lens-signature:after{
+    content:""!important;
+    flex:1 1 auto!important;
+    height:1px!important;
+    background:rgba(145,103,59,.16)!important;
+  }
+  .ticket-lens-signature:before{margin-right:10px!important}
+  .ticket-lens-signature:after{margin-left:10px!important}
+
+  .ticket-footer{
+    grid-column:2!important;
+    grid-row:2!important;
+    align-self:end!important;
+    padding:10px 24px 24px 38px!important;
+  }
+  .ticket-footer .voyage-plan-button{
+    width:min(355px,100%)!important;
+  }
+}
+
+@media (max-width:1080px){
+  .ticket-lens{
+    background:rgba(255,251,245,.42)!important;
+    border:1px solid rgba(145,103,59,.18)!important;
+    border-radius:4px!important;
+    padding:16px 16px 14px!important;
+    overflow:hidden!important;
+  }
+  .ticket-lens:before{display:block!important;content:""!important;position:absolute!important;inset:8px!important;pointer-events:none!important;
+    background:
+      linear-gradient(rgba(176,136,84,.45),rgba(176,136,84,.45)) left top / 12px 1px no-repeat,
+      linear-gradient(rgba(176,136,84,.45),rgba(176,136,84,.45)) left top / 1px 12px no-repeat,
+      linear-gradient(rgba(176,136,84,.45),rgba(176,136,84,.45)) right bottom / 12px 1px no-repeat,
+      linear-gradient(rgba(176,136,84,.45),rgba(176,136,84,.45)) right bottom / 1px 12px no-repeat!important;
+    opacity:.45!important;
+  }
+  .ticket-lens-list li{border:1px solid rgba(145,103,59,.16)!important;border-radius:4px!important;background:rgba(255,251,245,.54)!important;padding:10px 11px!important}
+  .ticket-lens-signature{display:flex!important;align-items:center!important;justify-content:center!important;margin-top:12px!important;color:#b08754!important;font:500 8px/1 var(--sans)!important;letter-spacing:.15em!important;text-transform:uppercase!important}
+  .ticket-lens-signature:before,.ticket-lens-signature:after{content:""!important;flex:1 1 auto!important;height:1px!important;background:rgba(145,103,59,.14)!important}
+  .ticket-lens-signature:before{margin-right:8px!important}.ticket-lens-signature:after{margin-left:8px!important}
+}
+
+@media (max-width:760px){
+  .ticket-lens{padding:16px 14px 14px!important}
+  .ticket-lens-list{gap:10px!important}
+  .ticket-lens-list li{padding:10px 11px!important}
+  .ticket-lens-signature{margin-top:10px!important}
+}
+
+
+/* V111.4 — restore preferred V111.2 Lens look, add horizontal barcode, and fix alignment. */
+.ticket-lens-kicker{
+  text-align:center!important;
+  border-bottom:0!important;
+  padding-bottom:0!important;
+  margin:0 0 14px!important;
+}
+.ticket-lens-kicker:after{
+  display:none!important;
+  content:none!important;
+}
+
+.ticket-lens-list li{
+  grid-template-columns:1fr!important;
+  justify-items:center!important;
+  text-align:center!important;
+  font-family:"Cormorant Garamond",var(--serif)!important;
+  font-size:15px!important;
+  line-height:1.18!important;
+}
+.ticket-lens-list li:before{
+  display:none!important;
+  content:none!important;
+}
+.ticket-lens-quote{
+  text-align:center!important;
+}
+
+.ticket-lens-signature{
+  position:relative!important;
+  align-self:center!important;
+  margin-top:18px!important;
+  padding-top:34px!important;
+}
+.ticket-lens-signature:before{
+  content:""!important;
+  position:absolute!important;
+  top:0!important;
+  left:50%!important;
+  transform:translateX(-50%)!important;
+  width:92px!important;
+  height:18px!important;
+  background:repeating-linear-gradient(90deg,
+    #5d72b8 0 2px, transparent 2px 4px,
+    #2c4aa6 4px 5px, transparent 5px 8px,
+    #7a8fd6 8px 10px, transparent 10px 12px,
+    #2c4aa6 12px 14px, transparent 14px 17px,
+    #5d72b8 17px 18px, transparent 18px 21px,
+    #7a8fd6 21px 23px, transparent 23px 26px,
+    #2c4aa6 26px 29px, transparent 29px 31px,
+    #5d72b8 31px 32px, transparent 32px 35px,
+    #7a8fd6 35px 37px, transparent 37px 40px,
+    #2c4aa6 40px 43px, transparent 43px 46px,
+    #5d72b8 46px 47px, transparent 47px 50px,
+    #7a8fd6 50px 52px, transparent 52px 54px,
+    #2c4aa6 54px 57px, transparent 57px 60px,
+    #5d72b8 60px 61px, transparent 61px 64px,
+    #7a8fd6 64px 66px, transparent 66px 69px,
+    #2c4aa6 69px 72px, transparent 72px 74px,
+    #5d72b8 74px 75px, transparent 75px 78px,
+    #7a8fd6 78px 80px, transparent 80px 82px,
+    #2c4aa6 82px 85px, transparent 85px 88px,
+    #5d72b8 88px 89px, transparent 89px 92px)!important;
+  opacity:.78!important;
+}
+
+@media (max-width:1080px){
+  .ticket-lens-signature{padding-top:30px!important}
+  .ticket-lens-signature:before{width:84px!important;height:16px!important}
+}
+
+@media (max-width:760px){
+  .ticket-lens{
+    text-align:center!important;
+  }
+  .ticket-lens-list li{
+    padding:10px 11px!important;
+  }
+}
+
+/* Preserve two-column voyage fact alignment on mobile/tablet. */
+@media (max-width:760px){
+  .edit-panel--voyages .voyage-meta{grid-template-columns:1fr 1fr!important}
+  .edit-panel--voyages .voyage-meta>div{padding:13px 0 14px!important}
+  .edit-panel--voyages .voyage-meta>div:first-child,
+  .edit-panel--voyages .voyage-meta>div:nth-child(3){padding-left:0!important;padding-right:12px!important}
+  .edit-panel--voyages .voyage-meta>div:nth-child(2),
+  .edit-panel--voyages .voyage-meta>div:nth-child(4){padding-left:12px!important;padding-right:0!important}
+}
+
+@media (max-width:430px){
+  .edit-panel--voyages .voyage-meta{grid-template-columns:1fr!important}
+  .edit-panel--voyages .voyage-meta>div,
+  .edit-panel--voyages .voyage-meta>div:first-child,
+  .edit-panel--voyages .voyage-meta>div:nth-child(2),
+  .edit-panel--voyages .voyage-meta>div:nth-child(3),
+  .edit-panel--voyages .voyage-meta>div:nth-child(4){padding-left:0!important;padding-right:0!important}
+}
+
+
+/* V111.5 — remove lower right Lens logo and keep only the attached-style horizontal barcode. */
+.ticket-lens-signature{
+  width:100%!important;
+  height:18px!important;
+  margin-top:18px!important;
+  padding-top:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  color:transparent!important;
+  font-size:0!important;
+  line-height:0!important;
+  letter-spacing:0!important;
+  display:block!important;
+  align-self:center!important;
+}
+.ticket-lens-signature::before{
+  content:""!important;
+  position:static!important;
+  display:block!important;
+  margin:0 auto!important;
+  width:96px!important;
+  height:18px!important;
+  transform:none!important;
+  background:repeating-linear-gradient(90deg,
+    #7387c5 0 1px, transparent 1px 3px,
+    #4a61b2 3px 5px, transparent 5px 7px,
+    #8ca0d9 7px 8px, transparent 8px 10px,
+    #4a61b2 10px 13px, transparent 13px 15px,
+    #7387c5 15px 16px, transparent 16px 18px,
+    #8ca0d9 18px 20px, transparent 20px 22px,
+    #4a61b2 22px 24px, transparent 24px 26px,
+    #7387c5 26px 27px, transparent 27px 29px,
+    #8ca0d9 29px 30px, transparent 30px 32px,
+    #4a61b2 32px 35px, transparent 35px 37px,
+    #7387c5 37px 38px, transparent 38px 40px,
+    #8ca0d9 40px 42px, transparent 42px 44px,
+    #4a61b2 44px 47px, transparent 47px 49px,
+    #7387c5 49px 50px, transparent 50px 53px,
+    #8ca0d9 53px 55px, transparent 55px 57px,
+    #4a61b2 57px 59px, transparent 59px 62px,
+    #7387c5 62px 63px, transparent 63px 65px,
+    #8ca0d9 65px 67px, transparent 67px 69px,
+    #4a61b2 69px 72px, transparent 72px 74px,
+    #7387c5 74px 75px, transparent 75px 77px,
+    #8ca0d9 77px 79px, transparent 79px 82px,
+    #4a61b2 82px 84px, transparent 84px 86px,
+    #7387c5 86px 87px, transparent 87px 89px,
+    #8ca0d9 89px 91px, transparent 91px 93px,
+    #4a61b2 93px 96px)!important;
+  opacity:.84!important;
+  box-shadow:inset 0 0 0 1px rgba(74,97,178,.04)!important;
+}
+.ticket-lens-signature::after{
+  content:none!important;
+  display:none!important;
+}
+@media (max-width:1080px){
+  .ticket-lens-signature::before{width:88px!important;height:16px!important}
+}
+
+
+/* V111.6 — use the user-supplied barcode artwork exactly; no synthetic barcode and no lower logo. */
+.ticket-lens-signature{display:none!important}
+.ticket-barcode{
+  display:block!important;
+  width:min(172px,86%)!important;
+  aspect-ratio:2000 / 647!important;
+  margin:18px auto 0!important;
+  background:#8e714c!important;
+  -webkit-mask-image:url("assets/images/mfm-ticket-barcode.png")!important;
+  mask-image:url("assets/images/mfm-ticket-barcode.png")!important;
+  -webkit-mask-repeat:no-repeat!important;
+  mask-repeat:no-repeat!important;
+  -webkit-mask-position:center!important;
+  mask-position:center!important;
+  -webkit-mask-size:contain!important;
+  mask-size:contain!important;
+  opacity:.82!important;
+}
+@media(max-width:1080px){
+  .ticket-barcode{width:min(190px,82%)!important;margin-top:16px!important}
+}
+@media(max-width:760px){
+  .ticket-barcode{width:min(210px,76%)!important;margin-top:15px!important}
+}
