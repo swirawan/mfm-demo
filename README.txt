@@ -1,3 +1,104 @@
+MFM Editorial V110
+
+Built from V109.5.
+
+V110 ADVISOR-MATCH UPGRADE
+- Expanded Advisor Match from three to four questions.
+- New fourth question asks what the traveler values most in the planning relationship, using seven specialty descriptions grounded in the existing Team bios.
+- First three questions continue to describe the trip and feed the inquiry handoff; the fourth planning-style signal is intentionally decisive.
+- Full combinational audit: 4 traveler choices x 3 pace choices x 4 travel-focus choices x 7 planning-style choices = 336 paths.
+- Distribution is exactly even: 48 winning paths for each of Maddy, Neelie, Amy, Lisi, Morgan, Ellen, and Rachael.
+- Result now shows a compact summary of all four answers above the advisor bio; the advisor bio remains pulled from the Team section.
+- Accepted quiz matches add the fourth-answer planning preference to the generated inquiry context while preserving the independent Departure/Voyage/advisor state system.
+
+MFM Editorial V109.5
+
+Built from V109.5.
+
+V109.5 DEMO ENTRY FLOW
+- Restored the private-demo introduction after successful access-key entry.
+- First-time/incognito sequence is now: Access key -> “Hi, my name is Stanley Wirawan” introduction -> View demo.
+- Successful unlock forces the introduction so the portfolio disclaimer/context cannot be skipped accidentally.
+- If access is already stored, the introduction still appears automatically until the visitor explicitly chooses not to see it again.
+- Footer “Demo notice” continues to reopen the introduction at any time.
+
+MFM Editorial V109.5
+
+Built from V109.2.
+
+V109.5 UX ENHANCEMENTS
+- Automated form actions now respect user-entered content: a manually typed destination is not overwritten by a later Departure/Voyage click, and a substantially rewritten message is never replaced by automation.
+- If the visitor merely appends a personal note to the generated message, that note is preserved while quiz/journey context updates around it.
+- Manual advisor changes still remove the exact quiz-owned recommendation lines while preserving all unrelated edits and journey details.
+- Added a compact “Your inquiry so far” state summary showing the active advisor, selected Departure/Voyage, and whether advisor-match context is included.
+- Added source hints to auto-filled Destination and Message fields so visitors understand what was added and that they can edit it.
+- Added Back controls and a readable “Question X of 3” indicator to the advisor-match quiz so a mis-tap does not force a restart.
+- Restored a truly neutral No Preference state: the advisor card now shows the team collage and “Let us make the match” rather than visually implying Maddy is already selected.
+- Choosing an advisor no longer opens the optional Phone / Preferred Call Time panel automatically.
+- When custom message copy is protected, selected quiz/journey context is still included as structured metadata in the prepared email so user intent is not lost.
+
+MFM Editorial V109.2
+
+Built from V109.1 / V108.2.
+
+V109.2 inquiry-state changes:
+- Advisor Match, Departure/Voyage selection, and manual advisor choice now operate as independent form states.
+- Accepting a quiz match adds the full advisor-match message with the matched advisor name correctly spaced (for example, Amy Gennaro).
+- Adding a Departure or Voyage after the quiz preserves the matched/preselected advisor and appends the journey context instead of replacing the quiz context.
+- Running the quiz after a Departure/Voyage keeps the specific selected destination instead of replacing it with the quiz's generic destination hint.
+- Manually changing the preferred advisor removes only quiz-owned message lines and the quiz-only destination hint; any selected Departure/Voyage and edited journey details remain intact.
+- Selecting a new Departure/Voyage replaces only the journey-owned portion while leaving the advisor preference unchanged.
+
+V109.1 BASE CHANGES
+- Fixed advisor picker scrolling on small screens without changing its design.
+- Added the supplied three-question Advisor Match quiz inside the Inquire section.
+- Quiz result pulls the matching advisor bio directly from the Team card wording.
+- “Start with this match” uses the existing advisor-picker behavior and portrait animation.
+- Quiz scrolls to the form and focuses Name.
+
+MFM Luxury Travel — Editorial Website V108.2
+
+V108 is a QA/consolidation release built from V107. It preserves the approved luxury couture-ticket and Maddy Lens direction while making the experience quieter, more credible, more responsive, and easier to maintain.
+
+V108 HIGHLIGHTS
+- Froze the historical V17–V107 cascade into styles-legacy-v107.css; all new work now lives in the focused styles.css experience layer.
+- Consolidated the live font load to Libre Bodoni, Manrope, and Cormorant Garamond.
+- Increased tiny navigation/utility typography and improved gold-on-cream readability.
+- Removed the redundant Departure ticker and Voyage sound control so the split-flap board remains the signature interaction.
+- Rewrote interface-explainer copy into customer-facing luxury editorial language.
+- Reframed stale 2025 voyage inventory as evergreen seasonal voyage directions with a clear seasonal-inspiration note.
+- Added same-document View Transition support for Voyage ticket changes, with a reduced-motion fallback.
+- Added scroll-led active-stage storytelling to the MFM Method instead of another looping animation.
+- Simplified the inquiry experience: core trip fields first, optional phone/call/advisor details behind progressive disclosure, and a compact advisor receipt instead of another large team card.
+- Kept the full flexible paper curl on desktop; phones now use a lightweight editorial page transition to reduce GPU work.
+- Converted all 20 lookbook page renders to high-quality 1700x2200 WebP and removed unused duplicate lookbook assets, cutting the project footprint substantially without reducing page dimensions.
+- Added content-visibility containment to heavier downstream sections.
+- Improved mobile Voyage-board scale, ticket metadata spacing, anchor clearance, focus visibility, and overflow handling.
+- Removed the automatic second legal/demo interruption after access; the independent-concept notice remains available from the footer.
+
+QA CHECKS COMPLETED
+- JavaScript syntax check passed.
+- Desktop and 390px mobile runtime interaction checks completed with zero page errors.
+- No horizontal document overflow at 1440px or 390px.
+- Departure/Voyage toggle, one-active-voyage behavior, optional inquiry panel, and mobile lookbook page turn tested.
+- No duplicate HTML IDs and no missing local asset references.
+
+The access gate remains client-side because this is a static portfolio demo. It discourages casual access but is not server-side authentication.
+
+Open index.html locally or deploy the folder to static hosting.
+
+V108.2 MICRO-POLISH
+- Re-encoded the original 1700×2200 lookbook artwork as lossless WebP; validation confirms the decoded pixels are identical to the source PNGs, avoiding the blur from V108's lossy compression while reducing image weight.
+- Added near-viewport and next-page prewarming so the full-sharpness magazine feels faster without loading all 20 pages up front.
+- Restored the personal advisor portrait card as the form's second-column anchor while retaining the cleaner V108 progressive contact details.
+- Tightened inquiry spacing and returned the advisor selector to the main conversation flow.
+- Refined advisor changes with a blur-free exposure/scale transition and restrained editorial light sweep.
+- Prewarms team portraits only when the inquiry section approaches the viewport.
+
+
+
+--- Historical project notes retained below ---
+
 MFM Luxury Travel - Editorial Website V58
 
 V28 rebuilds the Maddy Lens lookbook as a true 25-page travel magazine based on the supplied editorial mock.

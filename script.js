@@ -29,8 +29,14 @@
     accessGate?.classList.add('is-unlocked');
     accessGate?.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('access-gate-open');
-    window.setTimeout(() => accessGate?.remove(), reduceMotion ? 0 : 420);
-    window.setTimeout(() => openDemoNotice(), reduceMotion ? 0 : 180);
+
+    // This remains a private portfolio demo, so the intended first-entry sequence is:
+    // access key -> Stanley introduction -> website. Force the introduction after a
+    // successful unlock so clearing/re-entering the gate cannot accidentally skip it.
+    window.setTimeout(() => {
+      accessGate?.remove();
+      openDemoNotice({ force: true });
+    }, reduceMotion ? 0 : 430);
   };
 
   const showPrivateGate = () => {
@@ -118,7 +124,9 @@
   });
   if (hasPrivateAccess()) {
     accessGate?.remove();
-    window.setTimeout(() => openDemoNotice(), 120);
+    // If access was previously granted but the visitor never dismissed the demo
+    // introduction, still present it automatically on entry.
+    openDemoNotice();
   } else {
     showPrivateGate();
   }
@@ -608,10 +616,10 @@ What matters most on this trip:
   const voyageRows=[...document.querySelectorAll('[data-voyage-select]')];
 
   const voyageEdits=[
-    {key:'mediterranean',title:'MEDITERRANEAN VOYAGE',ship:'SEABOURN OVATION',date:'JUN 14'},
-    {key:'alaska',title:'ALASKAN PASSAGE',ship:'SILVER NOVA',date:'AUG 02'},
-    {key:'fjords',title:'NORWEGIAN FJORDS',ship:'VIKING SKY',date:'SEP 12'},
-    {key:'caribbean',title:'CARIBBEAN ESCAPE',ship:'REGENT SEVEN SEAS',date:'DEC 06'}
+    {key:'mediterranean',title:'MEDITERRANEAN VOYAGE',ship:'SEABOURN OVATION',date:'MAY–SEP'},
+    {key:'alaska',title:'ALASKAN PASSAGE',ship:'SILVER NOVA',date:'JUN–AUG'},
+    {key:'fjords',title:'NORWEGIAN FJORDS',ship:'VIKING SKY',date:'MAY–SEP'},
+    {key:'caribbean',title:'CARIBBEAN ESCAPE',ship:'REGENT SEVEN SEAS',date:'DEC–APR'}
   ];
 
   /* Each list row uses the exact same flap renderer as the Departure board. */
@@ -622,7 +630,7 @@ What matters most on this trip:
     const date=row.querySelector('[data-voyage-row-date]');
     setupFlap(title,21);
     setupFlap(ship,18);
-    setupFlap(date,6);
+    setupFlap(date,7);
     setFlapText(title,edit.title,0);
     setFlapText(ship,edit.ship,70);
     setFlapText(date,edit.date,140);
@@ -661,44 +669,30 @@ What matters most on this trip:
   sizeVoyageMarquees();
   window.addEventListener('resize',()=>window.requestAnimationFrame(sizeVoyageMarquees),{passive:true});
 
-  let voyageSoundOn=false, voyageCtx=null;
-  const voyageClick=()=>{
-    if(!voyageSoundOn)return;
-    const A=window.AudioContext||window.webkitAudioContext;
-    if(!A)return;
-    voyageCtx ||= new A();
-    if(voyageCtx.state==='suspended') voyageCtx.resume();
-    const c=voyageCtx, n=c.currentTime;
-    const strike=(when,freq,gainValue)=>{
-      const o=c.createOscillator(),g=c.createGain();
-      o.type='square';
-      o.frequency.setValueAtTime(freq,when);
-      o.frequency.exponentialRampToValueAtTime(Math.max(52,freq*.58),when+.045);
-      g.gain.setValueAtTime(gainValue,when);
-      g.gain.exponentialRampToValueAtTime(.0001,when+.05);
-      o.connect(g).connect(c.destination);o.start(when);o.stop(when+.055);
+  /* V108 — quiet luxury: the board itself is the interaction. Sound was removed
+     so the selected voyage can transition as a single editorial object. */
+  const runViewTransition = (update) => {
+    if (!reduceMotion && typeof document.startViewTransition === 'function') {
+      return document.startViewTransition(update);
+    }
+    update();
+    return null;
+  };
+
+  const selectVoyage=(key)=>{
+    const update=()=>{
+      voyageRows.forEach(row=>{
+        const active=row.dataset.voyageSelect===key;
+        row.classList.toggle('is-active',active);
+        row.setAttribute('aria-selected',active?'true':'false');
+      });
+      voyageCards.forEach(card=>card.classList.toggle('is-active',card.dataset.voyageCard===key));
     };
-    strike(n,150,.02); strike(n+.035,104,.015);
+    runViewTransition(update);
   };
 
-  const selectVoyage=(key,playSound=true)=>{
-    voyageRows.forEach(row=>{
-      const active=row.dataset.voyageSelect===key;
-      row.classList.toggle('is-active',active);
-      row.setAttribute('aria-selected',active?'true':'false');
-    });
-    voyageCards.forEach(card=>card.classList.toggle('is-active',card.dataset.voyageCard===key));
-    if(playSound)voyageClick();
-  };
-
-  voyageRows.forEach(row=>row.addEventListener('click',()=>selectVoyage(row.dataset.voyageSelect,true)));
-  voyageSound?.addEventListener('click',()=>{
-    voyageSoundOn=!voyageSoundOn;
-    voyageSound.setAttribute('aria-pressed',voyageSoundOn?'true':'false');
-    voyageSound.textContent=voyageSoundOn?'SOUND ON':'SOUND OFF';
-    voyageClick();
-  });
-  selectVoyage('mediterranean',false);
+  voyageRows.forEach(row=>row.addEventListener('click',()=>selectVoyage(row.dataset.voyageSelect)));
+  selectVoyage('mediterranean');
 
   /* Curated Edit toggle */
   const editTabs = [...document.querySelectorAll('[data-edit-trigger]')];
@@ -713,7 +707,7 @@ What matters most on this trip:
     },
     voyages: {
       title: 'Voyages worth <em>remembering.</em>',
-      lead: 'Hand-selected sailings for travelers who value ease, clarity, and beautifully handled details. Choose a sailing and open its private voyage brief below.'
+      lead: 'Seasonal voyage directions for travelers who value ease, clarity, and beautifully handled details. Choose an idea and open its private MFM brief below.'
     }
   };
   const setEditView = (viewKey) => {
@@ -739,10 +733,40 @@ What matters most on this trip:
   /* Maddy Lens V30 - exact uploaded 20-page magazine rendered at 200 DPI.
      Desktop pairs the cover by itself, then 02/03, 04/05 ... 18/19, with page 20 closing the issue.
      Mobile presents every page individually. */
-  const lookbookPages = Array.from({ length: 20 }, (_, idx) => {
+  const lookbookPageSources = Array.from({ length: 20 }, (_, idx) => {
     const pageNo = String(idx + 1).padStart(2, '0');
-    return `<div class="pdf-page"><img src="assets/lookbook/pages/page-${pageNo}.png" alt="Maddy Lens Issue 01 page ${idx + 1}" draggable="false" decoding="async"></div>`;
+    return `assets/lookbook/pages/page-${pageNo}.webp`;
   });
+  const lookbookPages = lookbookPageSources.map((src, idx) =>
+    `<div class="pdf-page"><img src="${src}" alt="Maddy Lens Issue 01 page ${idx + 1}" draggable="false" decoding="async" loading="lazy"></div>`
+  );
+
+  /* V108.2: keep the original lossless PNG artwork, but warm only the pages the
+     reader is likely to turn to next. This improves perceived opening/turn speed
+     without softening the magazine or front-loading all 20 high-resolution pages. */
+  const warmedLookbookPages = new Set();
+  const warmLookbookPages = (indexes = []) => {
+    indexes.forEach((idx) => {
+      if (idx < 0 || idx >= lookbookPageSources.length || warmedLookbookPages.has(idx)) return;
+      warmedLookbookPages.add(idx);
+      const image = new Image();
+      image.decoding = 'async';
+      image.src = lookbookPageSources[idx];
+      image.decode?.().catch(() => {});
+    });
+  };
+
+  const lookbookSection = document.querySelector('#lookbook');
+  if ('IntersectionObserver' in window && lookbookSection) {
+    const lookbookWarmObserver = new IntersectionObserver((entries, observer) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      warmLookbookPages([0, 1, 2, 3]);
+      observer.disconnect();
+    }, { rootMargin: '650px 0px' });
+    lookbookWarmObserver.observe(lookbookSection);
+  } else {
+    warmLookbookPages([0, 1, 2]);
+  }
 
   const blankLookbookPage = `<div class="pdf-page pdf-page--blank" aria-hidden="true"></div>`;
   const spreads = [{ left: blankLookbookPage, right: lookbookPages[0] }];
@@ -884,6 +908,15 @@ What matters most on this trip:
       updateMeta();
     };
 
+    const warmBookAround = (itemIndex) => {
+      if (singlePageMode()) {
+        warmLookbookPages([itemIndex, itemIndex + 1, itemIndex + 2]);
+      } else {
+        const pageStart = itemIndex === 0 ? 0 : 1 + ((itemIndex - 1) * 2);
+        warmLookbookPages([pageStart, pageStart + 1, pageStart + 2, pageStart + 3]);
+      }
+    };
+
     const getTarget = (direction) => {
       const total = totalItems();
       let target = index + (direction === 'next' ? 1 : -1);
@@ -899,6 +932,7 @@ What matters most on this trip:
       sheet.replaceChildren();
       sheet.removeAttribute('style');
       turning = false;
+      warmBookAround(index);
     };
 
     const turn = (direction = 'next') => {
@@ -906,8 +940,61 @@ What matters most on this trip:
       const target = getTarget(direction);
       if (target === null) return false;
       turning = true;
+      warmBookAround(target);
 
       const singlePage = singlePageMode();
+
+      /* V108 mobile performance path: phones use a restrained editorial page
+         transition instead of reproducing the magazine page across 14–20 3D
+         slices. Desktop keeps the signature flexible paper curl. */
+      if (singlePage) {
+        /* V109.5 mobile clarity fix: a finished Web Animation with fill:forwards
+           can keep contributing its old opacity/transform after the incoming
+           animation ends. That occasionally left the settled page at ~28%
+           opacity, which looked like a blurred low-resolution render. Always
+           cancel stale animations and explicitly restore the settled page. */
+        const resetMobilePageVisual = () => {
+          right.getAnimations?.().forEach((animation) => animation.cancel());
+          right.style.opacity = '1';
+          right.style.transform = 'none';
+          right.style.filter = 'none';
+        };
+        if (reduceMotion || typeof right.animate !== 'function') {
+          resetMobilePageVisual();
+          finishTurn(target);
+          resetMobilePageVisual();
+          return true;
+        }
+        resetMobilePageVisual();
+        const outX = direction === 'next' ? '-3.5%' : '3.5%';
+        const inX = direction === 'next' ? '3.5%' : '-3.5%';
+        const out = right.animate([
+          { opacity: 1, transform: 'translateX(0) scale(1)' },
+          { opacity: .28, transform: `translateX(${outX}) scale(.992)` }
+        ], { duration: 210, easing: 'cubic-bezier(.4,0,.6,1)', fill: 'both' });
+        out.finished.then(() => {
+          out.cancel();
+          index = target;
+          paint(index);
+          const incoming = right.animate([
+            { opacity: .3, transform: `translateX(${inX}) scale(.992)` },
+            { opacity: 1, transform: 'translateX(0) scale(1)' }
+          ], { duration: 330, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' });
+          incoming.finished
+            .catch(() => {})
+            .finally(() => {
+              incoming.cancel();
+              resetMobilePageVisual();
+              turning = false;
+            });
+        }).catch(() => {
+          resetMobilePageVisual();
+          finishTurn(target);
+          resetMobilePageVisual();
+        });
+        return true;
+      }
+
       const pageWidth = Math.max(1, right.getBoundingClientRect().width);
       let frontMarkup;
       let backMarkup;
@@ -1222,9 +1309,9 @@ What matters most on this trip:
   /* V35 inquiry advisor selector — reuses the same seven team portraits and editorial voice. */
   const advisorProfiles = {
     'no-preference': {
-      index: 'MFM / 01', eyebrow: 'Your starting point', name: 'Maddy Moffitt',
-      role: 'Owner & Travel Advisor · MFM team lead', image: 'assets/images/team/maddy.webp', position: 'center 27%',
-      bio: 'Not sure who to choose? Start with Maddy. Share the trip you have in mind and MFM will connect you with the team member whose experience and planning style best fit it.',
+      index: 'MFM / 00', eyebrow: 'No advisor selected', name: 'Let us make the match.',
+      role: 'Seven points of view · one standard of care', image: null, position: 'center 30%',
+      bio: 'Share the trip you have in mind and MFM will connect you with the team member whose experience, planning style and point of view best fit it.',
       tags: ['PERSONAL MATCH','MFM TEAM','WORLDWIDE']
     },
     maddy: {
@@ -1263,6 +1350,28 @@ What matters most on this trip:
       tags: ['PRECISION','DISCOVERY','PLANNING']
     }
   };
+
+  /* V108.2: prewarm advisor portraits only as the inquiry section approaches,
+     so the personal card changes instantly without adding work to the hero load. */
+  const warmAdvisorPortraits = () => {
+    [...new Set(Object.values(advisorProfiles).map((profile) => profile.image).filter(Boolean))].forEach((src) => {
+      const image = new Image();
+      image.decoding = 'async';
+      image.src = src;
+    });
+  };
+  const inquirySection = document.querySelector('#inquire');
+  if ('IntersectionObserver' in window && inquirySection) {
+    const advisorWarmObserver = new IntersectionObserver((entries, observer) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      warmAdvisorPortraits();
+      observer.disconnect();
+    }, { rootMargin: '500px 0px' });
+    advisorWarmObserver.observe(inquirySection);
+  } else {
+    warmAdvisorPortraits();
+  }
+
   const advisorSelect = document.querySelector('[data-advisor-select]');
   const advisorCard = document.querySelector('[data-advisor-card]');
   const advisorPhoto = document.querySelector('[data-advisor-photo]');
@@ -1350,11 +1459,16 @@ What matters most on this trip:
     }
   };
 
-  const chooseAdvisor = (key, returnFocus = true) => {
+  let onManualAdvisorOverride = () => {};
+  let updateInquiryContext = () => {};
+
+  const chooseAdvisor = (key, returnFocus = true, source = 'manual') => {
     if (!advisorSelect) return;
+    if (source === 'manual') onManualAdvisorOverride(key);
     advisorSelect.value = key;
     syncAdvisorPicker(key);
     renderAdvisorSelection(key, { celebrate: true });
+    updateInquiryContext();
     advisorPicker?.classList.remove('has-selection-pulse');
     if (!reduceMotion) {
       void advisorPicker?.offsetWidth;
@@ -1589,21 +1703,203 @@ What matters most on this trip:
     if (timeControl?.classList.contains('is-open') && !timeControl.contains(event.target)) { timeControl.classList.remove('is-open'); timeTrigger?.setAttribute('aria-expanded','false'); }
   });
 
+
+  /* V108 — scroll-driven MFM Method. The chapter stays calm while the current
+     planning stage gains emphasis and the progress hairline advances. */
+  const methodSection = document.querySelector('[data-method-section]');
+  const methodSteps = [...document.querySelectorAll('[data-method-step]')];
+  const methodProgress = document.querySelector('[data-method-progress]');
+  if (methodSection && methodSteps.length) {
+    const setMethodStep = (step) => {
+      const index = Math.max(0, methodSteps.indexOf(step));
+      methodSteps.forEach((item, i) => item.classList.toggle('is-method-active', i === index));
+      if (methodProgress) methodProgress.style.transform = `scaleY(${(index + 1) / methodSteps.length})`;
+    };
+    setMethodStep(methodSteps[0]);
+    if ('IntersectionObserver' in window) {
+      const methodObserver = new IntersectionObserver((entries) => {
+        const visible = entries.filter(entry => entry.isIntersecting)
+          .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setMethodStep(visible.target);
+      }, { rootMargin: '-28% 0px -42% 0px', threshold: [0.15,0.35,0.6] });
+      methodSteps.forEach(step => methodObserver.observe(step));
+    }
+  }
+
   /* Inquiry */
   const form = document.querySelector('[data-inquiry-form]');
   const formNote = document.querySelector('[data-form-note]');
   const inquiryDestinationField = form?.querySelector('input[name="destination"]');
   const inquiryMessageField = form?.querySelector('textarea[name="message"]');
+
+  /* V109.3 inquiry state — automated choices are additive, while anything the
+     visitor types by hand is treated as higher-priority and never overwritten. */
+  const inquiryContext = form?.querySelector('[data-inquiry-context]');
+  const contextAdvisor = form?.querySelector('[data-context-advisor]');
+  const contextJourney = form?.querySelector('[data-context-journey]');
+  const contextQuiz = form?.querySelector('[data-context-quiz]');
+  const destinationSourceHint = form?.querySelector('[data-destination-source]');
+  const messageSourceHint = form?.querySelector('[data-message-source]');
+  const inquiryAutoState = {
+    quiz: null,
+    journey: null,
+    destinationOwner: null,
+    destinationAutoValue: '',
+    lastAutoMessage: '',
+    lastRenderedMessage: '',
+    messageMode: 'auto',
+    userAppendix: '',
+    suppressMessageTracking: false,
+    suppressDestinationTracking: false
+  };
+
+  const stripJourneyGreeting = (template = '') => template
+    .replace(/^\s*(?:Hello|Hi) MFM team,\s*/i, '')
+    .trim();
+
+  const composeInquiryAutoMessage = () => {
+    const quiz = inquiryAutoState.quiz;
+    const journey = inquiryAutoState.journey;
+    if (quiz && journey) {
+      const journeyBody = stripJourneyGreeting(journey.template)
+        .replace(/^I would love/i, 'I would also love');
+      return [
+        'Hi MFM team,',
+        '',
+        quiz.contextLine,
+        quiz.advisorLine,
+        'I’d love to hear your thoughts on where to start.',
+        '',
+        journeyBody
+      ].join('\n').trim();
+    }
+    if (quiz) {
+      return [
+        'Hi MFM team,',
+        '',
+        quiz.contextLine,
+        quiz.advisorLine,
+        '',
+        'I’d love to hear your thoughts on where to start.'
+      ].join('\n');
+    }
+    if (journey) return journey.template.trim();
+    return '';
+  };
+
+  updateInquiryContext = () => {
+    if (!form) return;
+    const advisorKey = advisorSelect?.value || 'no-preference';
+    const advisorProfile = advisorProfiles[advisorKey] || advisorProfiles['no-preference'];
+    const hasAdvisor = advisorKey !== 'no-preference';
+    const hasJourney = Boolean(inquiryAutoState.journey);
+    const hasQuiz = Boolean(inquiryAutoState.quiz);
+
+    if (contextAdvisor) {
+      contextAdvisor.hidden = !hasAdvisor;
+      contextAdvisor.textContent = hasAdvisor ? `Advisor · ${advisorProfile.name}` : '';
+    }
+    if (contextJourney) {
+      contextJourney.hidden = !hasJourney;
+      contextJourney.textContent = hasJourney ? `${inquiryAutoState.journey.type === 'voyage' ? 'Voyage' : 'Departure'} · ${inquiryAutoState.journey.title}` : '';
+    }
+    if (contextQuiz) {
+      contextQuiz.hidden = !hasQuiz;
+      contextQuiz.textContent = hasQuiz ? 'Advisor match · added' : '';
+    }
+    if (inquiryContext) inquiryContext.hidden = !(hasAdvisor || hasJourney || hasQuiz);
+
+    if (destinationSourceHint) {
+      const source = inquiryAutoState.destinationOwner;
+      destinationSourceHint.hidden = !source || source === 'user';
+      destinationSourceHint.textContent = source === 'journey'
+        ? `From ${inquiryAutoState.journey?.title || 'your selected journey'} · edit freely`
+        : source === 'quiz' ? 'Suggested by your match quiz · edit freely' : '';
+    }
+    if (messageSourceHint) {
+      const hasAuto = hasJourney || hasQuiz;
+      messageSourceHint.hidden = !hasAuto;
+      messageSourceHint.textContent = inquiryAutoState.messageMode === 'custom'
+        ? 'Your custom note is protected — new selections will not overwrite it'
+        : inquiryAutoState.messageMode === 'append'
+          ? 'Prefilled from your selections · your added note will be kept'
+          : 'Prefilled from your selections · edit freely';
+    }
+  };
+
   const autoSizeInquiryMessage = () => {
     if (!inquiryMessageField) return;
     inquiryMessageField.style.height = 'auto';
     inquiryMessageField.style.height = `${Math.max(112, inquiryMessageField.scrollHeight + 2)}px`;
   };
-  inquiryMessageField?.addEventListener('input', autoSizeInquiryMessage);
+
+  const renderInquiryAutoMessage = () => {
+    if (!inquiryMessageField) return;
+    const nextAuto = composeInquiryAutoMessage();
+    inquiryAutoState.lastAutoMessage = nextAuto;
+
+    /* Once the visitor has substantially rewritten the message, never replace
+       their copy. Their selections still remain visible in the state summary
+       and are included as structured fields when the email is prepared. */
+    if (inquiryAutoState.messageMode === 'custom') {
+      updateInquiryContext();
+      autoSizeInquiryMessage();
+      return;
+    }
+
+    const appendix = inquiryAutoState.userAppendix.trim();
+    const nextMessage = [nextAuto, appendix].filter(Boolean).join('\n\n');
+    inquiryAutoState.suppressMessageTracking = true;
+    inquiryMessageField.value = nextMessage;
+    inquiryAutoState.lastRenderedMessage = nextMessage;
+    inquiryMessageField.dispatchEvent(new Event('input', { bubbles: true }));
+    inquiryAutoState.suppressMessageTracking = false;
+    updateInquiryContext();
+  };
+
+  inquiryMessageField?.addEventListener('input', () => {
+    autoSizeInquiryMessage();
+    if (inquiryAutoState.suppressMessageTracking) return;
+    const current = inquiryMessageField.value;
+    if (current === inquiryAutoState.lastRenderedMessage) return;
+
+    if (inquiryAutoState.lastAutoMessage && current.startsWith(inquiryAutoState.lastAutoMessage)) {
+      inquiryAutoState.messageMode = 'append';
+      inquiryAutoState.userAppendix = current.slice(inquiryAutoState.lastAutoMessage.length).trim();
+    } else {
+      inquiryAutoState.messageMode = 'custom';
+      inquiryAutoState.userAppendix = '';
+    }
+    inquiryAutoState.lastRenderedMessage = current;
+    updateInquiryContext();
+  });
+
+  inquiryDestinationField?.addEventListener('input', () => {
+    if (inquiryAutoState.suppressDestinationTracking) return;
+    inquiryAutoState.destinationOwner = inquiryDestinationField.value.trim() ? 'user' : null;
+    inquiryAutoState.destinationAutoValue = '';
+    updateInquiryContext();
+  });
+
   window.addEventListener('resize', autoSizeInquiryMessage, { passive: true });
   autoSizeInquiryMessage();
+  updateInquiryContext();
   const journeyPlanLinks = [...document.querySelectorAll('[data-plan-journey]')];
   const destinationPlanLinks = [...document.querySelectorAll('[data-plan-destination]')];
+
+  const setAutomatedDestination = (value, owner) => {
+    if (!inquiryDestinationField) return false;
+    const current = inquiryDestinationField.value.trim();
+    const canReplace = !current || inquiryAutoState.destinationOwner === 'quiz' || inquiryAutoState.destinationOwner === 'journey';
+    if (!canReplace) return false;
+    inquiryAutoState.suppressDestinationTracking = true;
+    inquiryDestinationField.value = value;
+    inquiryAutoState.suppressDestinationTracking = false;
+    inquiryAutoState.destinationOwner = owner;
+    inquiryAutoState.destinationAutoValue = value;
+    updateInquiryContext();
+    return true;
+  };
 
   const focusPrefilledForm = (noteText) => {
     if (formNote) formNote.textContent = noteText;
@@ -1627,20 +1923,267 @@ What matters most on this trip:
 
 I would love to learn more about the ${voyageTitle}.
 `);
-    if (inquiryDestinationField) inquiryDestinationField.value = destination;
-    if (inquiryMessageField) inquiryMessageField.value = template;
+
+    inquiryAutoState.journey = { type: 'voyage', key, title: voyageTitle, destination, template };
+    const destinationUpdated = setAutomatedDestination(destination, 'journey');
+    renderInquiryAutoMessage();
     autoSizeInquiryMessage();
-    focusPrefilledForm(`${voyageTitle} has been added below — tailor anything before sending.`);
+    focusPrefilledForm(destinationUpdated
+      ? `${voyageTitle} has been added — your preferred advisor has been kept.`
+      : `${voyageTitle} has been added. Your typed destination was kept, and your preferred advisor is unchanged.`);
   };
 
   const prefillDepartureInquiry = (key) => {
     if (!form) return;
     const edit = boardEdits.find(item => item.key === key) || boardEdits[0];
     if (!edit) return;
-    if (inquiryDestinationField) inquiryDestinationField.value = edit.title;
-    if (inquiryMessageField) inquiryMessageField.value = edit.template;
+
+    inquiryAutoState.journey = { type: 'departure', key: edit.key, title: edit.title, destination: edit.title, template: edit.template };
+    const destinationUpdated = setAutomatedDestination(edit.title, 'journey');
+    renderInquiryAutoMessage();
     autoSizeInquiryMessage();
-    focusPrefilledForm(`${edit.title} has been added below — tailor anything before sending.`);
+    focusPrefilledForm(destinationUpdated
+      ? `${edit.title} has been added — your preferred advisor has been kept.`
+      : `${edit.title} has been added. Your typed destination was kept, and your preferred advisor is unchanged.`);
+  };
+
+
+
+  /* V109 advisor-match quiz — imported from the user-provided component and
+     wired into V108.2's existing advisor picker + inquiry flow. The displayed
+     result bio is read directly from the Team card in the DOM, so the wording
+     stays verbatim with the Team section instead of becoming a second copy. */
+  const advisorMatchQuiz = document.querySelector('[data-mfm-quiz]');
+  if (advisorMatchQuiz) {
+    const quizSteps = ['party', 'pace', 'focus', 'priority'];
+    const quizAnswers = {};
+    const quizResult = advisorMatchQuiz.querySelector('[data-quiz-result]');
+    const quizProgressLabel = advisorMatchQuiz.querySelector('[data-quiz-progress-label]');
+    const quizStepEls = Object.fromEntries(quizSteps.map(key => [key, advisorMatchQuiz.querySelector(`[data-quiz-step="${key}"]`)]));
+
+    const quizTeamProfile = (key) => {
+      const storyButton = document.querySelector(`[data-team-story-open="${key}"]`);
+      const card = storyButton?.closest('[data-team-card]');
+      if (!card) return null;
+      return {
+        key,
+        name: advisorProfiles[key]?.name || card.querySelector('.team-name strong')?.textContent.replace(/([a-z])([A-Z])/g, '$1 $2').replace(/\s+/g, ' ').trim() || '',
+        role: advisorProfiles[key]?.role || card.querySelector('.team-name small')?.textContent.trim() || '',
+        bio: card.querySelector('.team-card-detail > p')?.textContent.trim() || ''
+      };
+    };
+
+    /* V110 four-question advisor match. The first three answers describe the
+       trip; question four asks what the traveler values most in the planning
+       relationship. That final signal is intentionally decisive because each
+       option maps directly to a real Team-section strength. With 4 x 3 x 4 x 7
+       = 336 paths, this yields exactly 48 credible winning paths per advisor. */
+    const quizMatchWeights = {
+      party: {
+        'Just the two of us': { maddy:3, neelie:2, amy:1, morgan:1 },
+        'Family with kids': { lisi:5, neelie:1, morgan:1 },
+        'A small group of friends': { morgan:2, amy:2, ellen:1, maddy:1 },
+        'Traveling solo': { rachael:5, ellen:1, maddy:1 }
+      },
+      pace: {
+        'Slow and immersive': { maddy:2, neelie:2, lisi:1, ellen:2 },
+        'Packed with detail': { morgan:4, amy:2, rachael:2, ellen:1 },
+        'A bit of both': { maddy:2, rachael:2, lisi:1, amy:1 }
+      },
+      focus: {
+        'Coastal and warm': { neelie:5, morgan:2, maddy:1 },
+        'City and culture': { amy:5, ellen:2, lisi:2, morgan:1 },
+        'Wild and remote': { ellen:5, rachael:2, maddy:1 },
+        'Not sure yet': { maddy:4, rachael:2, morgan:1 }
+      },
+      priority: {
+        'A strong overall point of view': { maddy:10 },
+        'Exceptional hotels and intuitive service': { neelie:10 },
+        'Style, culture and thoughtful curation': { amy:10 },
+        'Family ease and meaningful connection': { lisi:10 },
+        'Research, hotels and every last detail': { morgan:10 },
+        'Nature, culture and lived experience': { ellen:10 },
+        'Precision, discovery and perspective': { rachael:10 }
+      }
+    };
+    const quizTieOrder = ['lisi','rachael','neelie','amy','ellen','morgan','maddy'];
+    const matchQuizAdvisor = () => {
+      const scores = Object.fromEntries(quizTieOrder.map((key) => [key, 0]));
+      quizSteps.forEach((field) => {
+        const weights = quizMatchWeights[field]?.[quizAnswers[field]] || {};
+        Object.entries(weights).forEach(([key, value]) => { scores[key] = (scores[key] || 0) + value; });
+      });
+      return quizTieOrder.reduce((best, key) => scores[key] > scores[best] ? key : best, quizTieOrder[0]);
+    };
+
+    const quizDestinationHint = () => {
+      switch (quizAnswers.focus) {
+        case 'Coastal and warm': return 'Somewhere coastal and warm';
+        case 'City and culture': return 'A city with culture to explore';
+        case 'Wild and remote': return 'Somewhere wild and remote';
+        default: return 'Open to MFM’s recommendation';
+      }
+    };
+
+    const showQuizStep = (key) => {
+      const index = quizSteps.indexOf(key);
+      quizSteps.forEach(stepKey => quizStepEls[stepKey]?.classList.toggle('is-active', stepKey === key));
+      advisorMatchQuiz.setAttribute('data-quiz-step-index', String(index));
+      if (quizProgressLabel) quizProgressLabel.textContent = `Question ${index + 1} of ${quizSteps.length}`;
+    };
+
+    const showQuizResult = () => {
+      const key = matchQuizAdvisor();
+      const profile = quizTeamProfile(key);
+      advisorMatchQuiz.setAttribute('data-quiz-step-index', String(quizSteps.length));
+      if (quizProgressLabel) quizProgressLabel.textContent = 'Your advisor match';
+      quizSteps.forEach(stepKey => quizStepEls[stepKey]?.classList.remove('is-active'));
+      if (!quizResult || !profile) return;
+      quizResult.hidden = false;
+      quizResult.dataset.matchedAdvisor = key;
+      const resultName = quizResult.querySelector('[data-quiz-result-name]');
+      const resultRole = quizResult.querySelector('[data-quiz-result-role]');
+      const resultReason = quizResult.querySelector('[data-quiz-result-reason]');
+      const resultCopy = quizResult.querySelector('[data-quiz-result-copy]');
+      if (resultName) resultName.textContent = profile.name;
+      if (resultRole) resultRole.textContent = profile.role;
+      if (resultReason) {
+        const party = quizAnswers.party || 'Your travel party';
+        const pace = quizAnswers.pace || 'A flexible pace';
+        const focus = quizAnswers.focus || 'An open destination';
+        const priority = quizAnswers.priority || 'A personal planning style';
+        resultReason.textContent = `${party} · ${pace} · ${focus} · ${priority}`;
+      }
+      if (resultCopy) resultCopy.textContent = profile.bio;
+    };
+
+    const applyQuizMatch = () => {
+      const key = quizResult?.dataset.matchedAdvisor || matchQuizAdvisor();
+      const profile = quizTeamProfile(key);
+      const pace = quizAnswers.pace ? quizAnswers.pace.toLowerCase() : 'flexible';
+      const focus = quizAnswers.focus ? quizAnswers.focus.toLowerCase() : 'somewhere new';
+
+      inquiryAutoState.quiz = {
+        advisorKey: key,
+        advisorName: profile?.name || advisorProfiles[key]?.name || 'your matched advisor',
+        contextLine: `A quick starting point from the advisor-match quiz: ${quizAnswers.party || 'I am planning a trip'}, ${pace} pace, drawn to ${focus}, and looking for ${(quizAnswers.priority || 'a personal planning style').toLowerCase()}.`,
+        advisorLine: `I’d be happy to start the conversation with ${profile?.name || advisorProfiles[key]?.name || 'your matched advisor'}.`
+      };
+
+      /* Accepting a match uses the exact same picker logic/animation, but marks
+         the source as quiz so it does not immediately clear its own prefill. */
+      chooseAdvisor(key, false, 'quiz');
+
+      /* A real Departure/Voyage selection or something the user typed wins over
+         the quiz's generic destination hint. */
+      if (!inquiryAutoState.journey) {
+        setAutomatedDestination(quizDestinationHint(), 'quiz');
+      }
+
+      renderInquiryAutoMessage();
+      autoSizeInquiryMessage();
+      if (formNote) formNote.textContent = `${profile?.name || 'Your advisor match'} and your quiz answers have been added. A Departure or Voyage can be added without changing this advisor.`;
+
+      form?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
+      window.setTimeout(() => {
+        form?.querySelector('input[name="name"]')?.focus({ preventScroll: true });
+      }, reduceMotion ? 0 : 420);
+    };
+
+
+    advisorMatchQuiz.addEventListener('click', event => {
+      const answerButton = event.target.closest('[data-quiz-answer]');
+      if (answerButton) {
+        const field = answerButton.dataset.field;
+        quizAnswers[field] = answerButton.dataset.value;
+        answerButton.closest('.mfm-quiz-options')?.querySelectorAll('[data-quiz-answer]').forEach(button => {
+          button.classList.toggle('is-picked', button === answerButton);
+        });
+        const nextIndex = quizSteps.indexOf(field) + 1;
+        window.setTimeout(() => {
+          if (nextIndex < quizSteps.length) showQuizStep(quizSteps[nextIndex]);
+          else showQuizResult();
+        }, reduceMotion ? 0 : 220);
+        return;
+      }
+
+      const backButton = event.target.closest('[data-quiz-back]');
+      if (backButton) {
+        const activeStep = backButton.closest('[data-quiz-step]')?.dataset.quizStep;
+        const activeIndex = quizSteps.indexOf(activeStep);
+        if (activeIndex > 0) showQuizStep(quizSteps[activeIndex - 1]);
+        return;
+      }
+
+      if (event.target.closest('[data-quiz-restart]')) {
+        Object.keys(quizAnswers).forEach(key => delete quizAnswers[key]);
+        quizResult.hidden = true;
+        delete quizResult.dataset.matchedAdvisor;
+        advisorMatchQuiz.querySelectorAll('[data-quiz-answer].is-picked').forEach(button => button.classList.remove('is-picked'));
+        showQuizStep(quizSteps[0]);
+        return;
+      }
+
+      if (event.target.closest('[data-quiz-apply]')) applyQuizMatch();
+    });
+
+    showQuizStep(quizSteps[0]);
+  }
+
+  /* A manual advisor change means the visitor has intentionally overridden the
+     quiz recommendation. Remove only quiz-owned automation; never rewrite a
+     message the visitor has substantially customized. */
+  onManualAdvisorOverride = (newAdvisorKey) => {
+    if (!inquiryAutoState.quiz) {
+      updateInquiryContext();
+      return;
+    }
+
+    const previousQuiz = inquiryAutoState.quiz;
+    inquiryAutoState.quiz = null;
+
+    if (inquiryAutoState.destinationOwner === 'quiz' && !inquiryAutoState.journey && inquiryDestinationField) {
+      inquiryAutoState.suppressDestinationTracking = true;
+      inquiryDestinationField.value = '';
+      inquiryAutoState.suppressDestinationTracking = false;
+      inquiryAutoState.destinationOwner = null;
+      inquiryAutoState.destinationAutoValue = '';
+    }
+
+    if (inquiryAutoState.messageMode !== 'custom') {
+      renderInquiryAutoMessage();
+    } else if (inquiryMessageField) {
+      /* Even in a custom message, remove only the exact lines owned by the quiz.
+         Everything else the visitor wrote is preserved byte-for-byte. */
+      const quizOwnedLines = new Set([
+        previousQuiz.contextLine,
+        previousQuiz.advisorLine,
+        'I’d love to hear your thoughts on where to start.'
+      ]);
+      const cleaned = inquiryMessageField.value
+        .split('\n')
+        .filter(line => !quizOwnedLines.has(line.trim()))
+        .join('\n')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+      inquiryAutoState.suppressMessageTracking = true;
+      inquiryMessageField.value = cleaned;
+      inquiryAutoState.lastRenderedMessage = cleaned;
+      inquiryAutoState.suppressMessageTracking = false;
+      updateInquiryContext();
+    }
+    autoSizeInquiryMessage();
+
+    const chosenName = newAdvisorKey === 'no-preference'
+      ? 'No preference'
+      : (advisorProfiles[newAdvisorKey]?.name || 'Your advisor');
+    if (formNote) {
+      formNote.textContent = inquiryAutoState.messageMode === 'custom'
+        ? `${chosenName} is now your advisor preference. Only the quiz-generated lines were removed; your other edits were kept.`
+        : inquiryAutoState.journey
+          ? `${chosenName} is now your advisor preference. Your selected ${inquiryAutoState.journey.type === 'voyage' ? 'voyage' : 'departure'} stays in the inquiry.`
+          : `${chosenName} is now your advisor preference. The quiz recommendation was removed.`;
+    }
   };
 
   journeyPlanLinks.forEach(link => {
@@ -1681,8 +2224,16 @@ I would love to learn more about the ${voyageTitle}.
     const message = data.get('message') || '';
     const subject = encodeURIComponent(`Travel inquiry from ${name}${destination ? ` — ${destination}` : ''}`);
     const preferredCall = callDateValue || callTimeValue ? `${callDateValue || 'Date flexible'}${callTimeValue ? ` at ${callTimeValue}` : ' · time flexible'}` : 'Not specified';
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${fullPhone || 'Not provided'}\nDestination / idea: ${destination}\nPreferred advisor: ${advisorChoice}\nPreferred call: ${preferredCall}\n\n${message}`);
-    if (formNote) formNote.textContent = 'Opening your email app…';
+    const protectedContext = [];
+    if (inquiryAutoState.messageMode === 'custom' && inquiryAutoState.quiz) {
+      protectedContext.push(`Advisor-match context: ${inquiryAutoState.quiz.contextLine.replace(/^A quick starting point from the advisor-match quiz:\s*/i, '')}`);
+    }
+    if (inquiryAutoState.messageMode === 'custom' && inquiryAutoState.journey) {
+      protectedContext.push(`Selected MFM ${inquiryAutoState.journey.type}: ${inquiryAutoState.journey.title}`);
+    }
+    const contextBlock = protectedContext.length ? `\n${protectedContext.join('\n')}` : '';
+    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nPhone: ${fullPhone || 'Not provided'}\nDestination / idea: ${destination}\nPreferred advisor: ${advisorChoice}\nPreferred call: ${preferredCall}${contextBlock}\n\n${message}`);
+    if (formNote) formNote.textContent = 'Your inquiry is prepared — opening your email app for review…';
     window.location.href = `mailto:maddy@MFMLuxuryTravel.com?subject=${subject}&body=${body}`;
   });
 
