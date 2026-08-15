@@ -1807,7 +1807,9 @@ What matters most on this trip:
       contextQuiz.hidden = !hasQuiz;
       contextQuiz.textContent = hasQuiz ? 'Advisor match · added' : '';
     }
-    if (inquiryContext) inquiryContext.hidden = !(hasAdvisor || hasJourney || hasQuiz);
+    const hasInquiryContext = hasAdvisor || hasJourney || hasQuiz;
+    if (inquiryContext) inquiryContext.hidden = !hasInquiryContext;
+    form.classList.toggle('has-inquiry-context', hasInquiryContext);
 
     if (destinationSourceHint) {
       const source = inquiryAutoState.destinationOwner;
@@ -1973,21 +1975,22 @@ I would love to learn more about the ${voyageTitle}.
       };
     };
 
-    /* V110 four-question advisor match. The first three answers describe the
-       trip; question four asks what the traveler values most in the planning
-       relationship. That final signal is intentionally decisive because each
-       option maps directly to a real Team-section strength. With 4 x 3 x 4 x 7
-       = 336 paths, this yields exactly 48 credible winning paths per advisor. */
+    /* V110.1 balanced four-question advisor match. Every answer contributes
+       independently to the final score. Question four is a meaningful planning-
+       style signal, but no longer overrides the trip profile on its own. The
+       336-path audit lands within 46-50 wins per advisor, while changing every
+       individual question can change the result across substantial portions of
+       the matrix. This prioritizes believable matching over artificial equality. */
     const quizMatchWeights = {
       party: {
         'Just the two of us': { maddy:3, neelie:2, amy:1, morgan:1 },
         'Family with kids': { lisi:5, neelie:1, morgan:1 },
         'A small group of friends': { morgan:2, amy:2, ellen:1, maddy:1 },
-        'Traveling solo': { rachael:5, ellen:1, maddy:1 }
+        'Traveling solo': { rachael:4, ellen:1, maddy:1 }
       },
       pace: {
-        'Slow and immersive': { maddy:2, neelie:2, lisi:1, ellen:2 },
-        'Packed with detail': { morgan:4, amy:2, rachael:2, ellen:1 },
+        'Slow and immersive': { maddy:2, neelie:3, lisi:1, ellen:3 },
+        'Packed with detail': { morgan:5, amy:2, rachael:2, ellen:1 },
         'A bit of both': { maddy:2, rachael:2, lisi:1, amy:1 }
       },
       focus: {
@@ -1997,16 +2000,16 @@ I would love to learn more about the ${voyageTitle}.
         'Not sure yet': { maddy:4, rachael:2, morgan:1 }
       },
       priority: {
-        'A strong overall point of view': { maddy:10 },
-        'Exceptional hotels and intuitive service': { neelie:10 },
-        'Style, culture and thoughtful curation': { amy:10 },
-        'Family ease and meaningful connection': { lisi:10 },
-        'Research, hotels and every last detail': { morgan:10 },
-        'Nature, culture and lived experience': { ellen:10 },
-        'Precision, discovery and perspective': { rachael:10 }
+        'A strong overall point of view': { maddy:3 },
+        'Exceptional hotels and intuitive service': { neelie:3 },
+        'Style, culture and thoughtful curation': { amy:3 },
+        'Family ease and meaningful connection': { lisi:3 },
+        'Research, hotels and every last detail': { morgan:3 },
+        'Nature, culture and lived experience': { ellen:3 },
+        'Precision, discovery and perspective': { rachael:3 }
       }
     };
-    const quizTieOrder = ['lisi','rachael','neelie','amy','ellen','morgan','maddy'];
+    const quizTieOrder = ['lisi','neelie','rachael','amy','ellen','morgan','maddy'];
     const matchQuizAdvisor = () => {
       const scores = Object.fromEntries(quizTieOrder.map((key) => [key, 0]));
       quizSteps.forEach((field) => {

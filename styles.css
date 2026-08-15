@@ -864,3 +864,270 @@ main section[id]{scroll-margin-top:82px}
   .mfm-quiz-options--priority{grid-template-columns:1fr}
   .mfm-quiz-options--priority button{min-height:44px}
 }
+
+
+/* V110.1 quiz transparency */
+.mfm-quiz-method-note{margin:-6px 0 22px;color:rgba(255,255,255,.58);font:500 8px/1.55 var(--sans);letter-spacing:.08em;text-transform:uppercase;max-width:330px}
+@media(max-width:640px){.mfm-quiz-method-note{font-size:7.5px;margin-bottom:18px}}
+
+
+/* ========================================================================== */
+/* V110.2 — INQUIRY HIERARCHY                                                   */
+/* The context summary is a status strip ABOVE the fields, never a sibling of */
+/* Name. Name + Email remain the first true input row at every viewport.        */
+/* ========================================================================== */
+
+.inquiry-form--advisor > .inquiry-context{
+  width:100%!important;
+  margin:0 0 4px!important;
+  padding:0 0 14px!important;
+  border-bottom:1px solid rgba(31,29,25,.14)!important;
+}
+.inquiry-form--advisor > .inquiry-context .inquiry-context-label{
+  flex-basis:100%;
+  margin:0 0 2px!important;
+}
+.inquiry-form--advisor > .inquiry-context .inquiry-context-items{
+  flex:1 1 auto;
+}
+.inquiry-form--advisor > .inquiry-context > small{
+  flex-basis:100%;
+  margin-top:1px;
+}
+
+/* Single-column / tablet: the summary becomes row one, then Name + Email. */
+@media (max-width:1199px){
+  .inquiry-form--advisor > .inquiry-context{order:1!important;grid-column:1!important;grid-row:auto!important}
+  .inquiry-form--advisor > .form-row{order:2!important;grid-column:1!important;grid-row:auto!important}
+  .inquiry-form--advisor > label:not(.inquiry-message){order:3!important;grid-column:1!important;grid-row:auto!important}
+  .inquiry-form--advisor > .advisor-select-label{order:4!important;grid-column:1!important;grid-row:auto!important}
+  .inquiry-form--advisor > .advisor-selection-card{order:5!important;grid-column:1!important;grid-row:auto!important}
+  .inquiry-form--advisor > .inquiry-optional{order:6!important;grid-column:1!important;grid-row:auto!important}
+  .inquiry-form--advisor > .inquiry-message{order:7!important;grid-column:1!important;grid-row:auto!important}
+  .inquiry-form--advisor > button[type="submit"]{order:8!important;grid-column:1!important;grid-row:auto!important}
+  .inquiry-form--advisor > .form-note{order:9!important;grid-column:1!important;grid-row:auto!important}
+}
+
+/* Wide desktop: the status strip starts the left form column; the portrait can */
+/* align with it, but it never displaces or shares a row with Name.             */
+@media (min-width:1200px){
+  .inquiry-form--advisor > .inquiry-context{grid-column:1!important;grid-row:1!important}
+  .inquiry-form--advisor > .form-row{grid-column:1!important;grid-row:2!important}
+  .inquiry-form--advisor > label:not(.inquiry-message){grid-column:1!important;grid-row:3!important}
+  .inquiry-form--advisor > .advisor-select-label{grid-column:1!important;grid-row:4!important}
+  .inquiry-form--advisor > .inquiry-optional{grid-column:1!important;grid-row:5!important}
+  .inquiry-form--advisor > .inquiry-message{grid-column:1!important;grid-row:6!important}
+  .inquiry-form--advisor > .advisor-selection-card{
+    grid-column:2!important;
+    grid-row:1 / 7!important;
+    align-self:stretch!important;
+  }
+  .inquiry-form--advisor > button[type="submit"]{grid-column:1 / -1!important;grid-row:7!important}
+  .inquiry-form--advisor > .form-note{grid-column:1 / -1!important;grid-row:8!important}
+
+  /* When there is no state yet, remove the empty summary row completely. */
+  .inquiry-form--advisor:not(.has-inquiry-context) > .form-row{grid-row:1!important}
+  .inquiry-form--advisor:not(.has-inquiry-context) > label:not(.inquiry-message){grid-row:2!important}
+  .inquiry-form--advisor:not(.has-inquiry-context) > .advisor-select-label{grid-row:3!important}
+  .inquiry-form--advisor:not(.has-inquiry-context) > .inquiry-optional{grid-row:4!important}
+  .inquiry-form--advisor:not(.has-inquiry-context) > .inquiry-message{grid-row:5!important}
+  .inquiry-form--advisor:not(.has-inquiry-context) > .advisor-selection-card{grid-row:1 / 6!important}
+  .inquiry-form--advisor:not(.has-inquiry-context) > button[type="submit"]{grid-row:6!important}
+  .inquiry-form--advisor:not(.has-inquiry-context) > .form-note{grid-row:7!important}
+}
+
+@media (max-width:640px){
+  .inquiry-form--advisor > .inquiry-context{
+    padding-bottom:13px!important;
+    margin-bottom:2px!important;
+  }
+}
+
+/* ========================================================================== */
+/* V110.3 — INQUIRE DESKTOP DENSITY + EDITORIAL TOP ALIGNMENT                 */
+/* The quiz/result can be taller than the form. Do not stretch or vertically  */
+/* center the form to match it; let each column use its natural content height. */
+/* ========================================================================== */
+
+@media (min-width:981px){
+  .inquire{
+    padding-top:clamp(58px,5vw,76px)!important;
+    padding-bottom:clamp(64px,5.5vw,84px)!important;
+  }
+  .inquire-inner{
+    align-items:start!important;
+    min-height:0!important;
+    box-shadow:none!important;
+  }
+  .inquire-copy{
+    justify-content:flex-start!important;
+    align-self:start!important;
+    padding-top:clamp(44px,4vw,58px)!important;
+    padding-bottom:clamp(48px,4vw,62px)!important;
+    box-shadow:0 25px 70px rgba(24,22,19,.09);
+  }
+  .inquiry-form--advisor{
+    align-content:start!important;
+    align-self:start!important;
+    justify-content:start!important;
+    min-height:0!important;
+    padding-top:clamp(44px,4vw,58px)!important;
+    padding-bottom:clamp(40px,3.5vw,52px)!important;
+    box-shadow:0 25px 70px rgba(24,22,19,.075);
+  }
+  .inquiry-form--advisor > .inquiry-context{
+    margin-top:0!important;
+  }
+}
+
+/* Large desktop: tighten the vertical rhythm slightly now that the form is
+   top-aligned. The portrait remains substantial without forcing a 540px rail. */
+@media (min-width:1200px){
+  .inquiry-form--advisor{
+    row-gap:18px!important;
+  }
+  .inquiry-form--advisor > .advisor-selection-card{
+    min-height:0!important;
+    align-self:start!important;
+    grid-template-rows:minmax(300px,auto) auto!important;
+  }
+  .advisor-selection-media{
+    min-height:300px!important;
+  }
+  .inquiry-context{
+    padding-top:0!important;
+    padding-bottom:11px!important;
+    margin-bottom:2px!important;
+  }
+  .inquiry-form--advisor > button[type="submit"]{
+    margin-top:4px!important;
+  }
+}
+
+/* Ultra-wide screens should gain width, not empty vertical canvas. */
+@media (min-width:1500px){
+  .inquire-inner{
+    grid-template-columns:minmax(390px,.72fr) minmax(0,1.28fr)!important;
+  }
+  .inquire-copy{
+    padding-left:clamp(48px,4vw,68px)!important;
+    padding-right:clamp(48px,4vw,68px)!important;
+  }
+  .inquiry-form--advisor{
+    padding-left:clamp(48px,4vw,68px)!important;
+    padding-right:clamp(48px,4vw,68px)!important;
+  }
+}
+
+
+/* ========================================================================== */
+/* V110.4 — INQUIRE RECOMPOSITION                                              */
+/* Restore a single couture canvas. Compact the chapter instead of separating  */
+/* the black and cream panels into unrelated natural-height blocks.             */
+/* ========================================================================== */
+
+@media (min-width:981px){
+  .inquire{
+    padding-top:clamp(46px,4vw,62px)!important;
+    padding-bottom:clamp(54px,4.5vw,72px)!important;
+  }
+  .inquire-inner{
+    grid-template-columns:minmax(360px,.72fr) minmax(0,1.28fr)!important;
+    align-items:stretch!important;
+    min-height:0!important;
+    box-shadow:0 28px 72px rgba(24,22,19,.10)!important;
+  }
+  .inquire-copy{
+    align-self:stretch!important;
+    justify-content:flex-start!important;
+    padding:clamp(46px,3.8vw,58px) clamp(42px,3.6vw,56px)!important;
+    box-shadow:none!important;
+  }
+  .inquire h2{
+    font-size:clamp(58px,4.5vw,72px)!important;
+    line-height:.91!important;
+  }
+  .inquire-copy>p:not(.eyebrow){
+    margin-top:24px!important;
+    font-size:15.5px!important;
+    line-height:1.58!important;
+  }
+
+  /* The quiz belongs to the invitation, not below a mid-section brand footer. */
+  .inquire-copy .mfm-quiz{
+    order:4!important;
+    margin-top:32px!important;
+    padding:24px 23px 22px!important;
+  }
+  .inquire-copy .mfm-quiz-title{
+    font-size:clamp(24px,2vw,29px)!important;
+    line-height:1.08!important;
+    margin-bottom:17px!important;
+  }
+  .mfm-quiz-method-note{
+    margin:-2px 0 17px!important;
+    line-height:1.45!important;
+  }
+  .mfm-quiz-question{margin-bottom:10px!important}
+  .mfm-quiz-options{gap:7px!important}
+  .mfm-quiz-options button{padding:9px 12px!important;min-height:40px!important}
+  .mfm-quiz-progress-label{margin-top:15px!important}
+
+  /* Brand signature closes the black column instead of interrupting it. */
+  .inquire-signature{
+    order:5!important;
+    margin-top:auto!important;
+    padding-top:22px!important;
+  }
+
+  .inquiry-form--advisor{
+    align-self:stretch!important;
+    align-content:start!important;
+    min-height:0!important;
+    padding:clamp(46px,3.8vw,58px) clamp(46px,4vw,62px) clamp(38px,3.2vw,48px)!important;
+    row-gap:18px!important;
+    box-shadow:none!important;
+  }
+  .inquiry-form--advisor > .inquiry-context{margin-bottom:0!important}
+  .inquiry-form--advisor > .form-row{margin-top:0!important}
+  .inquiry-form--advisor .inquiry-message textarea{
+    min-height:112px!important;
+    line-height:1.55!important;
+  }
+  .inquiry-form--advisor > button[type="submit"]{
+    margin-top:2px!important;
+  }
+  .form-note{margin-top:-4px!important}
+}
+
+@media (min-width:1200px){
+  .inquiry-form--advisor{
+    grid-template-columns:minmax(0,1fr) minmax(280px,.62fr)!important;
+    column-gap:32px!important;
+  }
+  .inquiry-form--advisor > .advisor-selection-card{
+    min-height:0!important;
+    align-self:stretch!important;
+    grid-template-rows:minmax(260px,1fr) auto!important;
+  }
+  .advisor-selection-media{min-height:260px!important}
+  .advisor-selection-card .advisor-selection-copy{padding:22px 22px 24px!important}
+  .advisor-selection-card h3{font-size:clamp(29px,2.15vw,39px)!important}
+  .advisor-selection-card .advisor-selection-bio{font-size:13px!important;line-height:1.48!important}
+  .advisor-selection-card .advisor-selection-tags{margin-top:15px!important}
+}
+
+/* The result can grow, but keep the black editorial panel composed rather than
+   making the whole chapter balloon vertically. */
+@media (min-width:981px){
+  .mfm-quiz-result>p[data-quiz-result-copy]{font-size:14px!important;line-height:1.48!important;margin-bottom:16px!important}
+  .mfm-quiz-result-reason{margin-bottom:10px!important;line-height:1.45!important}
+  .mfm-quiz-cta{padding:10px 15px!important}
+  .mfm-quiz-restart{padding-top:8px!important;padding-bottom:8px!important}
+}
+
+@media (min-width:1500px){
+  .inquire-inner{
+    grid-template-columns:minmax(410px,.70fr) minmax(0,1.30fr)!important;
+  }
+}

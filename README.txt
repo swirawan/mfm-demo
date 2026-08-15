@@ -1,3 +1,17 @@
+MFM Editorial V110.4.2
+
+Built from V110.
+
+V110.4 ADVISOR-MATCH LOGIC CORRECTION
+- Rebalanced the four-question advisor quiz so all four questions materially influence the result.
+- Question 4 is now a moderate +3 specialty signal rather than a +10 deciding key.
+- Q1 party profile, Q2 pace, and Q3 destination style can override Q4 when the combined trip profile points to another advisor.
+- Exhaustive audit covers all 336 possible answer combinations.
+- Winning distribution remains naturally close: Maddy 48, Neelie 46, Amy 47, Lisi 47, Morgan 49, Ellen 50, Rachael 49.
+- Influence audit: Q1 changes the winner in 60/84 comparable contexts; Q2 in 82/112; Q3 in 73/84; Q4 in 38/48.
+- The advisor directly associated with Q4 wins only 117/336 paths (~35%), confirming the final question no longer controls the result.
+- Added transparent quiz microcopy: “Every answer shapes the match - no single question decides it.”
+
 MFM Editorial V110
 
 Built from V109.5.
