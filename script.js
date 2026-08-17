@@ -2,7 +2,6 @@
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 
-
   /* Private access gate for the static portfolio demo.
      The key itself is not stored in plaintext; only its SHA-256 digest is compared.
      This is a client-side gate suitable for discouraging casual access on static hosting. */
@@ -229,7 +228,6 @@
   } else {
     document.querySelectorAll('.reveal').forEach(el => el.classList.add('is-visible'));
   }
-
 
 
   /* Editorial article transition inspired by the supplied CodePen reference.
@@ -619,7 +617,7 @@ What matters most on this trip:
     if (boardCountdown) boardCountdown.textContent = boardAutoplay ? '06' : 'PA';
   });
 
-  /* V89 voyage selector — Departure board visual system, list interaction preserved. */
+  /* Voyage selector — Departure board visual system, list interaction preserved. */
   const voyageCards=[...document.querySelectorAll('[data-voyage-card]')];
   const voyageSound=document.querySelector('[data-voyage-sound]');
   const voyageRows=[...document.querySelectorAll('[data-voyage-select]')];
@@ -678,7 +676,7 @@ What matters most on this trip:
   sizeVoyageMarquees();
   window.addEventListener('resize',()=>window.requestAnimationFrame(sizeVoyageMarquees),{passive:true});
 
-  /* V108 — quiet luxury: the board itself is the interaction. Sound was removed
+  /* The board itself is the interaction. Sound was removed
      so the selected voyage can transition as a single editorial object. */
   const runViewTransition = (update) => {
     if (!reduceMotion && typeof document.startViewTransition === 'function') {
@@ -739,7 +737,7 @@ What matters most on this trip:
   editTabs.forEach(tab => tab.addEventListener('click', () => setEditView(tab.dataset.editTrigger || 'departures')));
   setEditView(document.querySelector('[data-edit-trigger].is-active')?.dataset.editTrigger || 'departures');
 
-  /* Maddy Lens V30 - exact uploaded 20-page magazine rendered at 200 DPI.
+  /* Maddy Lens — exact uploaded 20-page magazine rendered at 200 DPI.
      Desktop pairs the cover by itself, then 02/03, 04/05 ... 18/19, with page 20 closing the issue.
      Mobile presents every page individually. */
   const lookbookPageSources = Array.from({ length: 20 }, (_, idx) => {
@@ -750,7 +748,7 @@ What matters most on this trip:
     `<div class="pdf-page"><img src="${src}" alt="Maddy Lens Issue 01 page ${idx + 1}" draggable="false" decoding="async" loading="lazy"></div>`
   );
 
-  /* V108.2: keep the original lossless PNG artwork, but warm only the pages the
+  /* Keep the original lossless artwork, but warm only the pages the
      reader is likely to turn to next. This improves perceived opening/turn speed
      without softening the magazine or front-loading all 20 high-resolution pages. */
   const warmedLookbookPages = new Set();
@@ -953,11 +951,11 @@ What matters most on this trip:
 
       const singlePage = singlePageMode();
 
-      /* V108 mobile performance path: phones use a restrained editorial page
+      /* Mobile performance path: phones use a restrained editorial page
          transition instead of reproducing the magazine page across 14–20 3D
          slices. Desktop keeps the signature flexible paper curl. */
       if (singlePage) {
-        /* V109.5 mobile clarity fix: a finished Web Animation with fill:forwards
+        /* Mobile clarity safeguard: a finished Web Animation with fill:forwards
            can keep contributing its old opacity/transform after the incoming
            animation ends. That occasionally left the settled page at ~28%
            opacity, which looked like a blurred low-resolution render. Always
@@ -1162,7 +1160,7 @@ What matters most on this trip:
     });
   }
 
-  /* Team story reader: full bios live inside this site rather than linking back to the legacy team page. */
+  /* Team story reader: full bios live inside this site rather than linking away to a separate team page. */
   const teamStories = [
     {
       key: 'maddy', index: '01', initials: 'MM', name: 'Maddy Moffitt', role: 'Owner & Travel Advisor', image: 'assets/images/team/maddy.webp', position: 'center 27%',
@@ -1315,7 +1313,7 @@ What matters most on this trip:
     });
   }
 
-  /* V35 inquiry advisor selector — reuses the same seven team portraits and editorial voice. */
+  /* Inquiry advisor selector — reuses the same seven team portraits and editorial voice. */
   const advisorProfiles = {
     'no-preference': {
       index: 'MFM / 00', eyebrow: 'No advisor selected', name: 'Let us make the match.',
@@ -1360,7 +1358,7 @@ What matters most on this trip:
     }
   };
 
-  /* V108.2: prewarm advisor portraits only as the inquiry section approaches,
+  /* Prewarm advisor portraits only as the inquiry section approaches,
      so the personal card changes instantly without adding work to the hero load. */
   const warmAdvisorPortraits = () => {
     [...new Set(Object.values(advisorProfiles).map((profile) => profile.image).filter(Boolean))].forEach((src) => {
@@ -1432,7 +1430,7 @@ What matters most on this trip:
   };
   advisorSelect?.addEventListener('change', () => renderAdvisorSelection(advisorSelect.value));
 
-  /* V36 bespoke advisor picker — keeps the real select for form submission,
+  /* Bespoke advisor picker — keeps the real select for form submission,
      but presents a fully styled, keyboard-accessible editorial listbox. */
   const advisorPicker = document.querySelector('[data-advisor-picker]');
   const advisorTrigger = document.querySelector('[data-advisor-trigger]');
@@ -1542,7 +1540,7 @@ What matters most on this trip:
   syncAdvisorPicker(advisorSelect?.value || 'no-preference');
   renderAdvisorSelection(advisorSelect?.value || 'no-preference');
 
-  /* V39 premium contact + discovery-call controls. */
+  /* Premium contact + discovery-call controls. */
   const emailField = document.querySelector('[data-email-field]');
   const emailInput = emailField?.querySelector('input[name="email"]');
   const emailError = document.querySelector('[data-email-error]');
@@ -1713,7 +1711,7 @@ What matters most on this trip:
   });
 
 
-  /* V108 — scroll-driven MFM Method. The chapter stays calm while the current
+  /* Scroll-driven MFM Method. The chapter stays calm while the current
      planning stage gains emphasis and the progress hairline advances. */
   const methodSection = document.querySelector('[data-method-section]');
   const methodSteps = [...document.querySelectorAll('[data-method-step]')];
@@ -1741,7 +1739,7 @@ What matters most on this trip:
   const inquiryDestinationField = form?.querySelector('input[name="destination"]');
   const inquiryMessageField = form?.querySelector('textarea[name="message"]');
 
-  /* V109.3 inquiry state — automated choices are additive, while anything the
+  /* Inquiry state — automated choices are additive, while anything the
      visitor types by hand is treated as higher-priority and never overwritten. */
   const inquiryContext = form?.querySelector('[data-inquiry-context]');
   const contextAdvisor = form?.querySelector('[data-context-advisor]');
@@ -1959,9 +1957,8 @@ I would love to learn more about the ${voyageTitle}.
   };
 
 
-
-  /* V109 advisor-match quiz — imported from the user-provided component and
-     wired into V108.2's existing advisor picker + inquiry flow. The displayed
+  /* Advisor-match quiz — integrated with the existing advisor picker and
+     inquiry flow. The displayed
      result bio is read directly from the Team card in the DOM, so the wording
      stays verbatim with the Team section instead of becoming a second copy. */
   const advisorMatchQuiz = document.querySelector('[data-mfm-quiz]');
@@ -1984,7 +1981,7 @@ I would love to learn more about the ${voyageTitle}.
       };
     };
 
-    /* V110.1 balanced four-question advisor match. Every answer contributes
+    /* Balanced four-question advisor match. Every answer contributes
        independently to the final score. Question four is a meaningful planning-
        style signal, but no longer overrides the trip profile on its own. The
        336-path audit lands within 46-50 wins per advisor, while changing every

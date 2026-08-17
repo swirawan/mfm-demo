@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="MFM Luxury Travel icon">
+  <rect width="64" height="64" rx="14" fill="#171513"/>
+  <path d="M32 10l3.6 4.8L41 18l-5.4 3.2L32 26l-3.6-4.8L23 18l5.4-3.2L32 10z" fill="#B58A49" opacity="0.96"/>
+  <text x="32" y="43" text-anchor="middle" font-size="19" font-family="Georgia, 'Times New Roman', serif" font-weight="700" letter-spacing="1.4" fill="#E8D4AE">MFM</text>
+</svg>
